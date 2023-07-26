@@ -3,6 +3,9 @@ from django.db import models
 
 # ARTICLES MODELS
 class ArticlesModel(models.Model):
+    CHOICE_MENU = (('News', 'News'),
+                   ('Information', 'Information'))
+
     title = models.CharField(
         max_length=30,
     )
@@ -21,5 +24,5 @@ class ArticlesModel(models.Model):
     )
     article_type = models.CharField(
         max_length=30,
-        #news or useful information
+        choices=CHOICE_MENU,
     )
