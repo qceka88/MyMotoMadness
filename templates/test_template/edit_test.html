@@ -5,16 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-
-<form action="{% url 'add article view' %}" method="post">
-    {{ form.as_p }}
+<form action="{% url 'edit article view' pk=object.pk %}" method="post">
+    {{ form }}
     <button>
-        Create
+        Edit!
     </button>
     {% csrf_token %}
 </form>
 <button>
     <a href="{% url 'common articles views' %}">LIST</a>
 </button>
+
 </body>
 </html>

@@ -6,15 +6,16 @@
 </head>
 <body>
 
-<form action="{% url 'add article view' %}" method="post">
-    {{ form.as_p }}
+<h1> Are you sure to delete? </h1>
+<form action="{% url  'delete article view' pk=object.pk %}" method="post">
+    {{ form }}
     <button>
-        Create
+        DELETE ARTICLE!
     </button>
     {% csrf_token %}
+
 </form>
-<button>
-    <a href="{% url 'common articles views' %}">LIST</a>
-</button>
+
+
 </body>
 </html>

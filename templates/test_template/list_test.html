@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {% for article in object_list %}
+        <li>
+            {{ article }} <button><a href="{% url 'detail article view' pk=article.pk %}">DET</a></button>
+             <button><a href="{% url 'edit article view' pk=article.pk %}">Edit</a></button>
+             <button><a href="{% url 'delete article view' pk=article.pk %}">Delete</a></button>
+        </li>
+    {% endfor %}
+
+</ul>
+<button>
+    <a href="{% url 'add article view' %}"> ADD</a>
+</button>
+
+
+</body>
+</html>

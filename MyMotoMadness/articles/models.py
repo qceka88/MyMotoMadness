@@ -4,7 +4,8 @@ from django.db import models
 # ARTICLES MODELS
 class ArticlesModel(models.Model):
     CHOICE_MENU = (('News', 'News'),
-                   ('Advices', 'Advices'))
+                   ('Advices', 'Advices'),
+                   )
 
     title = models.CharField(
         max_length=30,
@@ -13,11 +14,15 @@ class ArticlesModel(models.Model):
         max_length=30,
     )
 
+    # article_image = models.ImageField(
+    #     upload_to='mediafiles/images/'
+    # )
+
     description = models.TextField(
 
     )
     published = models.DateTimeField(
-        auto_created=True,
+        auto_now_add=True,
     )
     author = models.CharField(
         max_length=30
@@ -26,3 +31,6 @@ class ArticlesModel(models.Model):
         max_length=30,
         choices=CHOICE_MENU,
     )
+
+    def __str__(self):
+        return self.title

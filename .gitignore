@@ -3,3 +3,4 @@
 .idea/dataSources.xml
 envs/__init__.py
 *.pyc
+*.pyc
