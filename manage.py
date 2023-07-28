@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
-import sys
-import os
 import re
 import sys
+
 
 def load_env():
     try:
@@ -17,6 +16,7 @@ def load_env():
         if m:
             key, val = m.group(1), m.group(2)
             os.environ.setdefault(key, val)
+
 
 def main():
     """Run administrative tasks."""
