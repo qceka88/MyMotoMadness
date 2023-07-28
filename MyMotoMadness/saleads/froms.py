@@ -1,6 +1,6 @@
 from django import forms
 
-from MyMotoMadness.saleads.models import MotorcyclesModel
+from MyMotoMadness.saleads.models import MotorcyclesModel, MotoParts, MotoEquipmentGear
 
 
 class BaseMotorcycleForm(forms.ModelForm):
@@ -57,3 +57,50 @@ class DeleteMotorcycleForm(BaseMotorcycleForm):
             self.instance.delete()
 
         return self.instance
+
+
+class BaseEquipmentGearForm(forms.ModelForm):
+    class Meta:
+        model = MotoEquipmentGear
+        fields = '__all__'
+
+
+class CreateEquipmentGearForm(BaseEquipmentGearForm):
+    ...
+
+
+class EditEquipmentGearForm(BaseEquipmentGearForm):
+    ...
+
+
+class DeleteEquipmentGearForm(BaseEquipmentGearForm):
+    class Meta:
+        model = MotorcyclesModel
+        fields = ()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        if commit:
+            self.instance.delete()
+
+        return self.instance
+
+
+class BasePartsForm(forms.ModelForm):
+    class Meta:
+        model = MotoParts
+        fields = '__all__'
+
+
+class CreatePartsForm(BasePartsForm):
+    ...
+
+
+class EditPartsForm(BasePartsForm):
+    ...
+
+
+class DeletePartsForm(BasePartsForm):
+    ...

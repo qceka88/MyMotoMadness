@@ -11,31 +11,51 @@ class CommonSaleView(views.TemplateView):
 
 
 class MotorcyclesListViews(views.ListView):
-    template_name = 'test_template/list_test.html'
+    template_name = 'sales/motorcycles'
     model = MotorcyclesModel
 
 
 class MotorcyclesAddView(views.CreateView):
-    template_name = 'test_template/create_test.html'
+    template_name = 'sales/motorcycles'
     model = MotorcyclesModel
     form_class = CreateMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
 
 class MotorcyclesEditView(views.UpdateView):
-    template_name = 'test_template/edit_test.html'
+    template_name = 'sales/motorcycles'
     model = MotorcyclesModel
     form_class = EditMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
 
 class MotorcyclesDetailsView(views.DetailView):
-    template_name = 'test_template/detail_test.html'
+    template_name = 'sales/motorcycles'
     model = MotorcyclesModel
 
 
 class MotorcyclesDeleteView(views.DeleteView):
-    template_name = 'test_template/delete_test.html'
+    template_name = 'sales/motorcycles'
     model = MotorcyclesModel
     form_class = DeleteMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
+
+#TODO : impelement the logic
+class EquipmentGearListView(views.ListView):
+    ...
+
+
+class EquipmentGearAddView(views.ListView):
+    ...
+
+
+class EquipmentGearEditView(views.UpdateView):
+    ...
+
+
+class EquipmentGearDetailsView(views.DetailView):
+    ...
+
+
+class EquipmentGearDeleteView(views.DeleteView):
+    ...

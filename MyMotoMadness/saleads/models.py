@@ -32,7 +32,7 @@ class MotorcyclesModel(models.Model):
 
     )
     bike_image = models.ImageField(
-        upload_to='bike_photos',
+        upload_to='photos/bike_photos',
         blank=True,
         null=True,
     )
@@ -44,7 +44,7 @@ class MotorcyclesModel(models.Model):
         return f"{self.brand} {self.model} {self.engine_volume}"
 
 
-class MotoGear(models.Model):
+class MotoEquipmentGear(models.Model):
     brand = models.CharField(
         max_length=30,
     )
@@ -73,7 +73,7 @@ class MotoGear(models.Model):
 
     )
     gear_image = models.ImageField(
-        upload_to='gear_photos',
+        upload_to='photos/gear_photos',
         blank=True,
         null=True,
     )
@@ -104,7 +104,7 @@ class MotoParts(models.Model):
 
     )
     part_image = models.ImageField(
-        upload_to='part_photos',
+        upload_to='photos/part_photos',
         blank=True,
         null=True,
     )
