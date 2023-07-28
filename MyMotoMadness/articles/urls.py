@@ -1,7 +1,8 @@
 from django.urls import path
 
-from MyMotoMadness.articles.views import ArticlesView
+from MyMotoMadness.articles.views import CommonArticlesView
 
 urlpatterns = [
-    path('', ArticlesView.as_view(), name='articles views'),
+    path('', CommonArticlesView.as_view(), name='common articles views'),
+
 ]

@@ -1,5 +1,8 @@
 from django.urls import path
-#Sale ads URLS
+
+from MyMotoMadness.saleads.views import CommonSaleView
+
+# Sale ads URLS
 urlpatterns = [
-    #path('')
+    path('', CommonSaleView.as_view(), name='common sale view'),
 ]

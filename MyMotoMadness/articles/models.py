@@ -4,7 +4,7 @@ from django.db import models
 # ARTICLES MODELS
 class ArticlesModel(models.Model):
     CHOICE_MENU = (('News', 'News'),
-                   ('Information', 'Information'))
+                   ('Advices', 'Advices'))
 
     title = models.CharField(
         max_length=30,

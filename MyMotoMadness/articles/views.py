@@ -4,6 +4,18 @@ from MyMotoMadness.articles.models import ArticlesModel
 
 
 # Create your views here.
-class ArticlesView(views.ListView):
+class CommonArticlesView(views.ListView):
     template_name = 'articles/articles_common.html'
     model = ArticlesModel
+
+
+class ArticleCreateView(views.CreateView):
+    ...
+
+
+class ArticleUpdateView(views.UpdateView):
+    ...
+
+
+class ArticleDeleteView(views.DeleteView):
+    ...
