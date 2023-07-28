@@ -1,12 +1,13 @@
 from django.db import models
 
+from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTypeChoices
+
 
 # ADS FOR SALE MODELS
-# Create your models here.
-class Motorcycles(models.Model):
+class MotorcyclesModel(models.Model):
     bike_type = models.CharField(
         max_length=30,
-        # choices  =  supersport, chopper, cross, etc,
+        choices=BikeTypeChoices.choices(),
     )
     brand = models.CharField(
         max_length=30,
@@ -17,18 +18,30 @@ class Motorcycles(models.Model):
     engine_volume = models.PositiveIntegerField(
 
     )
-
     manufacture_year = models.PositiveIntegerField(
     )
     description = models.TextField(
         max_length=500,
+        null=True,
+        blank=True,
     )
     owner = models.CharField(
-        max_length=15
+        max_length=15,
     )
     price = models.FloatField(
 
     )
+    bike_image = models.ImageField(
+        upload_to='bike_photos',
+        blank=True,
+        null=True,
+    )
+    approved = models.BooleanField(
+        default=False,
+    )
+
+    def __str__(self):
+        return f"{self.brand} {self.model} {self.engine_volume}"
 
 
 class MotoGear(models.Model):
@@ -39,8 +52,14 @@ class MotoGear(models.Model):
         max_length=30,
     )
     gear_type = models.CharField(
-        max_length=15,
-        # choices  =  gloves, boots, tracksuit, etc..
+        max_length=20,
+        choices=ProtectionGearTypeChoices.choices(),
+    )
+
+    material_type = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
     )
     manufacture_year = models.PositiveIntegerField(
     )
@@ -53,12 +72,19 @@ class MotoGear(models.Model):
     price = models.FloatField(
 
     )
+    gear_image = models.ImageField(
+        upload_to='gear_photos',
+        blank=True,
+        null=True,
+    )
+    approved = models.BooleanField(
+        default=False,
+    )
 
 
 class MotoParts(models.Model):
     type_of_part = models.CharField(
         max_length=30,
-        # choices  = engine, tyres, el system etc,
     )
     brand = models.CharField(
         max_length=30,
@@ -76,4 +102,12 @@ class MotoParts(models.Model):
     )
     price = models.FloatField(
 
+    )
+    part_image = models.ImageField(
+        upload_to='part_photos',
+        blank=True,
+        null=True,
+    )
+    approved = models.BooleanField(
+        default=False,
     )

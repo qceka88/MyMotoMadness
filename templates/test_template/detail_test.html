@@ -7,22 +7,24 @@
 <body>
 
 
-<p> Title{{ object.title }} </p>
-<p>Subtitle {{ object.sub_title }} </p>
-<p>Description {{ object.description }} </p>
-<p>Created On: {{ object.published }} </p>
-<p>Author: {{ object.author }} </p>
-<p>Type: {{ object.article_type }} </p>
+<p> Brand{{ object.brand }} </p>
+<p>Model {{ object.model }} </p>
+<p>Volume {{ object.engine_volume }} </p>
+<p>Created On: {{ object.manufacture_year }} </p>
+<p>Owner: {{ object.owner }} </p>
+<p>Type: {{ object.bike_type}} </p>
 
-<img src="{{ object.article_image.url }}" alt="{{ object.title }}">
+<p>Type: {{ object.approved}} </p>
 
-<button><a href="{% url 'edit article view' pk=object.pk %}">Edit</a></button>
+<img src="{{ object.bike_image.url }}" alt="{{ object.brand }}">
+
+<button><a href="{% url 'edit motorcycle view' pk=object.pk %}">Edit</a></button>
 
 
-<button><a href="{% url 'delete article view' pk=object.pk %}">Delete</a></button>
+<button><a href="{% url 'delete motorcycle view' pk=object.pk %}">Delete</a></button>
 
 
-<button><a href="{% url 'common articles views' %}">LIST</a></button>
+<button><a href="{% url 'list motorcycle view' %}">LIST</a></button>
 
 
 </body>

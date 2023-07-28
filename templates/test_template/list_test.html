@@ -6,17 +6,17 @@
 </head>
 <body>
 <ul>
-    {% for article in object_list %}
+    {% for bike in object_list %}
         <li>
-            {{ article }} <button><a href="{% url 'detail article view' pk=article.pk %}">DET</a></button>
-             <button><a href="{% url 'edit article view' pk=article.pk %}">Edit</a></button>
-             <button><a href="{% url 'delete article view' pk=article.pk %}">Delete</a></button>
+            {{ bike }} <button><a href="{% url 'detail motorcycle view' pk=bike.pk %}">DET</a></button>
+             <button><a href="{% url 'edit motorcycle view' pk=bike.pk %}">Edit</a></button>
+             <button><a href="{% url 'delete motorcycle view' pk=bike.pk %}">Delete</a></button>
         </li>
     {% endfor %}
 
 </ul>
 <button>
-    <a href="{% url 'add article view' %}"> ADD</a>
+    <a href="{% url 'add motorcycle view' %}"> ADD</a>
 </button>
 
 

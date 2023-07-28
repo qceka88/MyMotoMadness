@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from MyMotoMadness.saleads.models import MotoGear, MotoParts, Motorcycles
+from MyMotoMadness.saleads.models import MotoGear, MotoParts, MotorcyclesModel
 
 
 # Register your models here.
@@ -16,6 +16,6 @@ class MotoPartsAdmin(admin.ModelAdmin):
     ...
 
 
-@admin.register(Motorcycles)
+@admin.register(MotorcyclesModel)
 class MotorcyclesAdmin(admin.ModelAdmin):
     ...

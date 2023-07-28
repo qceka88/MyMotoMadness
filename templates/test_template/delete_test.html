@@ -7,10 +7,11 @@
 <body>
 
 <h1> Are you sure to delete? </h1>
-<form action="{% url  'delete article view' pk=object.pk %}" method="post">
+<form action="{% url  'delete motorcycle view' pk=object.pk %}" method="post">
     {{ form }}
+    {{ object }}
     <button>
-        DELETE ARTICLE!
+        DELETE!
     </button>
     {% csrf_token %}
 
