@@ -14,9 +14,11 @@ class ArticlesModel(models.Model):
         max_length=30,
     )
 
-    # article_image = models.ImageField(
-    #     upload_to='mediafiles/images/'
-    # )
+    article_image = models.ImageField(
+        upload_to='article_photos',
+        blank=True,
+        null=True,
+    )
 
     description = models.TextField(
 
@@ -33,4 +35,4 @@ class ArticlesModel(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return f'{self.title}-{self.pk}'

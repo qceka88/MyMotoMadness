@@ -6,12 +6,13 @@
 </head>
 <body>
 
-<form action="{% url 'add article view' %}" method="post">
+<form action="{% url 'add article view' %}" method="post" enctype="multipart/form-data">
     {{ form.as_p }}
+    {% csrf_token %}
     <button>
         Create
     </button>
-    {% csrf_token %}
+
 </form>
 <button>
     <a href="{% url 'common articles views' %}">LIST</a>

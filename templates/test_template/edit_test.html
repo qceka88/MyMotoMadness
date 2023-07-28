@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<form action="{% url 'edit article view' pk=object.pk %}" method="post">
-    {{ form }}
+<form action="{% url 'edit article view' pk=object.pk %}" method="post" enctype="multipart/form-data">
+    {{ form.as_p }}
     <button>
         Edit!
     </button>

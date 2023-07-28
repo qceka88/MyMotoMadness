@@ -14,6 +14,8 @@
 <p>Author: {{ object.author }} </p>
 <p>Type: {{ object.article_type }} </p>
 
+<img src="{{ object.article_image.url }}" alt="{{ object.title }}">
+
 <button><a href="{% url 'edit article view' pk=object.pk %}">Edit</a></button>
 
 

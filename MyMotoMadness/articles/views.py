@@ -13,7 +13,7 @@ class CommonArticlesView(views.ListView):
 
 
 class ArticleCreateView(views.CreateView):
-    template_name = 'test_template/test.html'
+    template_name = 'test_template/create_test.html'
     model = ArticlesModel
     form_class = CreateArticleForm
     success_url = reverse_lazy('common articles views')

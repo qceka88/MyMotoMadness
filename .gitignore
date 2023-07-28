@@ -4,3 +4,4 @@
 envs/__init__.py
 *.pyc
 *.pyc
+*.pyc
