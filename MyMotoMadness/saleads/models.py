@@ -31,17 +31,23 @@ class MotorcyclesModel(models.Model):
     price = models.FloatField(
 
     )
-    bike_image = models.ImageField(
-        upload_to='photos/bike_photos',
-        blank=True,
-        null=True,
-    )
+
     approved = models.BooleanField(
         default=False,
     )
 
     def __str__(self):
         return f"{self.brand} {self.model} {self.engine_volume}"
+
+
+class MotorcycleImages(models.Model):
+    motorcycle = models.ForeignKey(
+        MotorcyclesModel,
+        on_delete=models.CASCADE
+    )
+    images = models.ImageField(
+        upload_to='photos/bike_photos',
+    )
 
 
 class MotoEquipmentGear(models.Model):
@@ -82,6 +88,16 @@ class MotoEquipmentGear(models.Model):
     )
 
 
+class MotoEquipmentImages(models.Model):
+    moto_equipment = models.ForeignKey(
+        MotorcyclesModel,
+        on_delete=models.CASCADE
+    )
+    images = models.ImageField(
+        upload_to='photos/equipment_photos',
+    )
+
+
 class MotoParts(models.Model):
     type_of_part = models.CharField(
         max_length=30,
@@ -101,13 +117,17 @@ class MotoParts(models.Model):
         max_length=15
     )
     price = models.FloatField(
-
-    )
-    part_image = models.ImageField(
-        upload_to='photos/part_photos',
-        blank=True,
-        null=True,
     )
     approved = models.BooleanField(
         default=False,
+    )
+
+
+class MotoPartsImages(models.Model):
+    moto_parts = models.ForeignKey(
+        MotoParts,
+        on_delete=models.CASCADE
+    )
+    images = models.ImageField(
+        upload_to='photos/part_photos',
     )

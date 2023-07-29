@@ -16,7 +16,15 @@
 
 <p>Type: {{ object.approved}} </p>
 
-<img src="{{ object.bike_image.url }}" alt="{{ object.brand }}">
+<ul>
+    {% for picture in object.motorcycleimages_set.all %}
+        <li>
+         <img src="{{ picture.images.url }}" alt="{{ object.brand }}">
+        </li>
+    {% endfor %}
+
+</ul>
+
 
 <button><a href="{% url 'edit motorcycle view' pk=object.pk %}">Edit</a></button>
 
