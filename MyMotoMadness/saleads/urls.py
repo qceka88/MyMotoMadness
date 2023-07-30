@@ -2,7 +2,8 @@ from django.urls import path, include
 
 from MyMotoMadness.saleads.views import CommonSaleView, MotorcyclesListViews, MotorcyclesAddView, \
     MotorcyclesDetailsView, MotorcyclesEditView, MotorcyclesDeleteView, EquipmentGearListView, EquipmentGearAddView, \
-    EquipmentGearEditView, EquipmentGearDetailsView, EquipmentGearDeleteView
+    EquipmentGearEditView, EquipmentGearDetailsView, EquipmentGearDeleteView, PartsListView, PartsAddView, \
+    PartsEditView, PartsDetailsView, PartsDeleteView
 
 # Sale offers URLS
 urlpatterns = [
@@ -20,5 +21,12 @@ urlpatterns = [
         path('edit/<int:pk>/', EquipmentGearEditView.as_view(), name='edit equipment gear view'),
         path('detail/<int:pk>/', EquipmentGearDetailsView.as_view(), name='detail equipment gear view'),
         path('delete/<int:pk>/', EquipmentGearDeleteView.as_view(), name='delete equipment gear view'),
+    ])),
+    path('bike-parts/', include([
+        path('', PartsListView.as_view(), name='list bike parts view'),
+        path('add/', PartsAddView.as_view(), name='add bike parts view'),
+        path('edit/<int:pk>', PartsEditView.as_view(), name='edit bike parts view'),
+        path('detail/<int:pk>', PartsDetailsView.as_view(), name='detail bike parts view'),
+        path('delete/<int:pk>', PartsDeleteView.as_view(), name='delete bike parts view'),
     ]))
 ]

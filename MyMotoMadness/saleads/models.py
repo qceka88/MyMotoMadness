@@ -4,7 +4,7 @@ from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTy
 
 
 # ADS FOR SALE MODELS
-# TODO: Add oject in Owner in all models
+# TODO: Add object in Owner in all models
 class MotorcyclesModel(models.Model):
     bike_type = models.CharField(
         max_length=30,
@@ -124,6 +124,8 @@ class MotoParts(models.Model):
         default=False,
     )
 
+    def __str__(self):
+        return f"{self.type_of_part}, {self.brand}, {self.model}: {self.price:.2f}lv."
 
 class MotoPartsImages(models.Model):
     moto_parts = models.ForeignKey(

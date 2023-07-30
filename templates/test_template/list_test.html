@@ -8,15 +8,15 @@
 <ul>
     {% for some_object in object_list %}
         <li>
-            {{ some_object }} <button><a href="{% url 'detail equipment gear view' pk=some_object.pk %}">DET</a></button>
-             <button><a href="{% url 'edit equipment gear view' pk=some_object.pk %}">Edit</a></button>
-             <button><a href="{% url 'delete equipment gear view' pk=some_object.pk %}">Delete</a></button>
+            {{ some_object }} <button><a href="{% url 'detail bike parts view' pk=some_object.pk %}">DET</a></button>
+             <button><a href="{% url 'edit bike parts view' pk=some_object.pk %}">Edit</a></button>
+             <button><a href="{% url 'delete bike parts view' pk=some_object.pk %}">Delete</a></button>
         </li>
     {% endfor %}
 
 </ul>
 <button>
-    <a href="{% url 'add equipment gear view' %}"> ADD</a>
+    <a href="{% url 'add bike parts view' %}"> ADD</a>
 </button>
 <button>
     <a href="{% url 'home-page' %}">HOME PAGE</a>
