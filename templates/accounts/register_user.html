@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block  page_content %}
+    <form action="{% url 'register user view' %}" method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button>
+            register
+        </button>
+    </form>
+{% endblock %}

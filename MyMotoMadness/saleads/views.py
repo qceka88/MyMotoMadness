@@ -3,8 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 
 from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, DeleteMotorcycleForm, \
-    CreateEquipmentGearForm, EditEquipmentGearForm, DeleteEquipmentGearForm, CreatePartsForm, EditPartsForm, \
-    DeletePartsForm
+    CreateEquipmentGearForm, EditEquipmentGearForm, DeleteEquipmentGearForm, CreatePartsForm, EditPartsForm
 from MyMotoMadness.saleads.models import MotorcyclesModel, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
 
@@ -63,6 +62,7 @@ class MotorcyclesDeleteView(views.DeleteView):
     # template_name = 'sales/motorcycles'
     template_name = 'test_template/delete_test.html'
     model = MotorcyclesModel
+    # TODO: Check form_class is needed
     form_class = DeleteMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
@@ -116,6 +116,7 @@ class EquipmentGearDeleteView(views.DeleteView):
     template_name = 'sales/equipment_gear/'
     # template_name = 'test_template/delete_test.html'
     model = MotoEquipmentGear
+    #TODO: Check form_class is needed
     form_class = DeleteEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
 
@@ -168,5 +169,4 @@ class PartsDeleteView(views.DeleteView):
     # template_name = 'sales/moto_parts/'
     template_name = 'test_template/delete_test.html'
     model = MotoParts
-    form_class = DeletePartsForm
     success_url = reverse_lazy('list bike parts view')

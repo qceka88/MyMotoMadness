@@ -19,6 +19,9 @@ class MotorcyclesModel(models.Model):
     engine_volume = models.PositiveIntegerField(
 
     )
+    horse_power = models.IntegerField(
+
+    )
     manufacture_year = models.PositiveIntegerField(
     )
     description = models.TextField(
