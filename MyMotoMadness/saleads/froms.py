@@ -64,6 +64,8 @@ class BaseEquipmentGearForm(forms.ModelForm):
         model = MotoEquipmentGear
         fields = '__all__'
 
+        # TODO: Add placeholders
+
 
 class CreateEquipmentGearForm(BaseEquipmentGearForm):
     ...
@@ -74,9 +76,7 @@ class EditEquipmentGearForm(BaseEquipmentGearForm):
 
 
 class DeleteEquipmentGearForm(BaseEquipmentGearForm):
-    class Meta:
-        model = MotorcyclesModel
-        fields = ()
+    BaseEquipmentGearForm.Meta.fields = ()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -92,6 +92,7 @@ class BasePartsForm(forms.ModelForm):
     class Meta:
         model = MotoParts
         fields = '__all__'
+        # TODO: Add placeholders
 
 
 class CreatePartsForm(BasePartsForm):
@@ -103,4 +104,13 @@ class EditPartsForm(BasePartsForm):
 
 
 class DeletePartsForm(BasePartsForm):
-    ...
+    BasePartsForm.Meta.fields = ()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        if commit:
+            self.instance.delete()
+
+        return self.instance

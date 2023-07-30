@@ -4,6 +4,7 @@ from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTy
 
 
 # ADS FOR SALE MODELS
+# TODO: Add oject in Owner in all models
 class MotorcyclesModel(models.Model):
     bike_type = models.CharField(
         max_length=30,
@@ -45,7 +46,7 @@ class MotorcycleImages(models.Model):
         MotorcyclesModel,
         on_delete=models.CASCADE
     )
-    images = models.ImageField(
+    image = models.ImageField(
         upload_to='photos/bike_photos',
     )
 
@@ -78,22 +79,20 @@ class MotoEquipmentGear(models.Model):
     price = models.FloatField(
 
     )
-    gear_image = models.ImageField(
-        upload_to='photos/gear_photos',
-        blank=True,
-        null=True,
-    )
     approved = models.BooleanField(
         default=False,
     )
 
+    def __str__(self):
+        return f'{self.gear_type}, {self.brand}, {self.model} - {self.price:.2f}lv.'
+
 
 class MotoEquipmentImages(models.Model):
     moto_equipment = models.ForeignKey(
-        MotorcyclesModel,
+        MotoEquipmentGear,
         on_delete=models.CASCADE
     )
-    images = models.ImageField(
+    image = models.ImageField(
         upload_to='photos/equipment_photos',
     )
 
@@ -107,6 +106,9 @@ class MotoParts(models.Model):
     )
     model = models.CharField(
         max_length=30,
+    )
+    for_bike = models.CharField(
+        max_length=40,
     )
     manufacture_year = models.PositiveIntegerField(
     )
@@ -128,6 +130,6 @@ class MotoPartsImages(models.Model):
         MotoParts,
         on_delete=models.CASCADE
     )
-    images = models.ImageField(
+    image = models.ImageField(
         upload_to='photos/part_photos',
     )

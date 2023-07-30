@@ -6,34 +6,37 @@
 </head>
 <body>
 
-
-<p> Brand{{ object.brand }} </p>
+<p>Type of equipment {{ object.gear_type }} </p>
+<p>Brand{{ object.brand }} </p>
 <p>Model {{ object.model }} </p>
-<p>Volume {{ object.engine_volume }} </p>
+
 <p>Created On: {{ object.manufacture_year }} </p>
 <p>Owner: {{ object.owner }} </p>
-<p>Type: {{ object.bike_type}} </p>
+<p>Material: {{ object.material_type}} </p>
 
 <p>Type: {{ object.approved}} </p>
 
 <ul>
-    {% for picture in object.motorcycleimages_set.all %}
+    {% for picture in equipment_pictures %}
         <li>
-         <img src="{{ picture.images.url }}" alt="{{ object.brand }}">
+         <img  style="width: 150px" src="{{ picture.image.url }}" alt="{{ object.brand }}">
         </li>
     {% endfor %}
 
 </ul>
 
 
-<button><a href="{% url 'edit motorcycle view' pk=object.pk %}">Edit</a></button>
+<button><a href="{% url 'edit equipment gear view' pk=object.pk %}">Edit</a></button>
 
 
-<button><a href="{% url 'delete motorcycle view' pk=object.pk %}">Delete</a></button>
+<button><a href="{% url 'delete equipment gear view' pk=object.pk %}">Delete</a></button>
 
 
-<button><a href="{% url 'list motorcycle view' %}">LIST</a></button>
+<button><a href="{% url 'list equipment gear view' %}">LIST</a></button>
 
+<button>
+    <a href="{% url 'home-page' %}">HOME</a>
+</button>
 
 </body>
 </html>

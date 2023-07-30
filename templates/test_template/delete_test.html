@@ -7,7 +7,7 @@
 <body>
 
 <h1> Are you sure to delete? </h1>
-<form action="{% url  'delete motorcycle view' pk=object.pk %}" method="post">
+<form action="{% url  'delete equipment gear view' pk=object.pk %}" method="post">
     {{ form }}
     {{ object }}
     <button>
@@ -16,6 +16,10 @@
     {% csrf_token %}
 
 </form>
+
+<button>
+    <a href="{% url 'home-page' %}">HOME</a>
+</button>
 
 
 </body>
