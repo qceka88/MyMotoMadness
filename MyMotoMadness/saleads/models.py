@@ -1,10 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTypeChoices
 
+UserModel = get_user_model()
 
-# ADS FOR SALE MODELS
-# TODO: Add object in Owner in all models
+
 class MotorcyclesModel(models.Model):
     bike_type = models.CharField(
         max_length=30,
@@ -29,8 +30,9 @@ class MotorcyclesModel(models.Model):
         null=True,
         blank=True,
     )
-    owner = models.CharField(
-        max_length=15,
+    owner = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
     price = models.FloatField(
 
@@ -76,8 +78,9 @@ class MotoEquipmentGear(models.Model):
     description = models.TextField(
         max_length=500,
     )
-    owner = models.CharField(
-        max_length=15
+    owner = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
     price = models.FloatField(
 
@@ -118,8 +121,9 @@ class MotoParts(models.Model):
     description = models.TextField(
         max_length=500,
     )
-    owner = models.CharField(
-        max_length=15
+    owner = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
     price = models.FloatField(
     )
@@ -129,6 +133,7 @@ class MotoParts(models.Model):
 
     def __str__(self):
         return f"{self.type_of_part}, {self.brand}, {self.model}: {self.price:.2f}lv."
+
 
 class MotoPartsImages(models.Model):
     moto_parts = models.ForeignKey(

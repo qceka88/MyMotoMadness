@@ -1,11 +1,14 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
+UserModel = get_user_model()
 
-# ARTICLES MODELS
+
 class ArticlesModel(models.Model):
-    CHOICE_MENU = (('News', 'News'),
-                   ('Advices', 'Advices'),
-                   )
+    CHOICE_MENU = (
+        ('News', 'News'),
+        ('Advices', 'Advices'),
+    )
 
     title = models.CharField(
         max_length=30,
@@ -26,8 +29,9 @@ class ArticlesModel(models.Model):
     published = models.DateTimeField(
         auto_now_add=True,
     )
-    author = models.CharField(
-        max_length=30
+    author = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
     article_type = models.CharField(
         max_length=30,

@@ -1,15 +1,22 @@
 from django.contrib.auth import models as auth_models
 from django.db import models
 
+from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical
+
 
 # ACCOUNTS MODELS.
 class MotoUserModel(auth_models.AbstractUser):
     first_name = models.CharField(
         max_length=30,
+        validators=(
+            check_name_symbols_for_non_alphabetical,
+        ),
     )
-    # TODO: To add name alphabet validator
     last_name = models.CharField(
         max_length=30,
+        validators=(
+            check_name_symbols_for_non_alphabetical,
+        ),
     )
     email = models.EmailField(
         unique=True,
