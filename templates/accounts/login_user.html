@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block  page_content %}
+    <form action="{% url 'login user view' %}" method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button>
+            LOGIN
+        </button>
+    </form>
+{% endblock %}
