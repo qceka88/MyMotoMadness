@@ -1,3 +1,4 @@
+from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth import views as auth_views, get_user_model, login
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
@@ -18,11 +19,16 @@ class RegisterMotoUser(generic_views.CreateView):
         return data
 
 
-class LoginMotoUser(auth_views.LoginView):
+class LoginMotoUserView(auth_views.LoginView):
     template_name = 'accounts/login_user.html'
     success_url = reverse_lazy('home-page')
     form_class = MotoUserLoginForm
 
 
-class LogoutMotoUser(auth_views.LogoutView):
+class LogoutMotoUserView(auth_views.LogoutView):
     ...
+
+
+class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
+    template_name = 'accounts/detail_user.html'
+    model = UserModel

@@ -1,4 +1,4 @@
-# Create your views here.
+from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -68,8 +68,7 @@ class MotorcyclesDeleteView(views.DeleteView):
 
 
 class EquipmentGearListView(views.ListView):
-    template_name = 'sales/equipment_gear/'
-    # template_name = 'test_template/list_test.html'
+    template_name = 'sales/equipment_gear/equipment_list.html'
     model = MotoEquipmentGear
 
 
@@ -81,12 +80,12 @@ class EquipmentGearAddView(views.CreateView):
     success_url = reverse_lazy('list equipment gear view')
 
     def form_valid(self, form):
+        form.Meta.model.owner = self.request.user
+        form.save()
         data = super().form_valid(form)
-        # TODO: when user model is created change with  request.user.motorcycleequipmentgear.objects.all
-        equipment = MotoEquipmentGear.objects.all().last()
         for field in self.request.FILES.keys():
             for image_file in self.request.FILES.getlist(field):
-                image = MotoEquipmentImages(image=image_file, moto_equipment=equipment)
+                image = MotoEquipmentImages(image=image_file, sale_ad=self.object)
                 image.save()
 
         return data
@@ -112,50 +111,46 @@ class EquipmentGearDetailsView(views.DetailView):
         return data
 
 
-class EquipmentGearDeleteView(views.DeleteView):
+class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/equipment_gear/'
     # template_name = 'test_template/delete_test.html'
     model = MotoEquipmentGear
-    #TODO: Check form_class is needed
+    # TODO: Check form_class is needed
     form_class = DeleteEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
 
 
 class PartsListView(views.ListView):
-    # template_name = 'sales/moto_parts/'
-    template_name = 'test_template/list_test.html'
+    template_name = 'sales/moto_parts/list_parts.html'
     model = MotoParts
 
 
-class PartsAddView(views.CreateView):
-    # template_name = 'sales/moto_parts/'
-    template_name = 'test_template/create_test.html'
+class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
+    template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
     form_class = CreatePartsForm
     success_url = reverse_lazy('list bike parts view')
 
     def form_valid(self, form):
+        form.Meta.model.owner = self.request.user
+        form.save()
         data = super().form_valid(form)
-        # TODO: when user model is created change with  request.user.motoparts.objects.all
-        bike_part = MotoParts.objects.all().last()
         for field in self.request.FILES.keys():
             for image_file in self.request.FILES.getlist(field):
-                image = MotoPartsImages(image=image_file, moto_parts=bike_part)
+                image = MotoPartsImages(image=image_file, sale_ad=self.object)
                 image.save()
         return data
 
 
-class PartsEditView(views.UpdateView):
-    # template_name = 'sales/moto_parts/'
-    template_name = 'test_template/edit_test.html'
+class PartsEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+    template_name = 'sales/moto_parts/part_edit.html'
     model = MotoParts
     form_class = EditPartsForm
     success_url = reverse_lazy('list bike parts view')
 
 
 class PartsDetailsView(views.DetailView):
-    # template_name = 'sales/moto_parts/'
-    template_name = 'test_template/detail_test.html'
+    template_name = 'sales/moto_parts/details_parts.html'
     model = MotoParts
 
     def get_context_data(self, **kwargs):
@@ -165,8 +160,7 @@ class PartsDetailsView(views.DetailView):
         return context
 
 
-class PartsDeleteView(views.DeleteView):
-    # template_name = 'sales/moto_parts/'
-    template_name = 'test_template/delete_test.html'
+class PartsDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
+    template_name = 'sales/moto_parts/delete_parts.html'
     model = MotoParts
     success_url = reverse_lazy('list bike parts view')

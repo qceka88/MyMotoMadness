@@ -92,6 +92,10 @@ class BasePartsForm(forms.ModelForm):
     class Meta:
         model = MotoParts
         fields = '__all__'
+        widgets = {
+            'owner': forms.HiddenInput(),
+        }
+
         # TODO: Add placeholders
 
 
@@ -101,5 +105,3 @@ class CreatePartsForm(BasePartsForm):
 
 class EditPartsForm(BasePartsForm):
     ...
-
-

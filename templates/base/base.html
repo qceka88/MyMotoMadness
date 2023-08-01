@@ -59,22 +59,23 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="{% url 'home-page' %}" class="nav-item nav-link active">Home</a>
             <div class="nav-item dropdown">
-                <a href="{% url 'common sale view' %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Sale
+                <a href="{% url 'common sale view' %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                   onclick="window.location.href='{% url  'common sale view' %}'"
+                >Sale
                     Offers</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="{% url 'list motorcycle view' %}" class="dropdown-item">Motorcycles</a>
-                        <a href="{% url 'list bike parts view' %}" class="dropdown-item">Parts</a>
-                        <a href="{% url 'list equipment gear view' %}" class="dropdown-item">EquipmentGear</a>
-                        <a href="{% url 'common sale view' %}" class="dropdown-item">Sales View-TEST</a>
-                    </div>
+                <div class="dropdown-menu fade-up m-0">
+                    <a href="{% url 'list motorcycle view' %}" class="dropdown-item">Motorcycles</a>
+                    <a href="{% url 'list equipment gear view' %}" class="dropdown-item">EquipmentGear</a>
+                    <a href="{% url 'list bike parts view' %}" class="dropdown-item">Parts</a>
+                </div>
             </div>
             <div class="nav-item dropdown">
                 <a href="{% url 'common articles views' %}" class="nav-link dropdown-toggle"
-                   data-bs-toggle="dropdown">Articles</a>
+                   data-bs-toggle="dropdown"
+                   onclick="window.location.href='{% url  'common articles views' %}'">Articles</a>
                 <div class="dropdown-menu fade-up m-0">
                     <a href="../booking.html" class="dropdown-item">News</a>
                     <a href="../team.html" class="dropdown-item">Advices</a>
-                    <a href="{% url 'common articles views' %}" class="dropdown-item">Articles-TEST</a>
                 </div>
             </div>
             {% if not request.user.username %}
@@ -84,18 +85,28 @@
                 <a href="{% url 'register user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Register<i
                         class="fa fa-arrow-left ms-3"></i></a>
             {% else %}
-                <a href="" class="nav-item nav-link active">Profile</a>
-                <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Logout<i
+                <div class="nav-item dropdown">
+                    <a href="{% url 'details user view' request.user.pk %}" class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown"
+                       onclick="window.location.href='{% url 'details user view' request.user.pk %}'">Profile</a>
+
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="../booking.html" class="dropdown-item">Edit</a>
+                        <a href="../team.html" class="dropdown-item">Delete</a>
+                    </div>
+                </div>
+                <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"><i
+                        class="fa fa-arrow-right ms-3"></i> Logout<i
                         class="fa fa-arrow-left ms-3"></i></a>
             {% endif %}
     </div>
 </nav>
 <!-- Navbar End -->
-
+<body>
 {% block page_content %}
 
 {% endblock %}
-
+</body>
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

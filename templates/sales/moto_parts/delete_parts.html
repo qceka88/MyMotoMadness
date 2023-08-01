@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+
+
+
+    <h1> Are you sure to delete? </h1>
+    <form action="{% url  'delete bike parts view' pk=object.pk %}" method="post">
+        {{ form }}
+        {{ object }}
+        <button>
+            DELETE!
+        </button>
+        {% csrf_token %}
+
+    </form>
+
+    <button>
+        <a href="{% url 'home-page' %}">HOME</a>
+    </button>
+
+
+
+{% endblock %}

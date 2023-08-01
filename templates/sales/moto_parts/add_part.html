@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+
+    <form action="{% url 'add bike parts view' %}" method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <label for="files">Select files:</label>
+        <input type="file" id="files" name="files" multiple><br><br>
+        <button>
+            Submit information!
+        </button>
+
+    </form>
+    <button>
+        <a href="{% url 'list bike parts view' %}">LIST</a>
+    </button>
+
+    <button>
+        <a href="{% url 'home-page' %}">HOME</a>
+    </button>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <p>Type of equipment {{ object.type_of_part }} </p>
+    <p>Brand{{ object.brand }} </p>
+    <p>Model {{ object.model }} </p>
+
+    <p>Created On: {{ object.manufacture_year }} </p>
+    <p>Owner: {{ object.owner }} </p>
+    <p>For Bike: {{ object.for_bike }} </p>
+
+    <p>Type: {{ object.approved }} </p>
+
+    <ul>
+        {% for picture in part_pictures %}
+            <li>
+                <img style="width: 150px" src="{{ picture.image.url }}" alt="{{ object.brand }}">
+            </li>
+        {% endfor %}
+
+    </ul>
+
+
+    <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Edit</a></button>
+
+
+    <button><a href="{% url 'delete bike parts view' pk=object.pk %}">Delete</a></button>
+
+
+    <button><a href="{% url 'list bike parts view' %}">LIST</a></button>
+
+    <button>
+        <a href="{% url 'home-page' %}">HOME</a>
+    </button>
+
+{% endblock %}

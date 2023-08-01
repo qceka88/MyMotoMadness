@@ -33,9 +33,10 @@ class MotorcyclesModel(models.Model):
     owner = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     price = models.FloatField(
-
     )
 
     approved = models.BooleanField(
@@ -47,7 +48,7 @@ class MotorcyclesModel(models.Model):
 
 
 class MotorcycleImages(models.Model):
-    motorcycle = models.ForeignKey(
+    sale_ad = models.ForeignKey(
         MotorcyclesModel,
         on_delete=models.CASCADE
     )
@@ -81,6 +82,8 @@ class MotoEquipmentGear(models.Model):
     owner = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     price = models.FloatField(
 
@@ -94,7 +97,7 @@ class MotoEquipmentGear(models.Model):
 
 
 class MotoEquipmentImages(models.Model):
-    moto_equipment = models.ForeignKey(
+    sale_ad = models.ForeignKey(
         MotoEquipmentGear,
         on_delete=models.CASCADE
     )
@@ -124,6 +127,8 @@ class MotoParts(models.Model):
     owner = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     price = models.FloatField(
     )
@@ -132,11 +137,11 @@ class MotoParts(models.Model):
     )
 
     def __str__(self):
-        return f"{self.type_of_part}, {self.brand}, {self.model}: {self.price:.2f}lv."
+        return f"No{self.pk} - {self.type_of_part}, {self.brand}, {self.model}: {self.price:.2f}lv."
 
 
 class MotoPartsImages(models.Model):
-    moto_parts = models.ForeignKey(
+    sale_ad = models.ForeignKey(
         MotoParts,
         on_delete=models.CASCADE
     )

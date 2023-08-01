@@ -10,9 +10,10 @@
                 <h1 class="display-3 text-white mb-3 animated slideInDown">SALE OFFERS</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">MOTORCYCLES</a></li>
-                        <li class="breadcrumb-item"><a href="#">EQUIPMENT GEAR</a></li>
-                        <li class="breadcrumb-item"><a href="#">BIKE PARTS</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list motorcycle view' %}">MOTORCYCLES</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list equipment gear view' %}">EQUIPMENT GEAR</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'list bike parts view' %}">BIKE PARTS</a></li>
                     </ol>
                 </nav>
             </div>
@@ -30,8 +31,9 @@
                         <i class="fa fa-motorcycle fa-3x text-primary flex-shrink-0"></i>
                         <div class="ps-4">
                             <h5 class="mb-3">Motorcycles</h5>
-                            <p>Diam dolor diam ipsum sit amet diam et eos erat ipsum</p>
-                            <a class="text-secondary border-bottom" href="">Check Out</a>
+                            <p>Find your dream bike!</p>
+                            <a class="text-secondary border-bottom" href="{% url 'list motorcycle view' %}">Check
+                                Out</a>
                         </div>
                     </div>
                 </div>
@@ -40,8 +42,9 @@
                         <i class="fa fa-user-circle fa-3x text-primary flex-shrink-0"></i>
                         <div class="ps-4">
                             <h5 class="mb-3">Biker Protection Gear</h5>
-                            <p>Find best protection for you</p>
-                            <a class="text-secondary border-bottom" href="">Check Out</a>
+                            <p>Find best protection for you!</p>
+                            <a class="text-secondary border-bottom" href="{% url 'list equipment gear view' %}">Check
+                                Out</a>
                         </div>
                     </div>
                 </div>
@@ -50,8 +53,9 @@
                         <i class="fa fa-cogs fa-3x text-primary flex-shrink-0"></i>
                         <div class="ps-4">
                             <h5 class="mb-3">Bike Parts</h5>
-                            <p>Here you can find parts for your bike</p>
-                            <a class="text-secondary border-bottom" href="">Check Out</a>
+                            <p>Here you can find parts for your bike!</p>
+                            <a class="text-secondary border-bottom" href="{% url 'list bike parts view' %}">Check
+                                Out</a>
                         </div>
                     </div>
                 </div>
