@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 
 from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, DeleteMotorcycleForm, \
-    CreateEquipmentGearForm, EditEquipmentGearForm, DeleteEquipmentGearForm, CreatePartsForm, EditPartsForm
+    CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
 from MyMotoMadness.saleads.models import MotorcyclesModel, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
 
@@ -62,8 +62,6 @@ class MotorcyclesDeleteView(views.DeleteView):
     # template_name = 'sales/motorcycles'
     template_name = 'test_template/delete_test.html'
     model = MotorcyclesModel
-    # TODO: Check form_class is needed
-    form_class = DeleteMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
 
@@ -73,8 +71,7 @@ class EquipmentGearListView(views.ListView):
 
 
 class EquipmentGearAddView(views.CreateView):
-    template_name = 'sales/equipment_gear/'
-    # template_name = 'test_template/create_test.html'
+    template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
     form_class = CreateEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
@@ -92,16 +89,14 @@ class EquipmentGearAddView(views.CreateView):
 
 
 class EquipmentGearEditView(views.UpdateView):
-    template_name = 'sales/equipment_gear/'
-    # template_name = 'test_template/edit_test.html'
+    template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
     form_class = EditEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
 
 
 class EquipmentGearDetailsView(views.DetailView):
-    template_name = 'sales/equipment_gear/'
-    # template_name = 'test_template/detail_test.html'
+    template_name = 'sales/equipment_gear/details_equipment.html'
     model = MotoEquipmentGear
 
     def get_context_data(self, **kwargs):
@@ -112,11 +107,8 @@ class EquipmentGearDetailsView(views.DetailView):
 
 
 class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
-    template_name = 'sales/equipment_gear/'
-    # template_name = 'test_template/delete_test.html'
+    template_name = 'sales/equipment_gear/delete_equipment.html'
     model = MotoEquipmentGear
-    # TODO: Check form_class is needed
-    form_class = DeleteEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
 
 

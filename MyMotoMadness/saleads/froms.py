@@ -29,6 +29,7 @@ class BaseMotorcycleForm(forms.ModelForm):
                     'placeholder': 'Enter addition information about Motorcycle!'
                 }
             ),
+            'owner': forms.HiddenInput(),
             'price': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Price for Motorcycle'
@@ -46,23 +47,13 @@ class EditMotorcycleForm(BaseMotorcycleForm):
     ...
 
 
-class DeleteMotorcycleForm(BaseMotorcycleForm):
-    BaseMotorcycleForm.Meta.fields = ()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        if commit:
-            self.instance.delete()
-
-        return self.instance
-
-
 class BaseEquipmentGearForm(forms.ModelForm):
     class Meta:
         model = MotoEquipmentGear
         fields = '__all__'
+        widgets = {
+            'owner': forms.HiddenInput(),
+        }
 
         # TODO: Add placeholders
 
@@ -73,19 +64,6 @@ class CreateEquipmentGearForm(BaseEquipmentGearForm):
 
 class EditEquipmentGearForm(BaseEquipmentGearForm):
     ...
-
-
-class DeleteEquipmentGearForm(BaseEquipmentGearForm):
-    BaseEquipmentGearForm.Meta.fields = ()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        if commit:
-            self.instance.delete()
-
-        return self.instance
 
 
 class BasePartsForm(forms.ModelForm):

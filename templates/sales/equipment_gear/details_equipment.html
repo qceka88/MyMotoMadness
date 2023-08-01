@@ -2,15 +2,15 @@
 {% load static %}
 {% block page_content %}
 
-    <p>Type of part {{ object.type_of_part }} </p>
+    <p>Type of equipment {{ object.gear_type }} </p>
     <p>Brand{{ object.brand }} </p>
     <p>Model {{ object.model }} </p>
 
     <p>Created On: {{ object.manufacture_year }} </p>
     <p>Owner: {{ object.owner }} </p>
-    <p>For Bike: {{ object.for_bike }} </p>
+    <p>For Bike: {{ object.material_type }} </p>
 
-    <p>Type: {{ object.approved }} </p>
+    <p>Approved: {{ object.approved }} </p>
 
     <ul>
         {% for picture in part_pictures %}
@@ -22,13 +22,13 @@
     </ul>
 
 
-    <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Edit</a></button>
+    <button><a href="{% url 'edit equipment gear view' pk=object.pk %}">Edit</a></button>
 
 
-    <button><a href="{% url 'delete bike parts view' pk=object.pk %}">Delete</a></button>
+    <button><a href="{% url 'delete equipment gear view' pk=object.pk %}">Delete</a></button>
 
 
-    <button><a href="{% url 'list bike parts view' %}">LIST</a></button>
+    <button><a href="{% url 'list equipment gear view' %}">LIST</a></button>
 
     <button>
         <a href="{% url 'home-page' %}">HOME</a>
