@@ -18,8 +18,7 @@ class MotorcyclesListViews(views.ListView):
 
 
 class MotorcyclesAddView(views.CreateView):
-    template_name = 'sales/motorcycles'
-    # template_name = 'test_template/create_test.html'
+    template_name = 'sales/motorcycles/create_motorcycle.html'
     model = MotorcyclesModel
     form_class = CreateMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
@@ -32,16 +31,14 @@ class MotorcyclesAddView(views.CreateView):
 
 class MotorcyclesEditView(views.UpdateView):
     # TODO: check for removing or replace multiple images in edit view
-    template_name = 'sales/motorcycles'
-    # template_name = 'test_template/edit_test.html'
+    template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = MotorcyclesModel
     form_class = EditMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
 
 class MotorcyclesDetailsView(views.DetailView):
-    template_name = 'sales/motorcycles'
-    # template_name = 'test_template/detail_test.html'
+    template_name = 'sales/motorcycles/details_motorcycle.html'
     model = MotorcyclesModel
 
     def get_context_data(self, **kwargs):
@@ -52,8 +49,7 @@ class MotorcyclesDetailsView(views.DetailView):
 
 
 class MotorcyclesDeleteView(views.DeleteView):
-    # template_name = 'sales/motorcycles'
-    template_name = 'test_template/delete_test.html'
+    template_name = 'sales/motorcycles/delete_motorcycle.html'
     model = MotorcyclesModel
     success_url = reverse_lazy('list motorcycle view')
 

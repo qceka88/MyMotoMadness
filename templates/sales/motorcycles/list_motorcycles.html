@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+    <h1>MOTORCYCLES LIST</h1>
+    <ul>
+        {% for motorcycle_object in object_list %}
+            <li>
+                {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
+                <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
+                {% if motorcycle_object.owner == request.user %}
+                    <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
+                    <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
+                {% endif %}
+            </li>
+
+        {% endfor %}
+
+    </ul>
+    <button>
+        <a href="{% url 'add motorcycle view' %}"> ADD</a>
+    </button>
+    <button>
+        <a href="{% url 'home-page' %}">HOME PAGE</a>
+    </button>
+
+
+{% endblock %}

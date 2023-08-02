@@ -1,34 +1,36 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>EQUIPMENT DETAILS</h1>
-    <p>Type of equipment: {{ object.gear_type }} </p>
+    <h1>MOTORCYCLE DETAILS</h1>
+    <p>Type of motorcycle: {{ object.bike_type }} </p>
     <p>Brand: {{ object.brand }} </p>
-    <p>Model: {{ object.model }} </p>
+    <p>Model {{ object.model }} </p>
 
     <p>Created On: {{ object.manufacture_year }} </p>
     <p>Owner: {{ object.owner }}</p>
-    <p>For Bike: {{ object.material_type }} </p>
+    <p>Engine: {{ object.engine_volume }} </p>
+    <p>Horse Power: {{ object.horse_power }} </p>
 
     <p>Approved: {{ object.approved }} </p>
 
     <ul>
-        {% for picture in equipment_pictures %}
+        {% for picture in bike_pictures %}
             <li>
                 <img style="width: 150px" src="{{ picture.image.url }}" alt="{{ object.brand }}">
             </li>
         {% endfor %}
 
     </ul>
+
       <h1>Price :{{ object.price|floatformat:2 }}</h1>
 
-    <button><a href="{% url 'edit equipment gear view' pk=object.pk %}">Equipment Edit</a></button>
+    <button><a href="{% url 'edit motorcycle view' pk=object.pk %}">Motorcycle Edit</a></button>
 
 
-    <button><a href="{% url 'delete equipment gear view' pk=object.pk %}">Equipment Delete</a></button>
+    <button><a href="{% url 'delete motorcycle view' pk=object.pk %}">Motorcycle Delete</a></button>
 
 
-    <button><a href="{% url 'list equipment gear view' %}">Equipment LIST</a></button>
+    <button><a href="{% url 'list motorcycle view' %}">Motorcycle LIST</a></button>
 
     <button>
         <a href="{% url 'home-page' %}">HOME</a>

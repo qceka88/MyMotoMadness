@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-
+    <h1>PART DETAILS</h1>
     <p>Type of part {{ object.type_of_part }} </p>
     <p>Brand{{ object.brand }} </p>
     <p>Model {{ object.model }} </p>
@@ -20,15 +20,15 @@
         {% endfor %}
 
     </ul>
+    <h1>Price :{{ object.price|floatformat:2 }}</h1>
+
+    <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Part Edit</a></button>
 
 
-    <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Edit</a></button>
+    <button><a href="{% url 'delete bike parts view' pk=object.pk %}">Part Delete</a></button>
 
 
-    <button><a href="{% url 'delete bike parts view' pk=object.pk %}">Delete</a></button>
-
-
-    <button><a href="{% url 'list bike parts view' %}">LIST</a></button>
+    <button><a href="{% url 'list bike parts view' %}">Part LIST</a></button>
 
     <button>
         <a href="{% url 'home-page' %}">HOME</a>

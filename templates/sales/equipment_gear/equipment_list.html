@@ -7,8 +7,10 @@
             <li>
                 {{ equipment_object }} OWNER = {{ equipment_object.owner }}
                 <button><a href="{% url 'detail equipment gear view' pk=equipment_object.pk %}">DET</a></button>
-                <button><a href="{% url 'edit equipment gear view' pk=equipment_object.pk %}">Edit</a></button>
-                <button><a href="{% url 'delete equipment gear view' pk=equipment_object.pk %}">Delete</a></button>
+                {% if request.user == equipment_object.owner %}
+                    <button><a href="{% url 'edit equipment gear view' pk=equipment_object.pk %}">Edit</a></button>
+                    <button><a href="{% url 'delete equipment gear view' pk=equipment_object.pk %}">Delete</a></button>
+                {% endif %}
             </li>
         {% endfor %}
 
