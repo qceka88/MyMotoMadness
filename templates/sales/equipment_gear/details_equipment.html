@@ -7,13 +7,13 @@
     <p>Model {{ object.model }} </p>
 
     <p>Created On: {{ object.manufacture_year }} </p>
-    <p>Owner: {{ object.owner }} </p>
+    <p>Owner: {{ object.owner }}</p>
     <p>For Bike: {{ object.material_type }} </p>
 
     <p>Approved: {{ object.approved }} </p>
 
     <ul>
-        {% for picture in part_pictures %}
+        {% for picture in equipment_pictures %}
             <li>
                 <img style="width: 150px" src="{{ picture.image.url }}" alt="{{ object.brand }}">
             </li>

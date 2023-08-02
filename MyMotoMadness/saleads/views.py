@@ -2,7 +2,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, DeleteMotorcycleForm, \
+from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
 from MyMotoMadness.saleads.models import MotorcyclesModel, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
@@ -13,8 +13,7 @@ class CommonSaleView(views.TemplateView):
 
 
 class MotorcyclesListViews(views.ListView):
-    template_name = 'sales/motorcycles'
-    # template_name = 'test_template/list_test.html'
+    template_name = 'sales/motorcycles/list_motorcycles.html'
     model = MotorcyclesModel
 
 
@@ -27,12 +26,7 @@ class MotorcyclesAddView(views.CreateView):
 
     def form_valid(self, form):
         data = super().form_valid(form)
-        moto = MotorcyclesModel.objects.all().last()
-        for field in self.request.FILES.keys():
-            for image_file in self.request.FILES.getlist(field):
-                image = MotorcycleImages(image=image_file, motorcycle=moto)
-                image.save()
-
+        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotorcycleImages)
         return data
 
 
@@ -52,7 +46,6 @@ class MotorcyclesDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # TODO: when user model is created change with  request.user.motorcyclesmodel.objects.filter
         bike = MotorcyclesModel.objects.filter(pk=context['object'].pk).get()
         context['bike_pictures'] = bike.motorcycleimages_set.all()
         return context
@@ -77,18 +70,13 @@ class EquipmentGearAddView(views.CreateView):
     success_url = reverse_lazy('list equipment gear view')
 
     def form_valid(self, form):
-        form.Meta.model.owner = self.request.user
-        form.save()
         data = super().form_valid(form)
-        for field in self.request.FILES.keys():
-            for image_file in self.request.FILES.getlist(field):
-                image = MotoEquipmentImages(image=image_file, sale_ad=self.object)
-                image.save()
-
+        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
         return data
 
 
 class EquipmentGearEditView(views.UpdateView):
+    # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
     form_class = EditEquipmentGearForm
@@ -124,17 +112,13 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     success_url = reverse_lazy('list bike parts view')
 
     def form_valid(self, form):
-        form.Meta.model.owner = self.request.user
-        form.save()
         data = super().form_valid(form)
-        for field in self.request.FILES.keys():
-            for image_file in self.request.FILES.getlist(field):
-                image = MotoPartsImages(image=image_file, sale_ad=self.object)
-                image.save()
+        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
         return data
 
 
 class PartsEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+    # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/moto_parts/part_edit.html'
     model = MotoParts
     form_class = EditPartsForm
@@ -156,3 +140,14 @@ class PartsDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/moto_parts/delete_parts.html'
     model = MotoParts
     success_url = reverse_lazy('list bike parts view')
+
+
+def add_pictures_to_sale_offer(sale_object, request, owner, SaleImageClass):
+    sale_object.owner = owner
+    sale_object.save()
+    for field in request.FILES.keys():
+        for image_file in request.FILES.getlist(field):
+            image = SaleImageClass(image=image_file, sale_ad=sale_object)
+            image.save()
+
+    return sale_object
