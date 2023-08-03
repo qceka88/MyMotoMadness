@@ -43,7 +43,6 @@ class MotorcyclesDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #bike = Motorcycles.objects.filter(pk=.pk).get()
         context['bike_pictures'] = context['object'].motorcycleimages_set.all()
         return context
 
@@ -84,10 +83,9 @@ class EquipmentGearDetailsView(views.DetailView):
     model = MotoEquipmentGear
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        equipment_gear = MotoEquipmentGear.objects.filter(pk=data['object'].pk).get()
-        data['equipment_pictures'] = equipment_gear.motoequipmentimages_set.all()
-        return data
+        context = super().get_context_data(**kwargs)
+        context['equipment_pictures'] = context['object'].motoequipmentimages_set.all()
+        return context
 
 
 class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
@@ -127,8 +125,7 @@ class PartsDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        part = MotoParts.objects.filter(pk=context['object'].pk).get()
-        context['part_pictures'] = part.motopartsimages_set.all()
+        context['part_pictures'] = context['object'].motopartsimages_set.all()
         return context
 
 

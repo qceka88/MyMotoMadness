@@ -46,9 +46,3 @@ class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailVi
 
         return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['user_parts_offers'] = context['object'].motoparts_set.all()
-    #     context['user_equipment_offers'] = context['object'].motoequipmentgear_set.all()
-    #     context['user_motorcycles_offers'] = context['object'].motorcyclesmodel_set.all()
-    #     return context
