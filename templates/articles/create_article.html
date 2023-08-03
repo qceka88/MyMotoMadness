@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+        <h1>CREATE ARTICLE</h1>
+
+    <form action="{% url 'add article view' %}" method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button>
+            Submit information!
+        </button>
+
+    </form>
+    <button>
+        <a href="{% url 'test list articles views' %}">LIST ARTICLES</a>
+    </button>
+
+    <button>
+        <a href="{% url 'home-page' %}">HOME</a>
+    </button>
+
+{% endblock %}

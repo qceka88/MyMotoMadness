@@ -11,11 +11,23 @@ class CommonArticlesView(views.ListView):
     model = ArticlesModel
 
 
+class TestListView(views.ListView):
+    template_name = 'articles/test_list.html'
+    model = ArticlesModel
+
+
 class ArticleCreateView(views.CreateView):
-    template_name = 'articles'
+    template_name = 'articles/create_article.html'
     model = ArticlesModel
     form_class = CreateArticleForm
     success_url = reverse_lazy('common articles views')
+
+    def form_valid(self, form):
+        data = super().form_valid(form)
+        self.object.author = self.request.user
+        self.object.save()
+        return data
+
 
 
 class ArticleDetailView(views.DetailView):
@@ -35,4 +47,3 @@ class ArticleDeleteView(views.DeleteView):
     model = ArticlesModel
     form_class = DeleteArticleForm
     success_url = reverse_lazy('common articles views')
-

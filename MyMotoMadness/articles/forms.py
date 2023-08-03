@@ -23,6 +23,7 @@ class BasicArticleForm(forms.ModelForm):
                     'placeholder': 'Description'
                 }
             ),
+            'author': forms.HiddenInput()
         }
 
 

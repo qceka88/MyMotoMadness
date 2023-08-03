@@ -142,7 +142,7 @@ class MotoParts(models.Model):
 
 class MotoPartsImages(models.Model):
     sale_ad = models.ForeignKey(
-        to=MotoParts,
+        MotoParts,
         on_delete=models.CASCADE
     )
     image = models.ImageField(

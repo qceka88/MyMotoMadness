@@ -14,7 +14,7 @@ class ArticlesModel(models.Model):
         max_length=30,
     )
     sub_title = models.CharField(
-        max_length=30,
+        max_length=100,
     )
 
     article_image = models.ImageField(
@@ -32,6 +32,8 @@ class ArticlesModel(models.Model):
     author = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     article_type = models.CharField(
         max_length=30,
@@ -39,4 +41,4 @@ class ArticlesModel(models.Model):
     )
 
     def __str__(self):
-        return f'{self.title}-{self.pk}'
+        return f'{self.title}-{self.pk}, {self.article_type}'
