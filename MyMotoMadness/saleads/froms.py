@@ -1,11 +1,11 @@
 from django import forms
 
-from MyMotoMadness.saleads.models import MotorcyclesModel, MotoParts, MotoEquipmentGear
+from MyMotoMadness.saleads.models import Motorcycles, MotoParts, MotoEquipmentGear
 
 
 class BaseMotorcycleForm(forms.ModelForm):
     class Meta:
-        model = MotorcyclesModel
+        model = Motorcycles
         fields = '__all__'
 
         widgets = {

@@ -4,7 +4,7 @@ from django.views import generic as views
 
 from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.models import MotorcyclesModel, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
+from MyMotoMadness.saleads.models import Motorcycles, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
 
 
@@ -14,12 +14,12 @@ class CommonSaleView(views.TemplateView):
 
 class MotorcyclesListViews(views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
-    model = MotorcyclesModel
+    model = Motorcycles
 
 
 class MotorcyclesAddView(views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
-    model = MotorcyclesModel
+    model = Motorcycles
     form_class = CreateMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
@@ -32,25 +32,25 @@ class MotorcyclesAddView(views.CreateView):
 class MotorcyclesEditView(views.UpdateView):
     # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/motorcycles/edit_motorcycle.html'
-    model = MotorcyclesModel
+    model = Motorcycles
     form_class = EditMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
 
 
 class MotorcyclesDetailsView(views.DetailView):
     template_name = 'sales/motorcycles/details_motorcycle.html'
-    model = MotorcyclesModel
+    model = Motorcycles
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        bike = MotorcyclesModel.objects.filter(pk=context['object'].pk).get()
-        context['bike_pictures'] = bike.motorcycleimages_set.all()
+        #bike = Motorcycles.objects.filter(pk=.pk).get()
+        context['bike_pictures'] = context['object'].motorcycleimages_set.all()
         return context
 
 
 class MotorcyclesDeleteView(views.DeleteView):
     template_name = 'sales/motorcycles/delete_motorcycle.html'
-    model = MotorcyclesModel
+    model = Motorcycles
     success_url = reverse_lazy('list motorcycle view')
 
 

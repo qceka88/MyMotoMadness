@@ -6,7 +6,7 @@ from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTy
 UserModel = get_user_model()
 
 
-class MotorcyclesModel(models.Model):
+class Motorcycles(models.Model):
     bike_type = models.CharField(
         max_length=30,
         choices=BikeTypeChoices.choices(),
@@ -49,7 +49,7 @@ class MotorcyclesModel(models.Model):
 
 class MotorcycleImages(models.Model):
     sale_ad = models.ForeignKey(
-        MotorcyclesModel,
+        Motorcycles,
         on_delete=models.CASCADE
     )
     image = models.ImageField(
@@ -98,7 +98,7 @@ class MotoEquipmentGear(models.Model):
 
 class MotoEquipmentImages(models.Model):
     sale_ad = models.ForeignKey(
-        MotoEquipmentGear,
+        to=MotoEquipmentGear,
         on_delete=models.CASCADE
     )
     image = models.ImageField(
@@ -142,7 +142,7 @@ class MotoParts(models.Model):
 
 class MotoPartsImages(models.Model):
     sale_ad = models.ForeignKey(
-        MotoParts,
+        to=MotoParts,
         on_delete=models.CASCADE
     )
     image = models.ImageField(

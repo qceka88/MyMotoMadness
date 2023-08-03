@@ -32,3 +32,23 @@ class LogoutMotoUserView(auth_views.LogoutView):
 class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
     template_name = 'accounts/detail_user.html'
     model = UserModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['user_sale_offers'] = []
+        for queryset_offers in (
+                context['object'].motoparts_set.all(),
+                context['object'].motoequipmentgear_set.all(),
+                context['object'].motorcycles_set.all()
+        ):
+            context['user_sale_offers'].extend(queryset_offers)
+
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['user_parts_offers'] = context['object'].motoparts_set.all()
+    #     context['user_equipment_offers'] = context['object'].motoequipmentgear_set.all()
+    #     context['user_motorcycles_offers'] = context['object'].motorcyclesmodel_set.all()
+    #     return context

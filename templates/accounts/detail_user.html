@@ -1,10 +1,32 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load custom_filter %}
 {% block page_content %}
 
     <p>Username: {{ object.username }}</p>
     <p>First Name: {{ object.first_name }}</p>
     <p>Last Name: {{ object.last_name }}</p>
+    <ul>
+        {% for offer in user_sale_offers %}
+            {% if offer|class_name_show == 'Motorcycles' %}
+                <li>
+                    {{ offer|class_name_show }} {{ offer }} <a
+                        href="{% url 'detail motorcycle view' pk=offer.pk %}">DET</a>
+                </li>
+            {% elif offer|class_name_show == 'MotoEquipmentGear' %}
+                <li>
+                    {{ offer|class_name_show }} {{ offer }} <a
+                        href="{% url 'detail equipment gear view' pk=offer.pk %}">DET</a>
+                </li>
+            {% elif offer|class_name_show == 'MotoParts' %}
+                <li>
+                    {{ offer|class_name_show }} {{ offer }} <a
+                        href="{% url 'detail bike parts view' pk=offer.pk %}">DET</a>
+                </li>
+            {% else %}
+                <h1> THIS USER HAS NO SELLING OFFERS</h1>
+            {% endif %}
 
-
+        {% endfor %}
+    </ul>
 {% endblock %}
