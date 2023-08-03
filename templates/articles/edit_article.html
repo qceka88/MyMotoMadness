@@ -1,16 +1,14 @@
 {% extends 'base/base.html' %}
-{% load static %}
 {% block page_content %}
-
-        <h1>CREATE ARTICLE</h1>
-
-    <form action="{% url 'add article view' %}" method="post" enctype="multipart/form-data">
+    <h1>
+        EDIT ARTICLE
+    </h1>
+    <form action="{% url 'edit article view' pk=object.pk %}" method="post">
         {{ form.as_p }}
-        {% csrf_token %}
         <button>
-            Submit information!
+            Edit!
         </button>
-
+        {% csrf_token %}
     </form>
     <button>
         <a href="{% url 'common articles views' %}">LIST ARTICLES</a>

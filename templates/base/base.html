@@ -74,8 +74,8 @@
                    data-bs-toggle="dropdown"
                    onclick="window.location.href='{% url  'common articles views' %}'">Articles</a>
                 <div class="dropdown-menu fade-up m-0">
-                    <a href="../booking.html" class="dropdown-item">News</a>
-                    <a href="../team.html" class="dropdown-item">Advices</a>
+                    <a href="{% url 'list news view' %}" class="dropdown-item">News</a>
+                    <a href="{% url 'list advices view' %}" class="dropdown-item">Advices</a>
                 </div>
             </div>
             {% if not request.user.username %}
@@ -86,13 +86,13 @@
                         class="fa fa-arrow-left ms-3"></i></a>
             {% else %}
                 <div class="nav-item dropdown">
-                    <a href="{% url 'details user view' request.user.pk %}" class="nav-link dropdown-toggle"
+                    <a href="{% url 'details user view' pk=request.user.pk %}" class="nav-link dropdown-toggle active"
                        data-bs-toggle="dropdown"
-                       onclick="window.location.href='{% url 'details user view' request.user.pk %}'">Profile</a>
+                       onclick="window.location.href='{% url 'details user view' request.user.pk %}'">My Profile</a>
 
                     <div class="dropdown-menu fade-up m-0">
-                        <a href="../booking.html" class="dropdown-item">Edit</a>
-                        <a href="../team.html" class="dropdown-item">Delete</a>
+                        <a href="{% url 'edit user view' pk=request.user.pk %}" class="dropdown-item">Edit</a>
+                        <a href="{% url 'delete user view' pk=request.user.pk %}" class="dropdown-item">Delete</a>
                     </div>
                 </div>
                 <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"><i

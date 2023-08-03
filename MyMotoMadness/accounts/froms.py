@@ -15,7 +15,7 @@ class MotoUserRegisterForm(auth_forms.UserCreationForm):
     password2 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Enter your password'
+                'placeholder': 'Repeat the password'
             }
         )
     )

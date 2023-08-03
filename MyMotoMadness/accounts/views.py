@@ -1,5 +1,6 @@
 from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth import views as auth_views, get_user_model, login
+from django.forms import modelform_factory
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
@@ -46,3 +47,17 @@ class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailVi
 
         return context
 
+
+class EditMotoUser(generic_views.UpdateView):
+    template_name = 'accounts/edit_user.html'
+    model = UserModel
+    form_class = modelform_factory(
+        UserModel,
+        fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number')
+    )
+
+
+class DeleteMotoUser(generic_views.DeleteView):
+    template_name = 'accounts/delete_user.html'
+    model = UserModel
+    success_url = reverse_lazy('home-page')

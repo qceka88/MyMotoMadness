@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <h1>
+        EDIT PROFILE
+    </h1>
+    <form action="{% url 'edit user view' pk=object.pk %}" method="post">
+        {{ form.as_p }}
+        <button>
+            Edit!
+        </button>
+        {% csrf_token %}
+    </form>
+
+
+{% endblock %}

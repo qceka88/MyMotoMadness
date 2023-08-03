@@ -11,17 +11,15 @@
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Articles</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">News</a></li>
-                        <li class="breadcrumb-item"><a href="#">Advices</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list news view' %}">News</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list advices view' %}">Advices</a></li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
-    <button>
-        <a href="{% url 'test list articles views' %}"> LIST ARTICLE</a>
-    </button>
+
 
     <!-- About Start -->
     <div class="container-xxl py-5">
@@ -71,11 +69,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="" class="btn btn-primary py-3 px-5">Read More<i class="fa fa-arrow-right ms-3"></i></a>
+                    <a href="{% url 'list news view' %}" class="btn btn-primary py-3 px-5">Read More<i
+                            class="fa fa-arrow-right ms-3"></i></a>
                 </div>
 
                 <div class="col-lg-6">
-                    <h6 class="text-primary text-uppercase">// Useful information //</h6>
+                    <h6 class="text-primary text-uppercase">// Advices //</h6>
                     <h1 class="mb-4"><span class="text-primary">MyMotoMadness</span> Is Place For Motorcycle Tips &
                         Tricks</h1>
                     <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et
@@ -119,7 +118,8 @@
                             </div>
                         </div>
                     </div>
-                    <a href="" class="btn btn-primary py-3 px-5">Read More<i class="fa fa-arrow-right ms-3"></i></a>
+                    <a href="{% url 'list advices view' %}" class="btn btn-primary py-3 px-5">Read More<i
+                            class="fa fa-arrow-right ms-3"></i></a>
                 </div>
 
             </div>
