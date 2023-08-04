@@ -7,7 +7,7 @@
     <p>First Name: {{ object.first_name }}</p>
     <p>Last Name: {{ object.last_name }}</p>
     {% if object.profile_picture %}
-        <img src="{{ object.profile_picture.url }}" alt="{{ object.username }}">
+        <img style="width: 300px" src="{{ object.profile_picture.url }}" alt="{{ object.username }}">
     {% endif %}
      <p>Phone Number: {{ object.phone_number }}</p>
     <ul>
