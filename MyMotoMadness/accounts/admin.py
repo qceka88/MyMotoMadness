@@ -6,4 +6,11 @@ from MyMotoMadness.accounts.models import MotoUserModel
 # Register your models here.
 @admin.register(MotoUserModel)
 class MotoUserAdmin(admin.ModelAdmin):
-    fields = ['name_last', 'name_first', 'email', 'profile_image']
+    fields = ('first_name',
+              'last_name',
+              'email',
+              'profile_picture',
+              'phone_number',
+              'is_staff',
+              'is_superuser',
+              'groups')

@@ -5,7 +5,7 @@ from MyMotoMadness.articles.forms import CreateArticleForm, EditArticleForm, Del
 from MyMotoMadness.articles.models import ArticlesModel
 
 
-# Create your views here.
+# TODO: test restrictions with admin panel
 class CommonArticlesView(views.ListView):
     template_name = 'articles/articles_common.html'
     model = ArticlesModel
@@ -27,6 +27,7 @@ class AdvicesListView(views.ListView):
     def get_queryset(self):
         data = super().get_queryset().filter(article_type='Advices')
         return data
+
 
 class ArticleCreateView(views.CreateView):
     template_name = 'articles/create_article.html'

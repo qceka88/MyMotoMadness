@@ -11,10 +11,9 @@ from MyMotoMadness.accounts.view_mixins import CheckForRestriction, CheckForRegi
 UserModel = get_user_model()
 
 
-class RegisterMotoUser(CheckForRegisteredUser,generic_views.CreateView):
+class RegisterMotoUser(CheckForRegisteredUser, generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
-
 
     def form_valid(self, form):
         data = super().form_valid(form)
