@@ -9,6 +9,7 @@
     {% if object.profile_picture %}
         <img src="{{ object.profile_picture.url }}" alt="{{ object.username }}">
     {% endif %}
+     <p>Phone Number: {{ object.phone_number }}</p>
     <ul>
         {% for offer in user_sale_offers %}
             {% if offer|class_name_show == 'Motorcycles' %}
@@ -32,4 +33,5 @@
 
         {% endfor %}
     </ul>
+    <button> <a href="{% url 'edit user view' pk=object.pk %}">EDIT</a> </button>
 {% endblock %}

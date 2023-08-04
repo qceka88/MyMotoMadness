@@ -23,7 +23,7 @@ class MotoUserModel(auth_models.AbstractUser):
         unique=True,
     )
     profile_picture = models.ImageField(
-        upload_to='users/profile_pictures',
+        upload_to='photos/profile_pictures',
         blank=True,
         null=True,
     )
