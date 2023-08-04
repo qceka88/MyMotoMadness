@@ -15,6 +15,13 @@ class RegisterMotoUser(generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return reverse_lazy('details user view', kwargs={'pk': self.object.pk})
+        else:
+            data = super().get(request, *args, **kwargs)
+            return data
+
     def form_valid(self, form):
         data = super().form_valid(form)
         login(self.request, self.object)
