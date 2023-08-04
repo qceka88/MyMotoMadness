@@ -6,12 +6,12 @@ from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
 from MyMotoMadness.accounts.froms import MotoUserRegisterForm, MotoUserLoginForm
-from MyMotoMadness.accounts.view_mixins import CheckForRestriction
+from MyMotoMadness.accounts.view_mixins import CheckForRestriction, CheckForRegisteredUser
 
 UserModel = get_user_model()
 
 
-class RegisterMotoUser(generic_views.CreateView):
+class RegisterMotoUser(CheckForRegisteredUser,generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
 

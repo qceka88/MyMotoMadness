@@ -15,8 +15,9 @@ class CheckForRestriction:
 class CheckForRegisteredUser:
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return reverse_lazy('details user view', kwargs={'pk': request.user.pk})
+        if not request.user.is_superuser:
+            return redirect('details user view', pk=request.user.pk)
+
         else:
             data = super().get(request, *args, **kwargs)
             return data
