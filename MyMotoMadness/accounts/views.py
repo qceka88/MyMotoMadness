@@ -10,7 +10,7 @@ from MyMotoMadness.accounts.view_mixins import CheckForRestriction, CheckForRegi
 
 UserModel = get_user_model()
 
-
+#TODO: implement automatic_email sending from google g-mail
 class RegisterMotoUser(CheckForRegisteredUser, generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
