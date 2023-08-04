@@ -6,6 +6,9 @@
     <p>Username: {{ object.username }}</p>
     <p>First Name: {{ object.first_name }}</p>
     <p>Last Name: {{ object.last_name }}</p>
+    {% if object.profile_picture %}
+        <img src="{{ object.profile_picture.url }}" alt="{{ object.username }}">
+    {% endif %}
     <ul>
         {% for offer in user_sale_offers %}
             {% if offer|class_name_show == 'Motorcycles' %}

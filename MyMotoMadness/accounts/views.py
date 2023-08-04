@@ -12,12 +12,14 @@ UserModel = get_user_model()
 class RegisterMotoUser(generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
-    success_url = reverse_lazy('home-page')
 
     def form_valid(self, form):
         data = super().form_valid(form)
         login(self.request, self.object)
         return data
+
+    def get_success_url(self):
+        return reverse_lazy('edit user view', kwargs={'pk': self.object.pk})
 
 
 class LoginMotoUserView(auth_views.LoginView):
@@ -55,6 +57,9 @@ class EditMotoUser(generic_views.UpdateView):
         UserModel,
         fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number')
     )
+
+    def get_success_url(self):
+        return reverse_lazy('details user view', kwargs={'pk': self.object.pk})
 
 
 class DeleteMotoUser(generic_views.DeleteView):

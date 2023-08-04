@@ -1,5 +1,6 @@
 from django.contrib.auth import models as auth_models
 from django.db import models
+from django.shortcuts import redirect
 
 from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical
 
@@ -22,6 +23,7 @@ class MotoUserModel(auth_models.AbstractUser):
         unique=True,
     )
     profile_picture = models.ImageField(
+        upload_to='users/profile_pictures',
         blank=True,
         null=True,
     )
@@ -31,3 +33,6 @@ class MotoUserModel(auth_models.AbstractUser):
 
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return redirect('edit user view', kwargs={'pk': self.pk})
