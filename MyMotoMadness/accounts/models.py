@@ -27,6 +27,7 @@ class MotoUserModel(auth_models.AbstractUser):
         blank=True,
         null=True,
     )
+    #TODO: add phone validator
     phone_number = models.CharField(
         max_length=15,
     )

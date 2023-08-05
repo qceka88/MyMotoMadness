@@ -2,10 +2,9 @@ from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from MyMotoMadness.accounts.mixins import CheckForRestriction
 from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer
+from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer, CheckForRestrictionAds
 from MyMotoMadness.saleads.models import Motorcycles, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
 
@@ -31,12 +30,31 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
         return data
 
 
-class MotorcyclesEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
-    # TODO: check for removing or replace multiple images in edit view
+class MotorcyclesEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+                          views.UpdateView):
     template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = Motorcycles
     form_class = EditMotorcycleForm
     success_url = reverse_lazy('list motorcycle view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bike_pictures'] = context['object'].motorcycleimages_set.all()
+        return context
+
+    def form_valid(self, form):
+        data = super().form_valid(form)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotorcycleImages)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        selected_images = request.POST.getlist('selected_images')
+        MotorcycleImages.objects.filter(id__in=selected_images).delete()
+        data = super().post(request, *args, **kwargs)
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('detail motorcycle view', kwargs={'pk': self.object.pk})
 
 
 class MotorcyclesDetailsView(views.DetailView):
@@ -49,7 +67,7 @@ class MotorcyclesDetailsView(views.DetailView):
         return context
 
 
-class MotorcyclesDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class MotorcyclesDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/motorcycles/delete_motorcycle.html'
     model = Motorcycles
     success_url = reverse_lazy('list motorcycle view')
@@ -72,12 +90,30 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffe
         return data
 
 
-class EquipmentGearEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
-    # TODO: check for removing or replace multiple images in edit view
+class EquipmentGearEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+                            views.UpdateView):
     template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
     form_class = EditEquipmentGearForm
-    success_url = reverse_lazy('list equipment gear view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['equipment_pictures'] = context['object'].motoequipmentimages_set.all()
+        return context
+
+    def form_valid(self, form):
+        data = super().form_valid(form)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        selected_images = request.POST.getlist('selected_images')
+        MotoEquipmentImages.objects.filter(id__in=selected_images).delete()
+        data = super().post(request, *args, **kwargs)
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('detail equipment gear view', kwargs={'pk': self.object.pk})
 
 
 class EquipmentGearDetailsView(views.DetailView):
@@ -90,7 +126,7 @@ class EquipmentGearDetailsView(views.DetailView):
         return context
 
 
-class EquipmentGearDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class EquipmentGearDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/equipment_gear/delete_equipment.html'
     model = MotoEquipmentGear
     success_url = reverse_lazy('list equipment gear view')
@@ -113,12 +149,30 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views
         return data
 
 
-class PartsEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
-    # TODO: check for removing or replace multiple images in edit view
+class PartsEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+                    views.UpdateView):
     template_name = 'sales/moto_parts/part_edit.html'
     model = MotoParts
     form_class = EditPartsForm
-    success_url = reverse_lazy('list bike parts view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['part_pictures'] = context['object'].motopartsimages_set.all()
+        return context
+
+    def form_valid(self, form):
+        data = super().form_valid(form)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        selected_images = request.POST.getlist('selected_images')
+        MotoPartsImages.objects.filter(id__in=selected_images).delete()
+        data = super().post(request, *args, **kwargs)
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('detail bike parts view', kwargs={'pk': self.object.pk})
 
 
 class PartsDetailsView(views.DetailView):
@@ -131,7 +185,7 @@ class PartsDetailsView(views.DetailView):
         return context
 
 
-class PartsDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class PartsDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/moto_parts/delete_parts.html'
     model = MotoParts
     success_url = reverse_lazy('list bike parts view')

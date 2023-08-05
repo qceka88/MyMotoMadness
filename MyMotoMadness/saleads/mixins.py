@@ -1,5 +1,7 @@
 from enum import Enum
 
+from django.shortcuts import redirect
+
 
 class ChoicesMixin:
     @classmethod
@@ -46,3 +48,13 @@ class AddPicturesToSaleOffer:
                 image.save()
 
         return sale_object
+
+
+class CheckForRestrictionAds:
+
+    def dispatch(self, request, *args, **kwargs):
+        data = super().dispatch(request, *args, **kwargs)
+        if request.user.pk != self.object.owner.pk and not request.user.is_superuser:
+            return redirect('home-page')
+
+        return data
