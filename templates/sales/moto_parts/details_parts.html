@@ -7,7 +7,7 @@
     <p>Model {{ object.model }} </p>
 
     <p>Created On: {{ object.manufacture_year }} </p>
-    <p>Owner: {{ object.owner }} </p>
+
     <p>For Bike: {{ object.for_bike }} </p>
 
     <p>Type: {{ object.approved }} </p>
@@ -20,6 +20,8 @@
         {% endfor %}
 
     </ul>
+     <p><a href="{% url 'details user view' pk=object.owner_id %}"> Owner: {{ object.owner.username }} </a></p>
+    <h1>Contact: {{ object.owner.phone_number }}</h1>
     <h1>Price :{{ object.price|floatformat:2 }}</h1>
 
     <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Part Edit</a></button>

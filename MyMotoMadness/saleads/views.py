@@ -2,8 +2,10 @@ from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
 
+from MyMotoMadness.accounts.mixins import CheckForRestriction
 from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
+from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer
 from MyMotoMadness.saleads.models import Motorcycles, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
 
@@ -17,7 +19,7 @@ class MotorcyclesListViews(views.ListView):
     model = Motorcycles
 
 
-class MotorcyclesAddView(views.CreateView):
+class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
     model = Motorcycles
     form_class = CreateMotorcycleForm
@@ -25,11 +27,11 @@ class MotorcyclesAddView(views.CreateView):
 
     def form_valid(self, form):
         data = super().form_valid(form)
-        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotorcycleImages)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotorcycleImages)
         return data
 
 
-class MotorcyclesEditView(views.UpdateView):
+class MotorcyclesEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
     # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = Motorcycles
@@ -47,7 +49,7 @@ class MotorcyclesDetailsView(views.DetailView):
         return context
 
 
-class MotorcyclesDeleteView(views.DeleteView):
+class MotorcyclesDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/motorcycles/delete_motorcycle.html'
     model = Motorcycles
     success_url = reverse_lazy('list motorcycle view')
@@ -58,7 +60,7 @@ class EquipmentGearListView(views.ListView):
     model = MotoEquipmentGear
 
 
-class EquipmentGearAddView(views.CreateView):
+class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
     form_class = CreateEquipmentGearForm
@@ -66,11 +68,11 @@ class EquipmentGearAddView(views.CreateView):
 
     def form_valid(self, form):
         data = super().form_valid(form)
-        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
         return data
 
 
-class EquipmentGearEditView(views.UpdateView):
+class EquipmentGearEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
     # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
@@ -88,7 +90,7 @@ class EquipmentGearDetailsView(views.DetailView):
         return context
 
 
-class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
+class EquipmentGearDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/equipment_gear/delete_equipment.html'
     model = MotoEquipmentGear
     success_url = reverse_lazy('list equipment gear view')
@@ -99,7 +101,7 @@ class PartsListView(views.ListView):
     model = MotoParts
 
 
-class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
+class PartsAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
     template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
     form_class = CreatePartsForm
@@ -107,11 +109,11 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
 
     def form_valid(self, form):
         data = super().form_valid(form)
-        add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
+        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
         return data
 
 
-class PartsEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+class PartsEditView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.UpdateView):
     # TODO: check for removing or replace multiple images in edit view
     template_name = 'sales/moto_parts/part_edit.html'
     model = MotoParts
@@ -129,18 +131,7 @@ class PartsDetailsView(views.DetailView):
         return context
 
 
-class PartsDeleteView(auth_mixins.LoginRequiredMixin, views.DeleteView):
+class PartsDeleteView(CheckForRestriction, auth_mixins.LoginRequiredMixin, views.DeleteView):
     template_name = 'sales/moto_parts/delete_parts.html'
     model = MotoParts
     success_url = reverse_lazy('list bike parts view')
-
-
-def add_pictures_to_sale_offer(sale_object, request, owner, SaleImageClass):
-    sale_object.owner = owner
-    sale_object.save()
-    for field in request.FILES.keys():
-        for image_file in request.FILES.getlist(field):
-            image = SaleImageClass(image=image_file, sale_ad=sale_object)
-            image.save()
-
-    return sale_object
