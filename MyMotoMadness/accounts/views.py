@@ -6,11 +6,11 @@ from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
 from MyMotoMadness.accounts.froms import MotoUserRegisterForm, MotoUserLoginForm
-from MyMotoMadness.accounts.view_mixins import CheckForRestriction, CheckForRegisteredUser
+from MyMotoMadness.accounts.mixins import CheckForRestriction, CheckForRegisteredUser
 
 UserModel = get_user_model()
 
-#TODO: implement automatic_email sending from google g-mail
+
 class RegisterMotoUser(CheckForRegisteredUser, generic_views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = MotoUserRegisterForm
@@ -57,7 +57,7 @@ class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_
     model = UserModel
     form_class = modelform_factory(
         UserModel,
-        fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number'),
+        fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number', 'is_staff', 'is_superuser'),
         widgets={
             'first_name': forms.TextInput(
                 attrs={'placeholder': 'Enter your first name'}
@@ -70,7 +70,7 @@ class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_
             ),
             'phone_number': forms.TextInput(
                 attrs={'placeholder': 'Enter your phone number'}
-            )
+            ),
         },
     )
 

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from MyMotoMadness.saleads.model_mixins import BikeTypeChoices, ProtectionGearTypeChoices
+from MyMotoMadness.saleads.mixins import BikeTypeChoices, ProtectionGearTypeChoices
 
 UserModel = get_user_model()
 

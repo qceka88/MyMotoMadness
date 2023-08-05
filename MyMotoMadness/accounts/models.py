@@ -31,6 +31,7 @@ class MotoUserModel(auth_models.AbstractUser):
         max_length=15,
     )
 
+
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
 

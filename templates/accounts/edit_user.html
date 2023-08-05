@@ -4,7 +4,16 @@
         EDIT PROFILE
     </h1>
     <form action="{% url 'edit user view' pk=object.pk %}" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
+        <p>{{ form.first_name }}</p>
+        <p>{{ form.last_name }}</p>
+        <p>{{ form.email }}</p>
+        <p> {{ form.profile_picture }}</p>
+        <p> {{ form.phone_number }}</p>
+        {% if request.user.is_superuser %}
+            {{ object.username }}
+            <p>{{ form.is_staff }}</p>
+            <p>  {{ form.is_superuser }}</p>
+        {% endif %}
         <button>
             Edit!
         </button>
