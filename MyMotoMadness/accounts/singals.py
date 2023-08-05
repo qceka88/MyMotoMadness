@@ -15,7 +15,7 @@ def send_successful_registration_email(user):
         lazy_email = part_one + f"+{user.pk}@" + part_two
     else:
         lazy_email = None
-
+    # TODO: END
     context = {
         'user': user,
     }

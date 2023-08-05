@@ -35,7 +35,6 @@ class MotorcyclesEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin
     template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = Motorcycles
     form_class = EditMotorcycleForm
-    success_url = reverse_lazy('list motorcycle view')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
