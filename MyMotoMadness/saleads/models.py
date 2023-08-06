@@ -38,7 +38,9 @@ class Motorcycles(models.Model):
     )
     price = models.FloatField(
     )
-
+    city = models.CharField(
+        max_length=30,
+    )
     approved = models.BooleanField(
         default=False,
     )
@@ -88,6 +90,9 @@ class MotoEquipmentGear(models.Model):
     price = models.FloatField(
 
     )
+    city = models.CharField(
+        max_length=30,
+    )
     approved = models.BooleanField(
         default=False,
     )
@@ -131,6 +136,9 @@ class MotoParts(models.Model):
         null=True,
     )
     price = models.FloatField(
+    )
+    city = models.CharField(
+        max_length=30,
     )
     approved = models.BooleanField(
         default=False,

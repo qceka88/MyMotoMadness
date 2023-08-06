@@ -150,7 +150,7 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views
 
 class PartsEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
                     views.UpdateView):
-    template_name = 'sales/moto_parts/part_edit.html'
+    template_name = 'sales/moto_parts/edit_part.html'
     model = MotoParts
     form_class = EditPartsForm
 

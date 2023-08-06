@@ -23,6 +23,7 @@
     </ul>
 
     <p><a href="{% url 'details user view' pk=object.owner_id %}"> Owner: {{ object.owner.username }} </a></p>
+    <h1>City: {{ object.city }}</h1>
     <h1>Contact: {{ object.owner.phone_number }}</h1>
     <h1>Price :{{ object.price|floatformat:2 }}</h1>
 

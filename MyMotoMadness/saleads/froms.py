@@ -42,6 +42,11 @@ class BaseMotorcycleForm(forms.ModelForm):
                     'placeholder': 'Enter addition information about Motorcycle!'
                 }
             ),
+            'city': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter City'
+                }
+            ),
             'price': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Price for Motorcycle'
@@ -88,6 +93,11 @@ class BaseEquipmentGearForm(forms.ModelForm):
             'description': forms.Textarea(
                 attrs={
                     'placeholder': 'Enter addition information about Equipment Gear'
+                }
+            ),
+            'city': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter City'
                 }
             ),
             'price': forms.TextInput(
@@ -142,13 +152,17 @@ class BasePartsForm(forms.ModelForm):
                     'placeholder': 'Enter addition information about bike Part'
                 }
             ),
+            'city': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter City'
+                }
+            ),
             'price': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Price for Part'
                 }
             ),
         }
-
 
 
 class CreatePartsForm(BasePartsForm):
