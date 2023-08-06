@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
 
-class CheckUserPermission:
+class CheckUserArticlePermission:
 
     def dispatch(self, request, *args, **kwargs):
         if not (request.user.is_staff or request.user.is_superuser):

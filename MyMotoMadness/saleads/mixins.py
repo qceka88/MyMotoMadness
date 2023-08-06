@@ -36,6 +36,7 @@ class ProtectionGearTypeChoices(ChoicesMixin, Enum):
     PROTECTORS = 'Protectors'
     OTHER = 'Other..'
 
+
 class AddPicturesToSaleOffer:
 
     @staticmethod
@@ -54,7 +55,7 @@ class CheckForRestrictionAds:
 
     def dispatch(self, request, *args, **kwargs):
         data = super().dispatch(request, *args, **kwargs)
-        if request.user.pk != self.object.owner.pk and not request.user.is_superuser:
+        if request.user.pk != self.object.owner.pk and not request.user.is_superuser and not request.user.is_staff:
             return redirect('home-page')
 
         return data

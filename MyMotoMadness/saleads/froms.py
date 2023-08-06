@@ -9,6 +9,9 @@ class BaseMotorcycleForm(forms.ModelForm):
         fields = '__all__'
 
         widgets = {
+            'owner': forms.HiddenInput(
+
+            ),
             'brand': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Motorcycle Brand'
@@ -16,12 +19,22 @@ class BaseMotorcycleForm(forms.ModelForm):
             ),
             'model': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Motorcycle Brand'
+                    'placeholder': 'Enter Motorcycle Model'
                 }
             ),
-            'engine_volume': forms.TextInput(
+            'engine_volume': forms.NumberInput(
                 attrs={
                     'placeholder': 'Enter Engine Volume'
+                }
+            ),
+            'manufacture_year': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Enter Manufacture Year'
+                }
+            ),
+            'horse_power': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Enter Horse Power'
                 }
             ),
             'description': forms.Textarea(
@@ -29,7 +42,6 @@ class BaseMotorcycleForm(forms.ModelForm):
                     'placeholder': 'Enter addition information about Motorcycle!'
                 }
             ),
-            'owner': forms.HiddenInput(),
             'price': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Price for Motorcycle'
@@ -53,9 +65,37 @@ class BaseEquipmentGearForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'owner': forms.HiddenInput(),
+            'brand': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Equipment Brand'
+                }
+            ),
+            'model': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Equipment Model'
+                }
+            ),
+            'material_type': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Material Type'
+                }
+            ),
+            'manufacture_year': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Enter Manufacture Year'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'placeholder': 'Enter addition information about Equipment Gear'
+                }
+            ),
+            'price': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Price for Equipment'
+                }
+            ),
         }
-
-        # TODO: Add placeholders
 
 
 class CreateEquipmentGearForm(BaseEquipmentGearForm):
@@ -72,9 +112,43 @@ class BasePartsForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'owner': forms.HiddenInput(),
+            'type_of_part': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Type of Part'
+                }
+            ),
+            'brand': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Brand of Part'
+                }
+            ),
+            'model': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Model of Part'
+                }
+            ),
+            'for_bike': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter For What Bike is Part'
+                }
+            ),
+            'manufacture_year': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Enter Manufacture Year'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'placeholder': 'Enter addition information about bike Part'
+                }
+            ),
+            'price': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter Price for Part'
+                }
+            ),
         }
 
-        # TODO: Add placeholders
 
 
 class CreatePartsForm(BasePartsForm):

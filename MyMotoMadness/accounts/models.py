@@ -27,11 +27,10 @@ class MotoUserModel(auth_models.AbstractUser):
         blank=True,
         null=True,
     )
-    #TODO: add phone validator
+    # TODO: add phone validator
     phone_number = models.CharField(
         max_length=15,
     )
-
 
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
