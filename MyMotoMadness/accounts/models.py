@@ -12,12 +12,16 @@ class MotoUserModel(auth_models.AbstractUser):
         validators=(
             check_name_symbols_for_non_alphabetical,
         ),
+        null=True,
+        blank=True,
     )
     last_name = models.CharField(
         max_length=30,
         validators=(
             check_name_symbols_for_non_alphabetical,
         ),
+        null=True,
+        blank=True,
     )
     email = models.EmailField(
         unique=True,
@@ -30,6 +34,8 @@ class MotoUserModel(auth_models.AbstractUser):
     # TODO: add phone validator
     phone_number = models.CharField(
         max_length=15,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):

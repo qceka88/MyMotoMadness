@@ -1,24 +1,125 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block page_content %}
-    <h1>
-        EDIT PROFILE
-    </h1>
-    <form action="{% url 'edit user view' pk=object.pk %}" method="post" enctype="multipart/form-data">
-        <p>{{ form.first_name }}</p>
-        <p>{{ form.last_name }}</p>
-        <p>{{ form.email }}</p>
-        <p> {{ form.profile_picture }}</p>
-        <p> {{ form.phone_number }}</p>
-        {% if request.user.is_superuser %}
-            {{ object.username }}
-            <p>{{ form.is_staff }}</p>
-            <p>  {{ form.is_superuser }}</p>
-        {% endif %}
-        <button>
-            Edit!
-        </button>
-        {% csrf_token %}
-    </form>
 
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-bg-3.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">EDIT PROFILE</h1>
+
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="row gy-4">
+                        {% if not object.phone_number %}
+                            <div class="col-md-4">
+                                <div class="bg-light d-flex flex-column justify-content-center p-4">
+                                    <h5 class="text-uppercase">// Missing Phone Number //</h5>
+                                    <p class="m-0"><i class="fa fa-phone text-primary me-2"></i>Please add phone Number
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if not object.first_name %}
+                            <div class="col-md-4">
+                                <div class="bg-light d-flex flex-column justify-content-center p-4">
+                                    <h5 class="text-uppercase">// Missing First Name //</h5>
+                                    <p class="m-0"><i class="fa fa-user-cog text-primary me-2"></i>Please add First Name
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if not object.last_name %}
+                            <div class="col-md-4">
+                                <div class="bg-light d-flex flex-column justify-content-center p-4">
+                                    <h5 class="text-uppercase">// Missing Last Name //</h5>
+                                    <p class="m-0"><i class="fa fa-user-cog text-primary me-2"></i>Please add Last Name
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if object.profile_picture %}
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                        <h3>Current Profile Picture</h3>
+                        <img class="position-relative rounded w-75"
+                             src="{{ object.profile_picture.url }}"
+                             style="min-height: 250px; border:0;"
+                             aria-hidden="false"
+                             tabindex="0" alt="{{ object.first_name }}">
+                    </div>
+
+                {% else %}
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                        <h3>Current Profile Picture</h3>
+                        <img class="position-relative rounded w-75"
+                             src="{% static 'img/avatar.png' %}"
+                             style="min-height: 350px; border:0;"
+                             aria-hidden="false"
+                             tabindex="0" alt="default">
+                    </div>
+
+                {% endif %}
+                <div class="col-md-6">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <h3>Current Profile Data</h3>
+                        <form action="{% url 'edit user view' pk=object.pk %}" method="post"
+                              enctype="multipart/form-data" class="form-control">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.last_name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.phone_number }}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    {{ form.profile_picture }}
+                                </div>
+                                {% if request.user.is_superuser %}
+                                    <h2>Administrators Only!</h2>
+                                    <div class="col-12">
+                                        <label>Make this user: Moderator</label>
+                                        {{ form.is_staff }}
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Make this user: Administrator</label>
+                                        {{ form.is_superuser }}
+                                    </div>
+                                {% endif %}
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Edit Profile</button>
+                                </div>
+                                {% csrf_token %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

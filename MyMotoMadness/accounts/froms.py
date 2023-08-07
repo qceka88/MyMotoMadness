@@ -24,8 +24,9 @@ class MotoUserRegisterForm(auth_forms.UserCreationForm):
 
     class Meta:
         model = UserModel
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'profile_picture']
         widgets = {
+
             'username': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter your username',
@@ -38,6 +39,7 @@ class MotoUserRegisterForm(auth_forms.UserCreationForm):
                     'style': "height: 55px",
                 }
             ),
+            'profile_picture': forms.HiddenInput(),
         }
 
 

@@ -7,7 +7,7 @@
             <li>
                 {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
                 <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
-                {% if motorcycle_object.owner == request.user %}
+                {% if motorcycle_object.owner == request.user or request.user.is_superuser or request.user_is_staff %}
                     <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
                     <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
                 {% endif %}
