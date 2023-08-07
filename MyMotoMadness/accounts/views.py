@@ -60,16 +60,28 @@ class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_
         fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number', 'is_staff', 'is_superuser'),
         widgets={
             'first_name': forms.TextInput(
-                attrs={'placeholder': 'Enter your first name'}
+                attrs={
+                    'placeholder': 'Enter your first name',
+                    'style': "height: 55px",
+                }
             ),
             'last_name': forms.TextInput(
-                attrs={'placeholder': 'Enter your last name'}
+                attrs={
+                    'placeholder': 'Enter your last name',
+                    'style': "height: 55px",
+                }
             ),
             'email': forms.TextInput(
-                attrs={'placeholder': 'Enter your email'}
+                attrs={
+                    'placeholder': 'Enter your email',
+                    'style': "height: 55px",
+                }
             ),
             'phone_number': forms.TextInput(
-                attrs={'placeholder': 'Enter your phone number'}
+                attrs={
+                    'placeholder': 'Enter your phone number',
+                    'style': "height: 55px",
+                }
             ),
         },
     )

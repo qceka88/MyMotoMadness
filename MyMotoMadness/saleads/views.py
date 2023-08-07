@@ -30,7 +30,7 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
         return data
 
 
-class MotorcyclesEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
                           views.UpdateView):
     template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = Motorcycles
@@ -66,7 +66,7 @@ class MotorcyclesDetailsView(views.DetailView):
         return context
 
 
-class MotorcyclesDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class MotorcyclesDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.DeleteView):
     template_name = 'sales/motorcycles/delete_motorcycle.html'
     model = Motorcycles
     success_url = reverse_lazy('list motorcycle view')
@@ -89,7 +89,7 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffe
         return data
 
 
-class EquipmentGearEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
                             views.UpdateView):
     template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
@@ -125,7 +125,7 @@ class EquipmentGearDetailsView(views.DetailView):
         return context
 
 
-class EquipmentGearDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.DeleteView):
     template_name = 'sales/equipment_gear/delete_equipment.html'
     model = MotoEquipmentGear
     success_url = reverse_lazy('list equipment gear view')
@@ -148,7 +148,7 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views
         return data
 
 
-class PartsEditView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
+class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
                     views.UpdateView):
     template_name = 'sales/moto_parts/edit_part.html'
     model = MotoParts
@@ -184,7 +184,7 @@ class PartsDetailsView(views.DetailView):
         return context
 
 
-class PartsDeleteView(CheckForRestrictionAds, auth_mixins.LoginRequiredMixin, views.DeleteView):
+class PartsDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.DeleteView):
     template_name = 'sales/moto_parts/delete_parts.html'
     model = MotoParts
     success_url = reverse_lazy('list bike parts view')

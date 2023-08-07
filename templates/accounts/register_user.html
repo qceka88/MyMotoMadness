@@ -1,11 +1,42 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block  page_content %}
-    <form action="{% url 'register user view' %}" method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button>
-            register
-        </button>
-    </form>
+
+    <div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-6 py-5">
+                    <div class="py-5">
+
+                        <p class="text-white mb-4">Register in MyMotoMadness to sell your old bike, parts,
+                            equipment. Welcome to the Madness.</p>
+                        <h1 class="text-white mb-4">REGISTER</h1>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn"
+                         data-wow-delay="0.6s">
+                        <form action="{% url 'register user view' %}" method="post">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                {% for field in form %}
+                                    <div class="col-12 col-sm-6">
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="text-white">
+                                                {{ field.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <div class="col-12">
+                                    <button class="btn btn-secondary w-100 py-3" type="submit">Register Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

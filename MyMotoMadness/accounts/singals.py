@@ -9,20 +9,13 @@ UserModel = get_user_model()
 
 
 def send_successful_registration_email(user):
-    #TODO: DELETE THIS PART FOR LAZY EMAIL
-    if user.email:
-        part_one, part_two = user.email.split('@')
-        lazy_email = part_one + f"+{user.pk}@" + part_two
-    else:
-        lazy_email = None
-    # TODO: END
     context = {
         'user': user,
     }
     return send_the_email(
         subject='Registration greetings!',
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=(lazy_email,),
+        recipient_list=(user.email,),
         template_name='emails/test_email.html',
         context=context,
     )

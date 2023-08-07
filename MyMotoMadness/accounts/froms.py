@@ -8,16 +8,18 @@ class MotoUserRegisterForm(auth_forms.UserCreationForm):
     password1 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Enter your password'
+                'placeholder': 'Enter your password',
+                'style': "height: 55px",
             }
         )
     )
     password2 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Repeat the password'
+                'placeholder': 'Repeat the password',
+                'style': "height: 55px",
             }
-        )
+        ),
     )
 
     class Meta:
@@ -26,12 +28,14 @@ class MotoUserRegisterForm(auth_forms.UserCreationForm):
         widgets = {
             'username': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter your username'
+                    'placeholder': 'Enter your username',
+                    'style': "height: 55px",
                 }
             ),
             'email': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter your email'
+                    'placeholder': 'Enter your email',
+                    'style': "height: 55px",
                 }
             ),
         }
@@ -41,14 +45,20 @@ class MotoUserLoginForm(auth_forms.AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Enter your username'
+                'placeholder': 'Enter your username',
+                'style': "height: 55px",
+
             }
-        )
+        ),
+        label='',
+
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Enter your password'
+                'placeholder': 'Enter your password',
+                'style': "height: 55px",
             }
-        )
+        ),
+        label='',
     )
