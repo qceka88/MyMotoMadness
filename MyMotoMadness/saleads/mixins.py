@@ -44,10 +44,9 @@ class AddPicturesToSaleOffer:
         sale_object.owner = owner
         sale_object.save()
         for field in request.FILES.keys():
-            for image_file in request.FILES.getlist(field):
+            for i, image_file in enumerate(request.FILES.getlist(field)):
                 image = SaleImageClass(image=image_file, sale_ad=sale_object)
                 image.save()
-
         return sale_object
 
 

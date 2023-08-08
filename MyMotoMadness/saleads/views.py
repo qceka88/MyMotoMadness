@@ -7,6 +7,7 @@ from MyMotoMadness.saleads.froms import CreateMotorcycleForm, EditMotorcycleForm
 from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer, CheckForRestrictionAds
 from MyMotoMadness.saleads.models import Motorcycles, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
     MotoParts, MotoPartsImages
+from MyMotoMadness.saleads.validators import check_files_quantity
 
 
 class CommonSaleView(views.TemplateView):
@@ -25,6 +26,7 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
     success_url = reverse_lazy('list motorcycle view')
 
     def form_valid(self, form):
+        #check_files_quantity(len(self.request.FILES.getlist(*self.request.FILES.keys())))
         data = super().form_valid(form)
         self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotorcycleImages)
         return data
