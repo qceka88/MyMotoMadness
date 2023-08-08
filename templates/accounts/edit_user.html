@@ -79,21 +79,33 @@
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         {{ form.first_name }}
+                                        <div class="text-black">
+                                            {{ form.first_name.errors|join:", " }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         {{ form.last_name }}
+                                        <div class="text-black">
+                                            {{ form.last_name.errors|join:", " }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         {{ form.email }}
+                                        <div class="text-black">
+                                            {{ form.email.errors|join:", " }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         {{ form.phone_number }}
+                                        <div class="text-black">
+                                            {{ form.phone_number.errors|join:", " }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">

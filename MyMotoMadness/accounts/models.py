@@ -2,7 +2,7 @@ from django.contrib.auth import models as auth_models
 from django.db import models
 from django.shortcuts import redirect
 
-from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical
+from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical, phone_validator
 
 
 # ACCOUNTS MODELS.
@@ -31,11 +31,11 @@ class MotoUserModel(auth_models.AbstractUser):
         blank=True,
         null=True,
     )
-    # TODO: add phone validator
     phone_number = models.CharField(
         max_length=15,
         null=True,
         blank=True,
+        validators=(phone_validator,)
     )
 
     def __str__(self):
