@@ -3,35 +3,167 @@
 {% load custom_filter %}
 {% block page_content %}
 
-    <p>Username: {{ object.username }}</p>
-    <p>First Name: {{ object.first_name }}</p>
-    <p>Last Name: {{ object.last_name }}</p>
-    {% if object.profile_picture %}
-        <img style="width: 300px" src="{{ object.profile_picture.url }}" alt="{{ object.username }}">
-    {% endif %}
-     <p>Phone Number: {{ object.phone_number }}</p>
-    <ul>
-        {% for offer in user_sale_offers %}
-            {% if offer|class_name_show == 'Motorcycles' %}
-                <li>
-                    {{ offer|class_name_show }} {{ offer }} <a
-                        href="{% url 'detail motorcycle view' pk=offer.pk %}">DET</a>
-                </li>
-            {% elif offer|class_name_show == 'MotoEquipmentGear' %}
-                <li>
-                    {{ offer|class_name_show }} {{ offer }} <a
-                        href="{% url 'detail equipment gear view' pk=offer.pk %}">DET</a>
-                </li>
-            {% elif offer|class_name_show == 'MotoParts' %}
-                <li>
-                    {{ offer|class_name_show }} {{ offer }} <a
-                        href="{% url 'detail bike parts view' pk=offer.pk %}">DET</a>
-                </li>
-            {% else %}
-                <h1> THIS USER HAS NO SELLING OFFERS</h1>
-            {% endif %}
 
-        {% endfor %}
-    </ul>
-    <button> <a href="{% url 'edit user view' pk=object.pk %}">EDIT</a> </button>
+
+{#    {% for offer in user_sale_offers %}#}
+{#        {% if offer|class_name_show == 'Motorcycles' %}#}
+{#            <li>#}
+{#                {{ offer|class_name_show }} {{ offer }} <a#}
+{#                    href="{% url 'detail motorcycle view' pk=offer.pk %}">DET</a>#}
+{#            </li>#}
+{#        {% elif offer|class_name_show == 'MotoEquipmentGear' %}#}
+{#            <li>#}
+{#                {{ offer|class_name_show }} {{ offer }} <a#}
+{#                    href="{% url 'detail equipment gear view' pk=offer.pk %}">DET</a>#}
+{#            </li>#}
+{#        {% elif offer|class_name_show == 'MotoParts' %}#}
+{#            <li>#}
+{#                {{ offer|class_name_show }} {{ offer }} <a#}
+{#                    href="{% url 'detail bike parts view' pk=offer.pk %}">DET</a>#}
+{#            </li>#}
+{##}
+{#        {% endif %}#}
+{##}
+{#    {% endfor %}#}
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-bg-2.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.username }}'s PROFILE</h1>
+
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- User Information Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+                {% if object.profile_picture %}
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                        <h2>User Profile Picture</h2>
+                        <img class="position-relative rounded w-75"
+                             src="{{ object.profile_picture.url }}"
+                             style="min-height: 250px; border:0;"
+                             aria-hidden="false"
+                             tabindex="0" alt="{{ object.first_name }}">
+                    </div>
+                {% else %}
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                        <h2>User Profile Picture</h2>
+                        <img class="position-relative rounded w-75"
+                             src="{% static 'img/avatar.png' %}"
+                             style="min-height: 350px; border:0;"
+                             aria-hidden="false"
+                             tabindex="0" alt="default">
+                    </div>
+                {% endif %}
+                <div class="col-md-6">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <h1> User Data</h1>
+                        <div class="row g-3">
+                            <div class="col-md-6 form-control">
+                                <div class="form-floating ">
+                                    <h3>Username: {{ object.username }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-control">
+                                <div class="form-floating ">
+                                    <h3>First Name: {{ object.first_name }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-control">
+                                <div class="form-floating ">
+                                    <h3>Last Name: {{ object.last_name }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-control">
+                                <div class="form-floating ">
+                                    <h3>Email: {{ object.email }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-control">
+                                <div class="form-floating ">
+                                    <h3>Phone Number: {{ object.phone_number }}</h3>
+                                </div>
+                            </div>
+
+                            {% if request.user.is_superuser %}
+                                <h2>Administrators Only!</h2>
+                                <div class="col-md-6 form-control">
+                                    <div class="form-floating ">
+                                        <h3>Is Moderator: {{ object.is_staff }}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-control">
+                                    <div class="form-floating ">
+                                        <h3>Is Administrator: {{ object.is_superuser }}</h3>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if request.user.is_superuser or request.user.pk == object.pk %}
+                                <div class="col-md-6">
+                                    <button class="btn btn-secondary rounded-pill w-100 py-3">
+                                        <a href="{% url 'edit user view' pk=object.pk %}" style="color: whitesmoke">
+                                            Edit Profile
+                                        </a>
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary rounded-pill w-100 py-3">
+                                        <a href="{% url 'delete user view' pk=object.pk %}" style="color: whitesmoke">
+                                            Delete Profile
+                                        </a>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- User Information End -->
+
+    <!-- User Selling Offers Ads Start -->
+
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="text-primary text-uppercase">// User`s selling offers //</h6>
+            </div>
+            {% if not user_sale_offers %}
+                <div class="text-center">
+                    <h1 class="mb-5">THIS USER HAS NO SELLING OFFERS!</h1>
+                </div>
+            {% else %}
+                <div class="text-center">
+
+                    <h1 class="mb-5">{{ object.username }}`s selling offers!</h1>
+                </div>
+
+                <div class="owl-carousel testimonial-carousel position-relative">
+                    {% for offer in user_sale_offers %}
+                        <div class="testimonial-item text-center">
+                            <img class="bg-light rounded-circle p-2 mx-auto mb-3" src="{{ offer.images }}"
+                                 style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
+                            <h5 class="mb-0">{{ offer.brand }}</h5>
+                            <p>{{ offer.model }}</p>
+                            <div class="testimonial-text bg-light text-center p-4">
+                                <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <!-- User Selling Offers Ads End -->
 {% endblock %}

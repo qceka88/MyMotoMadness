@@ -123,6 +123,8 @@ class MotoParts(models.Model):
     )
     for_bike = models.CharField(
         max_length=40,
+        null=True,
+        blank=True,
     )
     manufacture_year = models.PositiveIntegerField(
     )

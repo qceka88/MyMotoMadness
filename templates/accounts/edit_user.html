@@ -72,7 +72,7 @@
                 {% endif %}
                 <div class="col-md-6">
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
-                        <h3>Current Profile Data</h3>
+                        <h3>Current Profile Data: {{ object.username }}</h3>
                         <form action="{% url 'edit user view' pk=object.pk %}" method="post"
                               enctype="multipart/form-data" class="form-control">
                             <div class="row g-3">

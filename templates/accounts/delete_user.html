@@ -1,24 +1,41 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block page_content %}
 
-    <h1>DELETE PROFILE</h1>
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/endless_ride.png' %}); ">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">DELETE PROFILE</h1>
+            </div>
+        </div>
+    </div>
 
-    <h1> Are you sure to delete? </h1>
-    <form action="{% url  'delete user view' pk=object.pk %}" method="post">
-        {{ form }}
-        {{ object }}
-        <button>
-            DELETE!
-        </button>
-        {% csrf_token %}
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s"
+         style="background-image: url({% static 'img/1018010_7fbba.gif' %});
+                 background-position: 65%;
+                 background-repeat: no-repeat;
+                 background-size: 20%;">
+        <div class="container text-lg-start">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <form action="{% url  'delete user view' pk=object.pk %}" method="post">
+                        <h1> {{ object.username }}, are you leaving? </h1>
+                        <br>
+                        <br>
+                        <h3 class="mb-4">IF DELETE YOUR USER. </h3>
+                        <h3 class="mb-4">ALL INFORMATION, AND PUBLISHED </h3>
+                        <h3 class="mb-4">SALE OFFERS WILL BE LOST</h3>
+                        <a class="btn btn-secondary rounded-pill py-3 px-5" href="javascript:history.back()">Return to
+                            profile</a>
+                        <button class="btn btn-primary rounded-pill py-3 px-5">DELETE</button>
+                        {% csrf_token %}
 
-    </form>
-
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
-
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
