@@ -7,7 +7,7 @@
         {{ form.as_p }}
         {% csrf_token %}
         <label for="files">Select files:</label>
-        <input type="file" id="files" name="files" multiple><br><br>
+        <input type="file" id="files" name="files" multiple max="8" min="3"><br><br>
         <button>
             Submit information!
         </button>

@@ -13,6 +13,18 @@ from MyMotoMadness.saleads.validators import check_files_quantity
 class CommonSaleView(views.TemplateView):
     template_name = 'sales/sales_common.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['sale_offers'] = []
+        for queryset_offers in (
+                Motorcycles.objects.all(),
+                MotoEquipmentGear.objects.all(),
+                MotoParts.objects.all()
+        ):
+            context['sale_offers'].extend(queryset_offers)
+
+        return context
 
 class MotorcyclesListViews(views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
