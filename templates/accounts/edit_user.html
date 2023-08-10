@@ -73,6 +73,7 @@
                 <div class="col-md-6">
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <h3>Current Profile Data: {{ object.username }}</h3>
+
                         <form action="{% url 'edit user view' pk=object.pk %}" method="post"
                               enctype="multipart/form-data" class="form-control">
                             <div class="row g-3">
@@ -123,7 +124,7 @@
                                     </div>
                                 {% endif %}
                                 <div class="col-md-6">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Edit Profile</button>
+                                    <button class="btn btn-primary w-100 py-3" type="submit">SAVE CHANGES</button>
                                 </div>
                                 <div class="col-md-6">
                                     <button class="btn btn-outline-secondary w-100 py-3" type="submit">
@@ -132,7 +133,15 @@
                                 </div>
                                 {% csrf_token %}
                             </div>
+
+                        <div class="col-12" style="padding: 5%; position: center">
+                            <button class="btn btn-success rounded-pill r w-100 py-7 px-13"><a
+                                    href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+                        </div>
                         </form>
+
+
+
                     </div>
                 </div>
             </div>
