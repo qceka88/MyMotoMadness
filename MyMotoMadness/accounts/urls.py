@@ -1,7 +1,7 @@
 from django.urls import path
 
 from MyMotoMadness.accounts.views import RegisterMotoUser, LoginMotoUserView, LogoutMotoUserView, DetailsMotoUserView, \
-    EditMotoUser, DeleteMotoUser
+    EditMotoUser, DeleteMotoUser, PasswordChange
 
 # Accounts URLS
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
     path('details/<int:pk>/', DetailsMotoUserView.as_view(), name='details user view'),
     path('edit/<int:pk>/', EditMotoUser.as_view(), name='edit user view'),
     path('delete/<int:pk>/', DeleteMotoUser.as_view(), name='delete user view'),
+    path('password_change/<int:pk>/', PasswordChange.as_view(), name='password change user view'),
 
 
 ]

@@ -5,7 +5,7 @@ from django.forms import modelform_factory
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
-from MyMotoMadness.accounts.froms import MotoUserRegisterForm, MotoUserLoginForm
+from MyMotoMadness.accounts.froms import MotoUserRegisterForm, MotoUserLoginForm, MotoUserChangePassword
 from MyMotoMadness.accounts.mixins import CheckForRestriction, CheckForRegisteredUser
 
 UserModel = get_user_model()
@@ -95,6 +95,12 @@ class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_
         return reverse_lazy('details user view', kwargs={'pk': self.object.pk})
 
 
+class PasswordChange(auth_views.PasswordChangeView):
+    template_name = 'accounts/password_change.html'
+    model = UserModel
+    form_class = MotoUserChangePassword
+    def get_success_url(self):
+        return reverse_lazy('details user view', kwargs={'pk': self.request.user.pk})
 class DeleteMotoUser(CheckForRestriction, generic_views.DeleteView):
     template_name = 'accounts/delete_user.html'
     model = UserModel
