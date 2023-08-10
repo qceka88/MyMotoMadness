@@ -37,19 +37,6 @@ class ProtectionGearTypeChoices(ChoicesMixin, Enum):
     OTHER = 'Other..'
 
 
-class AddPicturesToSaleOffer:
-
-    @staticmethod
-    def add_pictures_to_sale_offer(sale_object, request, owner, SaleImageClass):
-        sale_object.owner = owner
-        sale_object.save()
-        for field in request.FILES.keys():
-            for i, image_file in enumerate(request.FILES.getlist(field)):
-                image = SaleImageClass(image=image_file, sale_ad=sale_object)
-                image.save()
-        return sale_object
-
-
 class CheckForRestrictionAds:
 
     def dispatch(self, request, *args, **kwargs):

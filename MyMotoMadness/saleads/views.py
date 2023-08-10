@@ -4,8 +4,8 @@ from django.views import generic as views
 
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer, CheckForRestrictionAds
-from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts, MotoPartsImages
+from MyMotoMadness.saleads.mixins import  CheckForRestrictionAds
+from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
 
 class CommonSaleView(views.TemplateView):
@@ -30,7 +30,7 @@ class MotorcyclesListViews(views.ListView):
     model = Motorcycles
 
 
-class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
+class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
     model = Motorcycles
     form_class = CreateMotorcycleForm
@@ -48,8 +48,7 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer,
         return self.form_invalid(form)
 
 
-class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
-                          views.UpdateView):
+class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/motorcycles/edit_motorcycle.html'
     model = Motorcycles
     form_class = EditMotorcycleForm
@@ -95,7 +94,7 @@ class EquipmentGearListView(views.ListView):
     model = MotoEquipmentGear
 
 
-class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
+class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
     form_class = CreateEquipmentGearForm
@@ -113,8 +112,7 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffe
         return self.form_invalid(form)
 
 
-class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
-                            views.UpdateView):
+class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/equipment_gear/edit_equipment.html'
     model = MotoEquipmentGear
     form_class = EditEquipmentGearForm
@@ -160,20 +158,25 @@ class PartsListView(views.ListView):
     model = MotoParts
 
 
-class PartsAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffer, views.CreateView):
+class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
     form_class = CreatePartsForm
     success_url = reverse_lazy('list bike parts view')
 
-    def form_valid(self, form):
-        data = super().form_valid(form)
-        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
-        return data
+    def post(self, request, *args, **kwargs):
+        data = super().post(request, *args, **kwargs)
+        form = self.get_form()
+
+        if form.is_valid():
+            self.object.owner = self.request.user
+            self.object.save()
+            return data
+
+        return self.form_invalid(form)
 
 
-class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
-                    views.UpdateView):
+class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/moto_parts/edit_part.html'
     model = MotoParts
     form_class = EditPartsForm
@@ -183,15 +186,15 @@ class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddP
         context['part_pictures'] = context['object'].motopartsimages_set.all()
         return context
 
-    def form_valid(self, form):
-        data = super().form_valid(form)
-        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoPartsImages)
-        return data
-
     def post(self, request, *args, **kwargs):
-        selected_images = request.POST.getlist('selected_images')
-        MotoPartsImages.objects.filter(id__in=selected_images).delete()
         data = super().post(request, *args, **kwargs)
+        form = self.get_form()
+
+        if form.is_valid():
+            self.object.approved = False
+            self.object.save()
+            return data
+
         return data
 
     def get_success_url(self):
