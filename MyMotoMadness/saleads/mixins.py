@@ -30,7 +30,7 @@ class ProtectionGearTypeChoices(ChoicesMixin, Enum):
     HELMET = 'Helmet'
     RACE_SUIT_1PT = 'Race Suit One Part'
     RACE_SUIT_2PT = 'Race Suit Two Parts'
-    BONET = 'Bonet'
+    BONNET = 'Bonnet'
     BOOTS = 'Boots'
     GLOVES = 'Gloves'
     PROTECTORS = 'Protectors'

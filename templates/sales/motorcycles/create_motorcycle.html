@@ -8,8 +8,6 @@
     <form action="{% url 'add motorcycle view' %}" method="post" enctype="multipart/form-data">
         {{ form.as_p }}
         {% csrf_token %}
-        <label for="files">Select files:</label>
-        <input type="file" id="files" name="files" multiple><br><br>
         <button>
             Submit information!
         </button>

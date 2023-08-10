@@ -6,11 +6,11 @@
 
     <form action="{% url 'edit motorcycle view' pk=object.pk %}" method="post" enctype="multipart/form-data">
         {{ form.as_p }}
-
+        <p>TOTAL IMAGES {{ object.motorcycleimages_set.all.count }}</p>
         {% csrf_token %}
 
         <ul>
-            {% for image in bike_pictures %}
+            {% for image in object.motorcycleimages_set.all %}
                 <li>
                     <img style="width: 150px;" src="{{ image.image.url }}" alt="img">
                     <input type="checkbox" name="selected_images" value="{{ image.id }}">
@@ -18,7 +18,6 @@
 
             {% endfor %}
         </ul>
-        <input type="file" id="files" name="files" multiple><br><br>
         <button>
             Edit!
         </button>

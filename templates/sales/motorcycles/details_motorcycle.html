@@ -12,7 +12,7 @@
     <p>Horse Power: {{ object.horse_power }} </p>
 
     <p>Approved: {{ object.approved }} </p>
-
+    <p>TOTAL IMAGES {{ object.motorcycleimages_set.all.count }}</p>
     <ul>
         {% for picture in bike_pictures %}
             <li>
