@@ -2,7 +2,8 @@ from django import forms
 from django.core import exceptions
 from multiupload.fields import MultiMediaField
 
-from MyMotoMadness.saleads.models import Motorcycles, MotoParts, MotoEquipmentGear, MotorcycleImages
+from MyMotoMadness.saleads.models import Motorcycles, MotoParts, MotoEquipmentGear, MotorcycleImages, \
+    MotoEquipmentImages
 
 
 class Limits:
@@ -14,7 +15,7 @@ class Limits:
 class BaseMotorcycleForm(forms.ModelForm):
     class Meta:
         model = Motorcycles
-        exclude = ('images', 'approved',)
+        exclude = ('motorcycle_images', 'approved',)
         widgets = {
             'owner': forms.HiddenInput(
 
@@ -63,32 +64,32 @@ class BaseMotorcycleForm(forms.ModelForm):
 
     def save(self, commit=True):
         motorcycle = super(BaseMotorcycleForm, self).save(commit)
-        for image_file in self.cleaned_data['images']:
+        for image_file in self.cleaned_data['motorcycle_images']:
             MotorcycleImages.objects.create(image=image_file, sale_ad=motorcycle)
 
         return motorcycle
 
 
 class CreateMotorcycleForm(Limits, BaseMotorcycleForm):
-    images = MultiMediaField(min_num=Limits.MIN_FILES,
-                             max_num=Limits.MAX_FILES,
-                             max_file_size=Limits.MAX_FILE_SIZE,
-                             media_type='image'
-                             )
+    motorcycle_images = MultiMediaField(min_num=Limits.MIN_FILES,
+                                        max_num=Limits.MAX_FILES,
+                                        max_file_size=Limits.MAX_FILE_SIZE,
+                                        media_type='image',
+
+                                        )
 
 
 class EditMotorcycleForm(Limits, BaseMotorcycleForm):
-    images = MultiMediaField(min_num=0,
-                             max_num=Limits.MAX_FILES,
-                             max_file_size=Limits.MAX_FILE_SIZE,
-                             media_type='image',
-                             label='Add Images:',
-                             required=False, )
+    motorcycle_images = MultiMediaField(min_num=0,
+                                        max_num=Limits.MAX_FILES,
+                                        max_file_size=Limits.MAX_FILE_SIZE,
+                                        media_type='image',
+                                        label='Add Images:',
+                                        required=False, )
 
     def clean(self):
         existing_bike_images = len(self.instance.motorcycleimages_set.all())
-        print(f'curernt qty {existing_bike_images}')
-        images_for_add = len(self.cleaned_data['images'])
+        images_for_add = len(self.cleaned_data['motorcycle_images'])
 
         try:
             images_for_delete = dict(self.data)['selected_images']
@@ -96,20 +97,16 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
             images_for_delete = ''
 
         total = existing_bike_images - len(images_for_delete) + images_for_add
-        print(f"for delete{images_for_delete}")
-        print(f"for add {images_for_add}")
-        print(f"total {total}")
         if total < Limits.MIN_FILES:
             raise exceptions.ValidationError(
                 {
-                    "images": f'Minimum images for sale offer is {self.MIN_FILES} !'}
+                    "motorcycle_images": f'Minimum images for sale offer is {self.MIN_FILES} !'}
             )
 
         elif Limits.MAX_FILES < total:
-            print(f'limit{Limits.MAX_FILES }')
             raise exceptions.ValidationError(
                 {
-                    "images": f'Maximum images for sale offer is {self.MAX_FILES}!'}
+                    "motorcycle_images": f'Maximum images for sale offer is {self.MAX_FILES}!'}
             )
 
         MotorcycleImages.objects.filter(id__in=images_for_delete).delete()
@@ -119,7 +116,7 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
 class BaseEquipmentGearForm(forms.ModelForm):
     class Meta:
         model = MotoEquipmentGear
-        fields = '__all__'
+        exclude = ('images', 'approved',)
         widgets = {
             'owner': forms.HiddenInput(),
             'brand': forms.TextInput(
@@ -159,13 +156,59 @@ class BaseEquipmentGearForm(forms.ModelForm):
             ),
         }
 
+    def save(self, commit=True):
+        motorcycle = super(BaseEquipmentGearForm, self).save(commit)
+        for image_file in self.cleaned_data['equipment_images']:
+            MotoEquipmentImages.objects.create(image=image_file, sale_ad=motorcycle)
 
-class CreateEquipmentGearForm(BaseEquipmentGearForm):
-    ...
+        return motorcycle
 
 
-class EditEquipmentGearForm(BaseEquipmentGearForm):
-    ...
+class CreateEquipmentGearForm(Limits, BaseEquipmentGearForm):
+    equipment_images = MultiMediaField(min_num=Limits.MIN_FILES,
+                                       max_num=Limits.MAX_FILES,
+                                       max_file_size=Limits.MAX_FILE_SIZE,
+                                       media_type='image',
+                                       )
+
+
+class EditEquipmentGearForm(Limits, BaseEquipmentGearForm):
+    equipment_images = MultiMediaField(min_num=0,
+                                       max_num=Limits.MAX_FILES,
+                                       max_file_size=Limits.MAX_FILE_SIZE,
+                                       media_type='image',
+                                       label='Add Images:',
+                                       required=False, )
+
+    def clean(self):
+        existing_equipment_images = len(self.instance.motoequipmentimages_set.all())
+        print(f'curernt qty {existing_equipment_images}')
+        images_for_add = len(self.cleaned_data['equipment_images'])
+
+        try:
+            images_for_delete = dict(self.data)['selected_images']
+        except KeyError:
+            images_for_delete = ''
+
+        total = existing_equipment_images - len(images_for_delete) + images_for_add
+        print(f"for delete{images_for_delete}")
+        print(f"for add {images_for_add}")
+        print(f"total {total}")
+        if total < Limits.MIN_FILES:
+            raise exceptions.ValidationError(
+                {
+                    "equipment_images": f'Minimum images for sale offer is {self.MIN_FILES} !'}
+            )
+
+        elif Limits.MAX_FILES < total:
+            print(f'limit{Limits.MAX_FILES}')
+            raise exceptions.ValidationError(
+                {
+                    "equipment_images": f'Maximum images for sale offer is {self.MAX_FILES}!'}
+            )
+
+        MotoEquipmentImages.objects.filter(id__in=images_for_delete).delete()
+        return self.cleaned_data
 
 
 class BasePartsForm(forms.ModelForm):

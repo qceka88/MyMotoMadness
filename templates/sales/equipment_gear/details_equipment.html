@@ -11,7 +11,7 @@
     <p>For Bike: {{ object.material_type }} </p>
 
     <p>Approved: {{ object.approved }} </p>
-
+    <p>TOTAL IMAGES {{ object.motoequipmentimages_set.all.count }}</p>
     <ul>
         {% for picture in equipment_pictures %}
             <li>

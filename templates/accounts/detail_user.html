@@ -110,7 +110,7 @@
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="text-center">
-                <h6 class="text-primary text-uppercase">// User`s selling offers //</h6>
+                <h6 class="text-primary text-uppercase">// sSelling offers //</h6>
             </div>
             {% if not user_sale_offers %}
                 <div class="text-center">
@@ -118,8 +118,11 @@
                 </div>
             {% else %}
                 <div class="text-center">
-
-                    <h1 class="mb-5">{{ object.username }}`s selling offers!</h1>
+                    {% if request.user.pk == object.pk %}
+                        <h1 class="mb-5">My selling offers!</h1>
+                    {% else %}
+                        <h1 class="mb-5">{{ object.username }}`s selling offers!</h1>
+                    {% endif %}
                 </div>
 
                 <div class="owl-carousel testimonial-carousel position-relative">

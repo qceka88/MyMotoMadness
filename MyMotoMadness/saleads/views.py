@@ -5,8 +5,7 @@ from django.views import generic as views
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
 from MyMotoMadness.saleads.mixins import AddPicturesToSaleOffer, CheckForRestrictionAds
-from MyMotoMadness.saleads.models import Motorcycles, MotorcycleImages, MotoEquipmentGear, MotoEquipmentImages, \
-    MotoParts, MotoPartsImages
+from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts, MotoPartsImages
 
 
 class CommonSaleView(views.TemplateView):
@@ -61,11 +60,12 @@ class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds
         return context
 
     def post(self, request, *args, **kwargs):
-        #selected_images = request.POST.getlist('selected_images')
         data = super().post(request, *args, **kwargs)
         form = self.get_form()
 
         if form.is_valid():
+            self.object.approved = False
+            self.object.save()
             return data
 
         return data
@@ -101,10 +101,16 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, AddPicturesToSaleOffe
     form_class = CreateEquipmentGearForm
     success_url = reverse_lazy('list equipment gear view')
 
-    def form_valid(self, form):
-        data = super().form_valid(form)
-        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
-        return data
+    def post(self, request, *args, **kwargs):
+        data = super().post(request, *args, **kwargs)
+        form = self.get_form()
+
+        if form.is_valid():
+            self.object.owner = self.request.user
+            self.object.save()
+            return data
+
+        return self.form_invalid(form)
 
 
 class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, AddPicturesToSaleOffer,
@@ -118,15 +124,15 @@ class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionA
         context['equipment_pictures'] = context['object'].motoequipmentimages_set.all()
         return context
 
-    def form_valid(self, form):
-        data = super().form_valid(form)
-        self.add_pictures_to_sale_offer(self.object, self.request, self.request.user, MotoEquipmentImages)
-        return data
-
     def post(self, request, *args, **kwargs):
-        selected_images = request.POST.getlist('selected_images')
-        MotoEquipmentImages.objects.filter(id__in=selected_images).delete()
         data = super().post(request, *args, **kwargs)
+        form = self.get_form()
+
+        if form.is_valid():
+            self.object.approved = False
+            self.object.save()
+            return data
+
         return data
 
     def get_success_url(self):

@@ -10,7 +10,7 @@
         {% csrf_token %}
 
         <ul>
-            {% for image in object.motorcycleimages_set.all %}
+            {% for image in bike_pictures %}
                 <li>
                     <img style="width: 150px;" src="{{ image.image.url }}" alt="img">
                     <input type="checkbox" name="selected_images" value="{{ image.id }}">
