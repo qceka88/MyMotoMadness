@@ -4,7 +4,7 @@ from django.views import generic as views
 
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.mixins import  CheckForRestrictionAds
+from MyMotoMadness.saleads.mixins import CheckForRestrictionAds
 from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
 
@@ -29,12 +29,17 @@ class MotorcyclesListViews(views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['not_approved'] = context['object_list'].filter(approved=False)
+        context['approved'] = context['object_list'].filter(approved=True)
+        return context
 
 class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
     model = Motorcycles
     form_class = CreateMotorcycleForm
-
 
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
@@ -49,6 +54,7 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
 
     def get_success_url(self):
         return reverse_lazy('detail motorcycle view', kwargs={'pk': self.object.pk})
+
 
 class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/motorcycles/edit_motorcycle.html'
@@ -96,6 +102,12 @@ class EquipmentGearListView(views.ListView):
     template_name = 'sales/equipment_gear/equipment_list.html'
     model = MotoEquipmentGear
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['not_approved'] = context['object_list'].filter(approved=False)
+        context['approved'] = context['object_list'].filter(approved=True)
+        return context
 
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
@@ -160,7 +172,12 @@ class PartsListView(views.ListView):
     template_name = 'sales/moto_parts/list_parts.html'
     model = MotoParts
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        context['not_approved'] = context['object_list'].filter(approved=False)
+        context['approved'] = context['object_list'].filter(approved=True)
+        return context
 class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
