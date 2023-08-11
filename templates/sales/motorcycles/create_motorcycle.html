@@ -1,24 +1,153 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>
-        ADD NEW MOTORCYCLE SALE OFFER
-    </h1>
+    {#    <h1>#}
+    {#        ADD NEW MOTORCYCLE SALE OFFER#}
+    {#    </h1>#}
+    {##}
+    {#    <form action="{% url 'add motorcycle view' %}" method="post" enctype="multipart/form-data">#}
+    {#        {{ form.as_p }}#}
+    {#        {% csrf_token %}#}
+    {#        <button>#}
+    {#            Submit information!#}
+    {#        </button>#}
+    {##}
+    {#    </form>#}
 
-    <form action="{% url 'add motorcycle view' %}" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button>
-            Submit information!
-        </button>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/suziki-in-the-wild.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">ADD MOTORCYCLE</h1>
 
-    </form>
-    <button>
-        <a href="{% url 'list motorcycle view' %}">LIST Motorcycles</a>
-    </button>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
 
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+    <div class="container-xxl py-5">
+        <div class="wow fadeInUp" data-wow-delay="0.2s">
+            <div class="container text-center">
+                <form action="{% url 'add motorcycle view' %}" method="post"
+                      enctype="multipart/form-data" class="form-control">
+                    <div class="row g-6">
+                        <div class="col-md-6">
+                            <label>Brand:</label>
+                            <div class="form-floating">
+                                {{ form.brand }}
+                                <div class="text-black">
+                                    {{ form.brand.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Model:</label>
+                            <div class="form-floating">
+                                {{ form.model }}
+                                <div class="text-black">
+                                    {{ form.model.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Engine Volume:</label>
+                            <div class="form-floating">
+                                {{ form.engine_volume }}
+                                <div class="text-black">
+                                    {{ form.engine_volume.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Horse Power:</label>
+                            <div class="form-floating">
+                                {{ form.horse_power }}
+                                <div class="text-black">
+                                    {{ form.horse_power.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Price:</label>
+                            <div class="form-floating">
+                                {{ form.price }}
+                                <div class="text-black">
+                                    {{ form.price.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>City:</label>
+                            <div class="form-floating">
+                                {{ form.city }}
+                                <div class="text-black">
+                                    {{ form.city.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Select Motorcycle Type:</label>
+                            <div class="form-floating">
+                                {{ form.bike_type }}
+                                <div class="text-black">
+                                    {{ form.bike_type.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Select Images:</label>
+                            <div class="form-floating">
+                                {{ form.motorcycle_images }}
+                                <div class="text-black">
+                                    {{ form.motorcycle_images.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Description:</label>
+                            <div class="form-floating">
+                                {{ form.description }}
+                                <div class="text-black">
+                                    {{ form.description.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label> </label>
+                            <div class="form-floating">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label> </label>
+                            <div class="form-floating">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-25 py-3" type="submit">Publish offer</button>
+                        </div>
+
+                        {% csrf_token %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="col-12">
+            <button class="btn btn-success rounded-pill text-center" style="position: center">
+                <a href="javascript:history.back()" style="color: whitesmoke">
+                    GO BACK
+                </a>
+            </button>
+        </div>
+    </div>
 
 {% endblock %}

@@ -71,42 +71,47 @@
                     {% if offer|class_name_show == 'Motorcycles' %}
                         <div class="testimonial-item text-center">
                             {% for picture in offer.motorcycleimages_set.all|slice:1 %}
-                                <img class="bg-light rounded-circle p-2 mx-auto mb-3"
+                                <img class="bg-light p-2 mx-auto mb-3"
                                      src="{{ picture.image.url }}"
-                                     style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
+                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
                             {% endfor %}
                             <h5 class="mb-0">{{ offer.brand }}</h5>
                             <p>{{ offer.model }}</p>
+                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
                             <div class="testimonial-text bg-light text-center p-4">
                                 <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
                             </div>
+                            <br>
                             <button><a href="{% url 'detail motorcycle view' pk=offer.pk %}">DETAILS</a></button>
                         </div>
                     {% elif offer|class_name_show == 'MotoEquipmentGear' %}
                         <div class="testimonial-item text-center">
                             {% for picture in offer.motoequipmentimages_set.all|slice:1 %}
-                                <img class="bg-light rounded-circle p-2 mx-auto mb-3"
+                                <img class="bg-light p-2 mx-auto mb-3"
                                      src="{{ picture.image.url }}"
-                                     style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
+                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
                             {% endfor %}
                             <h5 class="mb-0">{{ offer.brand }}</h5>
                             <p>{{ offer.model }}</p>
-
+                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
                             <div class="testimonial-text bg-light text-center p-4">
                                 <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
                             </div>
+                            <br>
                             <button><a href="{% url 'detail equipment gear view' pk=offer.pk %}">DETAILS</a>
                             </button>
                         </div>
                     {% elif offer|class_name_show == 'MotoParts' %}
                         <div class="testimonial-item text-center">
                             {% for picture in offer.motopartsimages_set.all|slice:1 %}
-                                <img class="bg-light rounded-circle p-2 mx-auto mb-3"
+                                <img class="bg-light  p-2 mx-auto mb-3"
                                      src="{{ picture.image.url }}"
-                                     style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
+                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
                             {% endfor %}
                             <h5 class="mb-0">{{ offer.brand }}</h5>
+
                             <p>{{ offer.model }}</p>
+                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
                             <div class="testimonial-text bg-light text-center p-4">
                                 <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
                             </div>

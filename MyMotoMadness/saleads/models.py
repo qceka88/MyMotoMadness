@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core import validators
 from django.db import models
 
 from MyMotoMadness.saleads.mixins import BikeTypeChoices, ProtectionGearTypeChoices
@@ -24,6 +25,10 @@ class Motorcycles(models.Model):
 
     )
     manufacture_year = models.PositiveIntegerField(
+        validators=(
+            validators.MinValueValidator(1900),
+            validators.MaxValueValidator(2023)
+        )
     )
     description = models.TextField(
         max_length=500,
@@ -77,6 +82,10 @@ class MotoEquipmentGear(models.Model):
         blank=True,
     )
     manufacture_year = models.PositiveIntegerField(
+        validators=(
+            validators.MinValueValidator(1900),
+            validators.MaxValueValidator(2023)
+        )
     )
     description = models.TextField(
         max_length=500,
@@ -127,6 +136,10 @@ class MotoParts(models.Model):
         blank=True,
     )
     manufacture_year = models.PositiveIntegerField(
+        validators=(
+            validators.MinValueValidator(1900),
+            validators.MaxValueValidator(2023)
+        )
     )
     description = models.TextField(
         max_length=500,

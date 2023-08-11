@@ -12,6 +12,9 @@ class Limits:
     MAX_FILE_SIZE = 1024 * 1024 * 5
 
 
+a = forms.Select
+
+
 class BaseMotorcycleForm(forms.ModelForm):
     class Meta:
         model = Motorcycles
@@ -20,29 +23,40 @@ class BaseMotorcycleForm(forms.ModelForm):
             'owner': forms.HiddenInput(
 
             ),
+            'bike_type': forms.Select(
+                attrs={
+                    'placeholder': 'Enter Motorcycle Model',
+                    'style': "height: 35px",
+                }
+            ),
             'brand': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Motorcycle Brand'
+                    'placeholder': 'Enter Motorcycle Brand',
+                    'style': "height: 35px",
                 }
             ),
             'model': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Motorcycle Model'
+                    'placeholder': 'Enter Motorcycle Model',
+                    'style': "height: 35px",
                 }
             ),
             'engine_volume': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Enter Engine Volume'
+                    'placeholder': 'Enter Engine Volume',
+                    'style': "height: 35px",
                 }
             ),
             'manufacture_year': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Enter Manufacture Year'
+                    'placeholder': 'Enter Manufacture Year',
+                    'style': "height: 35px",
                 }
             ),
             'horse_power': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Enter Horse Power'
+                    'placeholder': 'Enter Horse Power',
+                    'style': "height: 35px",
                 }
             ),
             'description': forms.Textarea(
@@ -52,12 +66,14 @@ class BaseMotorcycleForm(forms.ModelForm):
             ),
             'city': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter City'
+                    'placeholder': 'Enter City',
+                    'style': "height: 35px",
                 }
             ),
             'price': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Price for Motorcycle'
+                    'placeholder': 'Enter Price for Motorcycle',
+                    'style': "height: 35px",
                 }
             ),
         }
