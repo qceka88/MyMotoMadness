@@ -49,6 +49,9 @@ class Motorcycles(models.Model):
     approved = models.BooleanField(
         default=False,
     )
+    published = models.DateTimeField(
+        auto_now_add=True,
+    )
 
     def __str__(self):
         return f"{self.brand} {self.model} {self.engine_volume}"
@@ -105,6 +108,9 @@ class MotoEquipmentGear(models.Model):
     approved = models.BooleanField(
         default=False,
     )
+    published = models.DateTimeField(
+        auto_now_add=True,
+    )
 
     def __str__(self):
         return f'{self.gear_type}, {self.brand}, {self.model} - {self.price:.2f}lv.'
@@ -157,6 +163,9 @@ class MotoParts(models.Model):
     )
     approved = models.BooleanField(
         default=False,
+    )
+    published = models.DateTimeField(
+        auto_now_add=True,
     )
 
     def __str__(self):
