@@ -24,6 +24,8 @@ class CommonSaleView(views.TemplateView):
 
         return context
 
+class NotApprovedOffersView(views.TemplateView):
+    template_name = 'sales/not_approved_offers.html'
 
 class MotorcyclesListViews(views.ListView, views.RedirectView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
