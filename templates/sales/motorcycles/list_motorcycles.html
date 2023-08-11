@@ -3,21 +3,37 @@
 {% block page_content %}
     <h1>MOTORCYCLES LIST</h1>
     <ul>
-        {% for motorcycle_object in object_list %}
+        {% if request.user.is_staff or request.user.is_superuser %}
+            <h3>NOT APPROVED MOTORCYCLES LIST</h3>
+            {% for motorcycle_object in not_approved %}
+                <li>
+                    {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
+                    <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
+                    {% if request.user.is_staff or request.user.is_superuser %}
+                        <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
+                        <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
+                        <p><label>Approve:<input type="checkbox" name="selected_offers"
+                                                 value="{{ motorcycle_object.id }}"
+                                                 title="Approve"> </label></p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <button><a href="{% url 'list motorcycle view' %}">Update</a></button>
+            <h3>APPROVED MOTORCYCLES LIST</h3>
+        {% endif %}
+        {% for motorcycle_object in approved %}
             <li>
                 {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
                 <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
-                {% if  request.user.is_superuser or request.user_is_staff %}
+                {% if request.user.is_staff or request.user.is_superuser %}
                     <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
                     <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
                 {% endif %}
             </li>
-
         {% endfor %}
-
     </ul>
 
-        <!-- Team Start -->
+    <!-- Team Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">

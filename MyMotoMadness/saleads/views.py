@@ -25,16 +25,16 @@ class CommonSaleView(views.TemplateView):
         return context
 
 
-class MotorcyclesListViews(views.ListView):
+class MotorcyclesListViews(views.ListView, views.RedirectView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
+
 
 class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
@@ -104,11 +104,9 @@ class EquipmentGearListView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
-
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
@@ -178,6 +176,8 @@ class PartsListView(views.ListView):
         context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
+
+
 class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
