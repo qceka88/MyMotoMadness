@@ -39,7 +39,7 @@ class MotoUserModel(auth_models.AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.username}: {self.first_name} {self.last_name}"
+        return f"{self.username}"
 
     def get_absolute_url(self):
         return redirect('edit user view', kwargs={'pk': self.pk})

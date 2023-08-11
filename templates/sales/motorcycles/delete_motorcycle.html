@@ -1,24 +1,38 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block page_content %}
+    {% for picture in object.motorcycleimages_set.all|slice:1 %}
+        <div class="container-fluid page-header mb-5 p-0"
+             style="background-image: url({{ picture.image.url }}); ">
+            <div class="container-fluid page-header-inner py-5">
+                <div class="container text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">DELETE MOTORCYCLE</h1>
+                </div>
+            </div>
+        </div>
 
-    <h1>DELETE MOTORCYCLE</h1>
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s"
+             style="background-image: url({{ picture.image.url }});
+                     background-position: 65%;
+                     background-repeat: no-repeat;
+                     background-size: 20%;">
+            <div class="container text-lg-start">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <form action="{% url  'delete motorcycle view' pk=object.pk %}" method="post">
+                            <h3 class="mb-4">IF DELETE YOUR OFFER. </h3>
+                            <h3 class="mb-4">OFFER WILL BE LOST </h3>
+                            <a class="btn btn-success rounded-pill py-3 px-5" href="javascript:history.back()">GO
+                                BACK</a>
+                            <button class="btn btn-primary rounded-pill py-3 px-5">DELETE</button>
+                            {% csrf_token %}
 
-    <h1> Are you sure to delete? </h1>
-    <form action="{% url  'delete motorcycle view' pk=object.pk %}" method="post">
-        {{ form }}
-        {{ object }}
-        <button>
-            DELETE!
-        </button>
-        {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    </form>
-
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
-
-
+    {% endfor %}
 
 {% endblock %}

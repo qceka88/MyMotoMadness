@@ -22,7 +22,7 @@
                         {% for picture in object.motorcycleimages_set.all %}
                             <div class="testimonial-item text-center">
                                 <div class="team-item">
-                                    <div class="position-relative ">
+                                    <div class="position-relative">
                                         <img class="bg-light  p-2 mx-auto mb-3"
                                              src="{{ picture.image.url }}"
                                              style="width: 200px; height: 200px;" alt="{{ object.brand }}">
@@ -137,12 +137,27 @@
                         </div>
                         <br>
                         <br>
-                        <div class="col-md-3">
-                            <label>NOTE: </label>
-                            <p>When you edit the offer. The offer will go for approval and will be not visible for other
-                                pople!</p>
-                            <div class="form-floating">
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                            <h3>Admin/Mod section</h3>
+                            <div class="col-12">
+                                <label>Approved:</label>
+                                <div class="form-floating">
+                                    {{ form.approved }}
+                                </div>
                             </div>
+                        {% endif %}
+                        <br>
+                        <br>
+
+                        <div class="col-md-3">
+                            {% if not request.user.is_staff and not request.user.is_superuser %}
+                                <label>NOTE: </label>
+                                <p>When you edit the offer. The offer will go for approval and will be not visible for
+                                    other
+                                    people!</p>
+                                <div class="form-floating">
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="col-md-6">
                             <label> </label>
@@ -154,7 +169,7 @@
                     <!-- Offer details End -->
                     {% csrf_token %}
                     <div class="col-12">
-                        <button class="btn btn-primary w-25 py-3">EDIT offer</button>
+                        <button class="btn btn-primary w-25 py-3">SAVE CHANGES</button>
                     </div>
                 </form>
             </div>

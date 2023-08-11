@@ -65,8 +65,9 @@ class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds
         form = self.get_form()
 
         if form.is_valid():
-            self.object.approved = False
-            self.object.save()
+            if not self.request.user.is_staff and not self.request.user.is_superuser:
+                self.object.approved = False
+                self.object.save()
             return data
 
         return data
