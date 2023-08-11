@@ -1,5 +1,6 @@
 {% load static %}
-
+{% load custom_filter %}
+{% not_approved_offers as offer_for_check %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,13 +46,35 @@
     </div>
 </div>
 <!-- Spinner End -->
-{##}
+<!-- Topbar Start -->
+<div class="container-fluid bg-light p-0">
+    <div class="row gx-0 d-none d-lg-flex">
+        <div class="col-lg-7 px-5 text-start">
+            {% if request.user.is_authenticated %}
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <small class="fa fa-user text-primary me-2"></small>
+                    <small>{{ request.user.username }}  welcome to the Madness!</small>
+                </div>
+            {% endif %}
+
+            {% if request.user.is_staff or request.user.is_superuser %}
+                {% if offer_for_check %}
+                    <div class="h-100 d-inline-flex align-items-center py-3">
+
+                        <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
+                        <small>Check not approved offers!</small>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class='fas fa-motorcycle fa-lg'></i>MyMotoMadness</h2>
     </a>
-    <h1> USER: {{ request.user.username }}</h1>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>

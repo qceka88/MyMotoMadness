@@ -6,3 +6,5 @@ envs/__init__.py
 *.pyc
 *.pyc
 *.pyc
+db.sqlite3
+*.sqlite3

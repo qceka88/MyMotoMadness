@@ -31,7 +31,6 @@ class MotorcyclesListViews(views.ListView, views.RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
 
@@ -104,7 +103,6 @@ class EquipmentGearListView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
@@ -172,8 +170,6 @@ class PartsListView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context['not_approved'] = context['object_list'].filter(approved=False)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
 
