@@ -21,7 +21,6 @@ class BaseMotorcycleForm(forms.ModelForm):
         exclude = ('motorcycle_images', 'approved',)
         widgets = {
             'owner': forms.HiddenInput(
-
             ),
             'bike_type': forms.Select(
                 attrs={
@@ -95,7 +94,10 @@ class CreateMotorcycleForm(Limits, BaseMotorcycleForm):
                                         )
 
 
+# "autocomplete": "current-password",
 class EditMotorcycleForm(Limits, BaseMotorcycleForm):
+    BaseMotorcycleForm.Meta.exclude = ('motorcycle_images', 'approved', 'owner')
+
     motorcycle_images = MultiMediaField(min_num=0,
                                         max_num=Limits.MAX_FILES,
                                         max_file_size=Limits.MAX_FILE_SIZE,

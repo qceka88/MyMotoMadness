@@ -34,7 +34,7 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/motorcycles/create_motorcycle.html'
     model = Motorcycles
     form_class = CreateMotorcycleForm
-    success_url = reverse_lazy('list motorcycle view')
+
 
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
@@ -47,6 +47,8 @@ class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
 
         return self.form_invalid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('detail motorcycle view', kwargs={'pk': self.object.pk})
 
 class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/motorcycles/edit_motorcycle.html'

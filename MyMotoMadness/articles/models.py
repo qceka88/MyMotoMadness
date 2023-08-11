@@ -24,6 +24,7 @@ class ArticlesModel(models.Model):
     )
 
     description = models.TextField(
+        max_length=5000
 
     )
     published = models.DateTimeField(

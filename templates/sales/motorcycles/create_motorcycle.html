@@ -1,25 +1,13 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    {#    <h1>#}
-    {#        ADD NEW MOTORCYCLE SALE OFFER#}
-    {#    </h1>#}
-    {##}
-    {#    <form action="{% url 'add motorcycle view' %}" method="post" enctype="multipart/form-data">#}
-    {#        {{ form.as_p }}#}
-    {#        {% csrf_token %}#}
-    {#        <button>#}
-    {#            Submit information!#}
-    {#        </button>#}
-    {##}
-    {#    </form>#}
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 p-0"
          style="background-image: url({% static 'img/suziki-in-the-wild.jpg' %});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">ADD MOTORCYCLE</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">ADD NEW MOTORCYCLE SALE OFFER</h1>
 
             </div>
         </div>
@@ -36,7 +24,7 @@
                             <label>Brand:</label>
                             <div class="form-floating">
                                 {{ form.brand }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.brand.errors|join:", " }}
                                 </div>
                             </div>
@@ -46,7 +34,7 @@
                             <label>Model:</label>
                             <div class="form-floating">
                                 {{ form.model }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.model.errors|join:", " }}
                                 </div>
                             </div>
@@ -55,7 +43,7 @@
                             <label>Engine Volume:</label>
                             <div class="form-floating">
                                 {{ form.engine_volume }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.engine_volume.errors|join:", " }}
                                 </div>
                             </div>
@@ -64,7 +52,7 @@
                             <label>Horse Power:</label>
                             <div class="form-floating">
                                 {{ form.horse_power }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.horse_power.errors|join:", " }}
                                 </div>
                             </div>
@@ -73,8 +61,17 @@
                             <label>Price:</label>
                             <div class="form-floating">
                                 {{ form.price }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.price.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Year of manufacture:</label>
+                            <div class="form-floating">
+                                {{ form.manufacture_year }}
+                                <div class="text-danger">
+                                    {{ form.manufacture_year.errors|join:", " }}
                                 </div>
                             </div>
                         </div>
@@ -84,7 +81,7 @@
                             <label>City:</label>
                             <div class="form-floating">
                                 {{ form.city }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.city.errors|join:", " }}
                                 </div>
                             </div>
@@ -94,7 +91,7 @@
                             <label>Select Motorcycle Type:</label>
                             <div class="form-floating">
                                 {{ form.bike_type }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.bike_type.errors|join:", " }}
                                 </div>
                             </div>
@@ -102,10 +99,10 @@
                         <br>
                         <br>
                         <div class="col-md-6">
-                            <label>Select Images:</label>
+                            <label>Add Images:</label>
                             <div class="form-floating">
                                 {{ form.motorcycle_images }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.motorcycle_images.errors|join:", " }}
                                 </div>
                             </div>
@@ -115,13 +112,17 @@
                             <label>Description:</label>
                             <div class="form-floating">
                                 {{ form.description }}
-                                <div class="text-black">
+                                <div class="text-danger">
                                     {{ form.description.errors|join:", " }}
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <br>
                         <div class="col-md-6">
-                            <label> </label>
+                            <label>NOTE: </label>
+                            <p>Images cannot be less than 2 and more than 8!</p>
+                            <p>After publish offer will go for approval!</p>
                             <div class="form-floating">
                             </div>
                         </div>
@@ -131,11 +132,13 @@
                             </div>
                         </div>
                         <br>
-                        <div class="col-12">
-                            <button class="btn btn-primary w-25 py-3" type="submit">Publish offer</button>
-                        </div>
 
                         {% csrf_token %}
+                        <div class="col-12">
+                            <button class="btn btn-primary w-25 py-3">Publish offer</button>
+                        </div>
+
+
                     </div>
                 </form>
             </div>
