@@ -1,40 +1,175 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>PART DETAILS</h1>
-    <p>Type of part {{ object.type_of_part }} </p>
-    <p>Brand{{ object.brand }} </p>
-    <p>Model {{ object.model }} </p>
+    <!-- Page Header Start -->
+    {% for picture in object.motopartsimages_set.all|slice:1 %}
+        <div class="container-fluid page-header mb-5 p-0"
+             style="background-image: url({{ picture.image.url }});" xmlns="http://www.w3.org/1999/html">
+    {% endfor %}
+<div class="container-fluid page-header-inner py-5">
+    <div class="container text-center">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.brand }} {{ object.model }} {{ object.type_of_part }}</h1>
 
-    <p>Created On: {{ object.manufacture_year }} </p>
+    </div>
+</div>
+</div>
+    <!-- Page Header End -->
+    <div class="container-xxl py-5 overflow-visible">
+        <div class="wow fadeInUp" data-wow-delay="0.2s overflow-visible">
+            <div class="container text-center">
+                <div class="owl-carousel testimonial-carousel position-relative overflow-visible">
+                    {% for picture in object.motopartsimages_set.all %}
+                        <div class="testimonial-item text-center">
+                            <div class="team-item">
+                                <div class="position-relative">
+                                    <img class="bg-light  p-2 mx-auto mb-3"
+                                         src="{{ picture.image.url }}"
+                                         style="width: 350px; height: 350px;" alt="{{ object.brand }}">
+                                    <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                        <img src="{{ picture.image.url }}" style="width: 550px; height: 550px;"
+                                             alt="{{ object.brand }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Offer details Start -->
+                <br>
+                <div class="row g-6">
+                    <div class="col-md-6">
+                        <h3>Brand: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.brand }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>Model: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.model }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>For Motorcycle: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.for_bike }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>Type of part: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.type_of_part }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Year of manufacture: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.manufacture_year }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
 
-    <p>For Bike: {{ object.for_bike }} </p>
+                        <div class="form-floating">
 
-    <p>Is approved: {{ object.approved }} </p>
-    <p>TOTAL IMAGES {{ object.motopartsimages_set.all.count }}</p>
-    <ul>
-        {% for picture in part_pictures %}
-            <li>
-                <img style="width: 150px" src="{{ picture.image.url }}" alt="{{ object.brand }}">
-            </li>
-        {% endfor %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>Description: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.description }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>City: </h3>
+                        <div class="form-floating">
+                            <p>{{ object.city }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h2>Price: </h2>
+                        <div class="form-floating">
+                            <h3>{{ object.price|floatformat:2 }} lv.</h3>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <h3>Owner: </h3>
+                        <div class="form-floating">
+                            <h3>{{ object.owner }}</h3>
+                            {% if object.owner.profile_picture %}
+                                <img src="{{ object.owner.profile_picture.url }}"
+                                     class="bg-light rounded-circle p-2 mx-auto mb-3"
+                                     style="width: 100px; height: 100px;"
+                                     alt="{{ object.owner }}">
+                            {% else %}
+                                <img src="{% static 'img/avatar.png' %}"
+                                     class="bg-light rounded-circle p-2 mx-auto mb-3"
+                                     style="width: 100px; height: 100px;"
+                                     alt="{{ object.owner }}">
+                            {% endif %}
+                            <p>Contacts:</p>
+                            <h3>{{ object.owner.phone_number }}</h3>
+                            <h3>{{ object.owner.email }}</h3>
+                            <button><a href="{% url 'details user view' pk=object.owner.pk %}">See Profile</a></button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Published on: </h3>
+                        <div class="form-floating">
+                            <h5>{{ object.published }}</h5>
+                        </div>
+                    </div>
+                    <br>
+                    {% if request.user.is_staff or request.user.is_superuser %}
 
-    </ul>
-     <p><a href="{% url 'details user view' pk=object.owner_id %}"> Owner: {{ object.owner.username }} </a></p>
-    <h1>City: {{ object.city }}</h1>
-    <h1>Contact: {{ object.owner.phone_number }}</h1>
-    <h1>Price :{{ object.price|floatformat:2 }}</h1>
-
-    <button><a href="{% url 'edit bike parts view' pk=object.pk %}">Part Edit</a></button>
-
-
-    <button><a href="{% url 'delete bike parts view' pk=object.pk %}">Part Delete</a></button>
-
-
-    <button><a href="{% url 'list bike parts view' %}">Part LIST</a></button>
-
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+                        <div class="col-md-6">
+                            <h3>Admin/Mod section</h3>
+                            <label>Approval status:</label>
+                            <div class="form-floating">
+                                {% if object.approved %}
+                                    <p>Offer is Approved!</p>
+                                {% else %}
+                                    <p>Offer is NOT approved!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if request.user.is_superuser or request.user.is_staff or  request.user.pk == object.owner.pk %}
+                        <div class="col-12">
+                            <button class="btn btn-secondary rounded-pill w-25 py-3">
+                                <a href="{% url 'edit bike parts view' pk=object.pk %}" style="color: whitesmoke">
+                                    Edit Offer
+                                </a>
+                            </button>
+                        </div>
+                        <br>
+                        <div class="col-12">
+                            <button class="btn btn-primary rounded-pill w-25 py-3">
+                                <a href="{% url 'delete bike parts view' pk=object.pk %}" style="color: whitesmoke">
+                                    Delete Offer
+                                </a>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Offer details End -->
+            </div>
+        </div>
+        <br>
+        <div class="col-12">
+            <button class="btn btn-success rounded-pill text-center" style="position: center">
+                <a href="javascript:history.back()" style="color: whitesmoke">
+                    GO BACK
+                </a>
+            </button>
+        </div>
+    </div>
 
 {% endblock %}

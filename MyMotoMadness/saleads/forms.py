@@ -134,12 +134,18 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
 class BaseEquipmentGearForm(forms.ModelForm):
     class Meta:
         model = MotoEquipmentGear
-        exclude = ('equipment_images', 'approved',)
+        exclude = ('equipment_images',)
         widgets = {
             'owner': forms.HiddenInput(),
             'brand': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Equipment Brand'
+                }
+            ),
+            'gear_type': forms.Select(
+                attrs={
+                    'placeholder': 'Select Equipment Model',
+                    'style': "height: 35px",
                 }
             ),
             'model': forms.TextInput(
@@ -192,6 +198,7 @@ class CreateEquipmentGearForm(Limits, BaseEquipmentGearForm):
 
 
 class EditEquipmentGearForm(Limits, BaseEquipmentGearForm):
+    BaseEquipmentGearForm.Meta.exclude = ('equipment_images', 'owner')
     equipment_images = MultiMediaField(min_num=0,
                                        max_num=Limits.MAX_FILES,
                                        max_file_size=Limits.MAX_FILE_SIZE,
@@ -276,7 +283,6 @@ class BasePartsForm(forms.ModelForm):
     def save(self, commit=True):
         parts = super(BasePartsForm, self).save(commit)
         for image_file in self.cleaned_data['moto_part_images']:
-            print('hui')
             MotoPartsImages.objects.create(image=image_file, sale_ad=parts)
 
         return parts
@@ -292,6 +298,7 @@ class CreatePartsForm(Limits, BasePartsForm):
 
 
 class EditPartsForm(Limits, BasePartsForm):
+    BasePartsForm.Meta.exclude = ('moto_part_images', 'owner')
     moto_part_images = MultiMediaField(min_num=0,
                                        max_num=Limits.MAX_FILES,
                                        max_file_size=Limits.MAX_FILE_SIZE,
@@ -302,7 +309,6 @@ class EditPartsForm(Limits, BasePartsForm):
 
     def clean(self):
         existing_part_images = len(self.instance.motopartsimages_set.all())
-        print(f'curernt qty {existing_part_images}')
         images_for_add = len(self.cleaned_data['moto_part_images'])
 
         try:
@@ -311,9 +317,6 @@ class EditPartsForm(Limits, BasePartsForm):
             images_for_delete = ''
 
         total = existing_part_images - len(images_for_delete) + images_for_add
-        print(f"for delete{images_for_delete}")
-        print(f"for add {images_for_add}")
-        print(f"total {total}")
         if total < Limits.MIN_FILES:
             raise exceptions.ValidationError(
                 {
@@ -321,7 +324,6 @@ class EditPartsForm(Limits, BasePartsForm):
             )
 
         elif Limits.MAX_FILES < total:
-            print(f'limit{Limits.MAX_FILES}')
             raise exceptions.ValidationError(
                 {
                     "moto_part_images": f'Maximum images for sale offer is {self.MAX_FILES}!'}

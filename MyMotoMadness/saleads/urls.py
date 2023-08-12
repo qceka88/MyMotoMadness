@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from MyMotoMadness.saleads.views import CommonSaleView, MotorcyclesListViews, MotorcyclesAddView, \
+from MyMotoMadness.saleads.views import CommonSaleView, NotApprovedOffersView,MotorcyclesListViews, MotorcyclesAddView, \
     MotorcyclesDetailsView, MotorcyclesEditView, MotorcyclesDeleteView, EquipmentGearListView, EquipmentGearAddView, \
     EquipmentGearEditView, EquipmentGearDetailsView, EquipmentGearDeleteView, PartsListView, PartsAddView, \
     PartsEditView, PartsDetailsView, PartsDeleteView
@@ -8,6 +8,7 @@ from MyMotoMadness.saleads.views import CommonSaleView, MotorcyclesListViews, Mo
 # Sale offers URLS
 urlpatterns = [
     path('', CommonSaleView.as_view(), name='common sale view'),
+    path('for-approval/', NotApprovedOffersView.as_view(), name='sales for approval view'),
     path('motorcycles/', include([
         path('', MotorcyclesListViews.as_view(), name='list motorcycle view'),
         path('add/', MotorcyclesAddView.as_view(), name='add motorcycle view'),

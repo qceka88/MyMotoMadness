@@ -1,75 +1,65 @@
 {% extends 'base/base.html' %}
 {% load static %}
+
 {% block page_content %}
-    <h1>MOTORCYCLES LIST</h1>
-    <ul>
-        {% if request.user.is_staff or request.user.is_superuser %}
-            <h3>NOT APPROVED MOTORCYCLES LIST</h3>
-            {% for motorcycle_object in not_approved %}
-                <li>
-                    {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
-                    <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
-                    {% if request.user.is_staff or request.user.is_superuser %}
-                        <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
-                        <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
-                        <p><label>Approve:<input type="checkbox" name="selected_offers"
-                                                 value="{{ motorcycle_object.id }}"
-                                                 title="Approve"> </label></p>
-                    {% endif %}
-                </li>
-            {% endfor %}
-            <button><a href="{% url 'list motorcycle view' %}">Update</a></button>
-            <h3>APPROVED MOTORCYCLES LIST</h3>
-        {% endif %}
-        {% for motorcycle_object in approved %}
-            <li>
-                {{ motorcycle_object }} OWNER = {{ motorcycle_object.owner }}
-                <button><a href="{% url 'detail motorcycle view' pk=motorcycle_object.pk %}">DET</a></button>
-                {% if request.user.is_staff or request.user.is_superuser %}
-                    <button><a href="{% url 'edit motorcycle view' pk=motorcycle_object.pk %}">Edit</a></button>
-                    <button><a href="{% url 'delete motorcycle view' pk=motorcycle_object.pk %}">Delete</a></button>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
 
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="text-primary text-uppercase">// Our Technicians //</h6>
-                <h1 class="mb-5">Our Expert Technicians</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                            <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light text-center p-4">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/endless_ride.png' %});">
 
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">MOTORCYCLES</h1>
+                <button class="btn btn-success rounded-pill text-center" style="position: center">
+                    <a href="{% url 'add motorcycle view' %}" style="color: whitesmoke">
+                        CREATE OFFER
+                    </a>
+                </button>
             </div>
         </div>
     </div>
-    <!-- Team End -->
-
-
-    <button>
-        <a href="{% url 'add motorcycle view' %}"> ADD</a>
-    </button>
-    <button>
-        <a href="{% url 'home-page' %}">HOME PAGE</a>
-    </button>
-
-
+    <!-- Page Header End -->
+    <!-- Offers Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-primary text-uppercase">// MyMotoMadness //</h6>
+                <h1 class="mb-5">All Motorcycles Offers</h1>
+            </div>
+            <div class="row g-4">
+                {% for motorcycle_offer in approved %}
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item">
+                            <div class="position-relative overflow-hidden">
+                                {% for picture in motorcycle_offer.motorcycleimages_set.all|slice:1 %}
+                                    <img class="img-fluid" src="{{ picture.image.url }}"
+                                         style="width: 300px; height: 200px;" alt="{{ motorcycle_offer.brand }}">
+                                {% endfor %}
+                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                    <a href="{% url 'detail motorcycle view' pk=motorcycle_offer.pk %}"
+                                       style="color: whitesmoke;"><small>{{ motorcycle_offer.description|truncatechars:30 }}</small></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light text-center p-4">
+                            <h5 class="fw-bold mb-0">{{ motorcycle_offer.brand }} {{ motorcycle_offer.model }} </h5>
+                            <small>Power: {{ motorcycle_offer.horse_power }}HP.</small>
+                            <small>Price: {{ motorcycle_offer.price|floatformat:2 }}lv.</small>
+                            <button><a href="{% url 'detail motorcycle view' pk=motorcycle_offer.pk %}"
+                                       style="color: red">See Details</a>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Offers End -->
+    <div class="col-12">
+        <button class="btn btn-success rounded-pill text-center" style="position: center">
+            <a href="javascript:history.back()" style="color: whitesmoke">
+                GO BACK
+            </a>
+        </button>
+    </div>
 {% endblock %}

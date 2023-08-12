@@ -1,26 +1,66 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>PARTS LIST</h1>
-    <ul>
-        {% for part_object in object_list %}
-            <li>
-                {{ part_object }} OWNER = {{ part_object.owner }}
-                <button><a href="{% url 'detail bike parts view' pk=part_object.pk %}">DET</a></button>
-                {% if part_object.owner == request.user %}
-                <button><a href="{% url 'edit bike parts view' pk=part_object.pk %}">Edit</a></button>
-                <button><a href="{% url 'delete bike parts view' pk=part_object.pk %}">Delete</a></button>
-            {% endif %}
-            </li>
-        {% endfor %}
 
-    </ul>
-    <button>
-        <a href="{% url 'add bike parts view' %}"> ADD</a>
-    </button>
-    <button>
-        <a href="{% url 'home-page' %}">HOME PAGE</a>
-    </button>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-bg-3.jpg' %});">
 
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">MOTORCYCLE PARTS</h1>
+                <button class="btn btn-success rounded-pill text-center" style="position: center">
+                    <a href="{% url 'add bike parts view' %}" style="color: whitesmoke">
+                        CREATE OFFER
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <!-- Offers Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-primary text-uppercase">// MyMotoMadness //</h6>
+                <h1 class="mb-5">All Motorcycle Parts Offers</h1>
+            </div>
+            <div class="row g-4">
+                {% for part_offer in approved %}
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item">
+                            <div class="position-relative overflow-hidden">
+                                {% for picture in part_offer.motopartsimages_set.all|slice:1 %}
+                                    <img class="img-fluid" src="{{ picture.image.url }}"
+                                         style="width: 300px; height: 200px;" alt="{{ part_offer.brand }}">
+                                {% endfor %}
+                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                    <a href="{% url 'detail bike parts view' pk=part_offer.pk %}"
+                                       style="color: whitesmoke;"><small>{{ part_offer.description|truncatechars:30 }}</small></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light text-center p-4">
+                            <h5 class="fw-bold mb-0">{{ part_offer.brand }} {{ part_offer.model }}</h5>
+                            <small>For: {{ part_offer.for_bike }}. </small>
+                            <small>Type: {{ part_offer.type_of_part }}. </small>
+                            <small>Price: {{ part_offer.price|floatformat:2 }}lv.</small>
+                            <button><a href="{% url 'detail bike parts view' pk=part_offer.pk %}"
+                                       style="color: red">See Details</a>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Offers End -->
+    <div class="col-12">
+        <button class="btn btn-success rounded-pill text-center" style="position: center">
+            <a href="javascript:history.back()" style="color: whitesmoke">
+                GO BACK
+            </a>
+        </button>
+    </div>
 
 {% endblock %}

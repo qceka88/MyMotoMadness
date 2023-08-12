@@ -96,7 +96,7 @@
                     <div class="col-md-6">
                         <h2>Price: </h2>
                         <div class="form-floating">
-                            <h3>{{ object.price|floatformat:2 }}lv.</h3>
+                            <h3>{{ object.price|floatformat:2 }} lv.</h3>
                         </div>
                     </div>
                     <br>
@@ -115,15 +115,16 @@
                                      style="width: 100px; height: 100px;"
                                      alt="{{ object.owner }}">
                             {% endif %}
-                            <p>Contact:</p>
+                            <p>Contacts:</p>
                             <h3>{{ object.owner.phone_number }}</h3>
+                            <h3>{{ object.owner.email }}</h3>
                             <button><a href="{% url 'details user view' pk=object.owner.pk %}">See Profile</a></button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h3>Published on: </h3>
                         <div class="form-floating">
-                            <hp>{{ object.published }}</hp>
+                            <h5>{{ object.published }}</h5>
                         </div>
                     </div>
                     <br>

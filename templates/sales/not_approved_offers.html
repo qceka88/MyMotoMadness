@@ -1,126 +1,122 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% load custom_filter %}
+
 {% block page_content %}
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 p-0"
-         style="background-image: url({% static 'img/carousel-bg-4.png' %});">
+         style="background-image: url({% static 'img/carousel-bg-3.jpg' %});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">SALE OFFERS</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">OFFERS FOR APPROVAL</h1>
+
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
                         <li class="breadcrumb-item"><a href="{% url 'list motorcycle view' %}">MOTORCYCLES</a></li>
                         <li class="breadcrumb-item"><a href="{% url 'list equipment gear view' %}">EQUIPMENT GEAR</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{% url 'list bike parts view' %}">BIKE PARTS</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list bike parts view' %}">MOTORCYCLE PARTS</a></li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
-
-    <!-- Service Start -->
+    <!-- Offers Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="d-flex py-5 px-4">
-                        <i class="fa fa-motorcycle fa-3x text-primary flex-shrink-0"></i>
-                        <div class="ps-4">
-                            <h5 class="mb-3">Motorcycles</h5>
-                            <p>Find your dream bike!</p>
-                            <a class="text-secondary border-bottom" href="{% url 'list motorcycle view' %}">Check
-                                Out</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="d-flex bg-light py-5 px-4">
-                        <i class="fa fa-user-circle fa-3x text-primary flex-shrink-0"></i>
-                        <div class="ps-4">
-                            <h5 class="mb-3">Biker Protection Gear</h5>
-                            <p>Find best protection for you!</p>
-                            <a class="text-secondary border-bottom" href="{% url 'list equipment gear view' %}">Check
-                                Out</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="d-flex py-5 px-4">
-                        <i class="fa fa-cogs fa-3x text-primary flex-shrink-0"></i>
-                        <div class="ps-4">
-                            <h5 class="mb-3">Bike Parts</h5>
-                            <p>Here you can find parts for your bike!</p>
-                            <a class="text-secondary border-bottom" href="{% url 'list bike parts view' %}">Check
-                                Out</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-primary text-uppercase">// MyMotoMadness //</h6>
+                <h1 class="mb-5">Offers Waiting For Approval</h1>
             </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="owl-carousel testimonial-carousel position-relative">
-                {% for offer in sale_offers %}
+            <div class="row g-4">
+                {% for offer in for_approval %}
                     {% if offer|class_name_show == 'Motorcycles' %}
-                        <div class="testimonial-item text-center">
-                            {% for picture in offer.motorcycleimages_set.all|slice:1 %}
-                                <img class="bg-light p-2 mx-auto mb-3"
-                                     src="{{ picture.image.url }}"
-                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
-                            {% endfor %}
-                            <h5 class="mb-0">{{ offer.brand }}</h5>
-                            <p>{{ offer.model }}</p>
-                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
-                            <div class="testimonial-text bg-light text-center p-4">
-                                <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
+                        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item">
+                                <div class="position-relative overflow-hidden">
+                                    {% for picture in offer.motorcycleimages_set.all|slice:1 %}
+                                        <img class="img-fluid" src="{{ picture.image.url }}"
+                                             style="width: 300px; height: 200px;" alt="{{ offer.brand }}">
+                                    {% endfor %}
+                                    <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                        <a href="{% url 'detail motorcycle view' pk=offer.pk %}"
+                                           style="color: whitesmoke;"><small>{{ offer.description|truncatechars:30 }}</small></a>
+                                    </div>
+                                </div>
                             </div>
-                            <br>
-                            <button><a href="{% url 'detail motorcycle view' pk=offer.pk %}">DETAILS</a></button>
+                            <div class="bg-light text-center p-4">
+                                <h5 class="fw-bold mb-0">{{ offer.brand }} {{ offer.model }} </h5>
+                                <h5 class="fw-bold mb-0"> Motorcycle </h5>
+                                <small>Power: {{ offer.horse_power }}HP.</small>
+                                <small>Price: {{ offer.price|floatformat:2 }}lv.</small>
+                                <button><a href="{% url 'detail motorcycle view' pk=offer.pk %}"
+                                           style="color: red">See Details</a>
+                                </button>
+                            </div>
                         </div>
                     {% elif offer|class_name_show == 'MotoEquipmentGear' %}
-                        <div class="testimonial-item text-center">
-                            {% for picture in offer.motoequipmentimages_set.all|slice:1 %}
-                                <img class="bg-light p-2 mx-auto mb-3"
-                                     src="{{ picture.image.url }}"
-                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
-                            {% endfor %}
-                            <h5 class="mb-0">{{ offer.brand }}</h5>
-                            <p>{{ offer.model }}</p>
-                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
-                            <div class="testimonial-text bg-light text-center p-4">
-                                <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
+                        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item">
+                                <div class="position-relative overflow-hidden">
+                                    {% for picture in offer.motoequipmentimages_set.all|slice:1 %}
+                                        <img class="img-fluid" src="{{ picture.image.url }}"
+                                             style="width: 300px; height: 200px;" alt="{{ offer.brand }}">
+                                    {% endfor %}
+                                    <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                        <a href="{% url 'detail equipment gear view' pk=offer.pk %}"
+                                           style="color: whitesmoke;"><small>{{ offer.description|truncatechars:30 }}</small></a>
+                                    </div>
+                                </div>
                             </div>
-                            <br>
-                            <button><a href="{% url 'detail equipment gear view' pk=offer.pk %}">DETAILS</a>
-                            </button>
+                            <div class="bg-light text-center p-4">
+                                <h5 class="fw-bold mb-0">{{ offer.brand }} {{ offer.model }} </h5>
+                                <h5 class="fw-bold mb-0"> Equipment Gear </h5>
+                                <small>Material: {{ offer.material_type }}. </small>
+                                <small>Price: {{ offer.price|floatformat:2 }}lv.</small>
+                                <button><a href="{% url 'detail equipment gear view' pk=offer.pk %}"
+                                           style="color: red">See Details</a>
+                                </button>
+                            </div>
                         </div>
                     {% elif offer|class_name_show == 'MotoParts' %}
-                        <div class="testimonial-item text-center">
-                            {% for picture in offer.motopartsimages_set.all|slice:1 %}
-                                <img class="bg-light  p-2 mx-auto mb-3"
-                                     src="{{ picture.image.url }}"
-                                     style="width: 150px; height: 150px;" alt="{{ offer.brand }}">
-                            {% endfor %}
-                            <h5 class="mb-0">{{ offer.brand }}</h5>
-
-                            <p>{{ offer.model }}</p>
-                            <h5 class="mb-0">{{ offer.price|floatformat:2 }}lv.</h5>
-                            <div class="testimonial-text bg-light text-center p-4">
-                                <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
+                        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item">
+                                <div class="position-relative overflow-hidden">
+                                    {% for picture in offer.motopartsimages_set.all|slice:1 %}
+                                        <img class="img-fluid" src="{{ picture.image.url }}"
+                                             style="width: 300px; height: 200px;" alt="{{ offer.brand }}">
+                                    {% endfor %}
+                                    <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                        <a href="{% url 'detail bike parts view' pk=offer.pk %}"
+                                           style="color: whitesmoke;"><small>{{ offer.description|truncatechars:30 }}</small></a>
+                                    </div>
+                                </div>
                             </div>
-                            <button><a href="{% url 'detail bike parts view' pk=offer.pk %}">DETAILS</a></button>
+                            <div class="bg-light text-center p-4">
+                                <h5 class="fw-bold mb-0">{{ offer.brand }} {{ offer.model }}</h5>
+                                <h5 class="fw-bold mb-0">Motorcycle Part</h5>
+                                <small>For: {{ offer.for_bike }}. </small>
+                                <small>Type: {{ offer.type_of_part }}. </small>
+                                <small>Price: {{ offer.price|floatformat:2 }}lv.</small>
+                                <button><a href="{% url 'detail bike parts view' pk=offer.pk %}"
+                                           style="color: red">See Details</a>
+                                </button>
+                            </div>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
+    </div>
+    <!-- Offers End -->
+    <div class="col-12">
+        <button class="btn btn-success rounded-pill text-center" style="position: center">
+            <a href="javascript:history.back()" style="color: whitesmoke">
+                GO BACK
+            </a>
+        </button>
     </div>
 
 {% endblock %}

@@ -1,31 +1,190 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block page_content %}
-    <h1>
-        EDIT YOUR EQUIPMENT GEAR
-    </h1>
-    <form action="{% url 'edit equipment gear view' pk=object.pk %}" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <p>TOTAL IMAGES {{ object.motoequipmentimages_set.all.count }}</p>
-        <ul>
-            {% for image in equipment_pictures %}
-                <li>
-                    <img style="width: 150px;" src="{{ image.image.url }}" alt="img">
-                    <input type="checkbox" name="selected_images" value="{{ image.id }}">
-                </li>
+        <!-- Page Header Start -->
+    {% for picture in object.motoequipmentimages_set.all|slice:1 %}
+        <div class="container-fluid page-header mb-5 p-0"
+             style="background-image: url({{ picture.image.url }});">
+    {% endfor %}
+<div class="container-fluid page-header-inner py-5">
+    <div class="container text-center">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">EDIT YOUR EQUIPMENT OFFER</h1>
 
-            {% endfor %}
-        </ul>
-        <button>
-            Edit!
-        </button>
-    </form>
-    <button>
-        <a href="{% url 'list equipment gear view' %}">LIST EQUIPMENT</a>
-    </button>
+    </div>
+</div>
+</div>
 
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+    <!-- Page Header End -->
+    <div class="container-xxl py-5 overflow-visible">
+        <div class="wow fadeInUp" data-wow-delay="0.2s overflow-visible">
+            <div class="container text-center overflow-visible">
+                <form action="{% url 'edit equipment gear view' pk=object.pk %}" method="post"
+                      enctype="multipart/form-data" class="form-control overflow-visible">
+                    <div class="row g-4">
+                        {% for picture in object.motoequipmentimages_set.all %}
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="team-item">
+                                    <div class="position-relative">
+                                        <img class="bg-light  p-2 mx-auto mb-3"
+                                             src="{{ picture.image.url }}"
+                                             style="width: 200px; height: 200px;" alt="{{ object.brand }}">
+                                        <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                            <img src="{{ picture.image.url }}"
+                                                 style="width: 400px; height: 400px;"
+                                                 alt="{{ object.brand }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><label>Select for delete</label></p>
+                                <p><input type="checkbox" name="selected_images" value="{{ picture.id }}"></p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Offer details Start -->
+                    <div class="row g-6">
+                        <div class="col-md-6">
+                            <label>Brand:</label>
+                            <div class="form-floating">
+                                {{ form.brand }}
+                                <div class="text-danger">
+                                    {{ form.brand.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Model:</label>
+                            <div class="form-floating">
+                                {{ form.model }}
+                                <div class="text-danger">
+                                    {{ form.model.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Material Type: </label>
+                            <div class="form-floating">
+                                {{ form.material_type }}
+                                <div class="text-danger">
+                                    {{ form.material_type.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Gear Type:</label>
+                            <div class="form-floating">
+                                {{ form.gear_type }}
+                                <div class="text-danger">
+                                    {{ form.gear_type.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Price:</label>
+                            <div class="form-floating">
+                                {{ form.price }}
+                                <div class="text-danger">
+                                    {{ form.price.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Year of manufacture:</label>
+                            <div class="form-floating">
+                                {{ form.manufacture_year }}
+                                <div class="text-danger">
+                                    {{ form.manufacture_year.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>City:</label>
+                            <div class="form-floating">
+                                {{ form.city }}
+                                <div class="text-danger">
+                                    {{ form.city.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label></label>
+                            <div class="form-floating">
 
+                                <div class="text-danger">
+
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Add Images:</label>
+                            <div class="form-floating">
+                                {{ form.equipment_images }}
+                                <div class="text-danger">
+                                    {{ form.equipment_images.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Description:</label>
+                            <div class="form-floating">
+                                {{ form.description }}
+                                <div class="text-danger">
+                                    {{ form.description.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                            <h3>Admin/Mod section</h3>
+                            <div class="col-12">
+                                <label>Approved:</label>
+                                <div class="form-floating">
+                                    {{ form.approved }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <br>
+                        <br>
+
+                        <div class="col-md-3">
+                            {% if not request.user.is_staff and not request.user.is_superuser %}
+                                <label>NOTE: </label>
+                                <p>When you edit the offer. The offer will go for approval and will be not visible for
+                                    other
+                                    people!</p>
+                                <div class="form-floating">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label> </label>
+                            <div class="form-floating">
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <!-- Offer details End -->
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <button class="btn btn-primary w-25 py-3">SAVE CHANGES</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="col-12">
+            <button class="btn btn-success rounded-pill text-center" style="position: center">
+                <a href="javascript:history.back()" style="color: whitesmoke">
+                    GO BACK
+                </a>
+            </button>
+        </div>
+    </div>
 {% endblock %}

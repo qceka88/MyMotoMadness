@@ -12,10 +12,10 @@ def class_name_show(value):
 
 @register.simple_tag
 def not_approved_offers():
-    not_approved = []
     for offer in (Motorcycles.objects.filter(approved=False),
                   MotoEquipmentGear.objects.filter(approved=False),
                   MotoParts.objects.filter(approved=False)):
-        not_approved.append(offer)
+        if offer:
+            return True
 
-    return offer
+

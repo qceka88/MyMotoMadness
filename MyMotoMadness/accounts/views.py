@@ -21,7 +21,6 @@ class RegisterMotoUser(CheckForRegisteredUser, generic_views.CreateView):
         return data
 
     def get_success_url(self):
-        self.object.profile_picture = 'img/avatar.png'
         return reverse_lazy('edit user view', kwargs={'pk': self.object.pk})
 
 
@@ -87,9 +86,13 @@ class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_
         },
     )
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        return data
+    def post(self, request, *args, **kwargs):
+        context = super().post(request, *args, **kwargs)
+
+        if request.user.pk == self.object.pk and request.user.is_staff:
+            self.object.is_staff = request.user.is_staff
+            self.object.save()
+        return context
 
     def get_success_url(self):
         return reverse_lazy('details user view', kwargs={'pk': self.object.pk})
@@ -99,8 +102,11 @@ class PasswordChange(auth_views.PasswordChangeView):
     template_name = 'accounts/password_change.html'
     model = UserModel
     form_class = MotoUserChangePassword
+
     def get_success_url(self):
         return reverse_lazy('details user view', kwargs={'pk': self.request.user.pk})
+
+
 class DeleteMotoUser(CheckForRestriction, generic_views.DeleteView):
     template_name = 'accounts/delete_user.html'
     model = UserModel

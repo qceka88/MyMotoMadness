@@ -60,9 +60,12 @@
             {% if request.user.is_staff or request.user.is_superuser %}
                 {% if offer_for_check %}
                     <div class="h-100 d-inline-flex align-items-center py-3">
-
                         <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
-                        <small>Check not approved offers!</small>
+                        <small>There is new offers for approval !  </small>
+                            <small>
+                                <button class="rounded-pill">
+                                    <a href="{% url 'sales for approval view' %}">Go To Offers</a></button>
+                            </small>
                     </div>
                 {% endif %}
             {% endif %}

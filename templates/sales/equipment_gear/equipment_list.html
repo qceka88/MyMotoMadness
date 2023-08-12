@@ -1,26 +1,66 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>LIST EQUIPMENT GEAR</h1>
-    <ul>
-        {% for equipment_object in object_list %}
-            <li>
-                {{ equipment_object }} OWNER = {{ equipment_object.owner }}
-                <button><a href="{% url 'detail equipment gear view' pk=equipment_object.pk %}">DET</a></button>
-                {% if request.user == equipment_object.owner %}
-                    <button><a href="{% url 'edit equipment gear view' pk=equipment_object.pk %}">Edit</a></button>
-                    <button><a href="{% url 'delete equipment gear view' pk=equipment_object.pk %}">Delete</a></button>
-                {% endif %}
-            </li>
-        {% endfor %}
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/equipment_gear.jpg' %});">
 
-    </ul>
-    <button>
-        <a href="{% url 'add equipment gear view' %}"> ADD</a>
-    </button>
-    <button>
-        <a href="{% url 'home-page' %}">HOME PAGE</a>
-    </button>
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">EQUIPMENT GEAR</h1>
+                <button class="btn btn-success rounded-pill text-center" style="position: center">
+                    <a href="{% url 'add equipment gear view' %}" style="color: whitesmoke">
+                        CREATE OFFER
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <!-- Offers Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-primary text-uppercase">// MyMotoMadness //</h6>
+                <h1 class="mb-5">All Equipment Gear Offers</h1>
+            </div>
+            <div class="row g-4">
+                {% for equipment_offer in approved %}
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item">
+                            <div class="position-relative overflow-hidden">
+                                {% for picture in equipment_offer.motoequipmentimages_set.all|slice:1 %}
+                                    <img class="img-fluid" src="{{ picture.image.url }}"
+                                         style="width: 300px; height: 200px;" alt="{{ equipment_offer.brand }}">
+                                {% endfor %}
+                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                    <a href="{% url 'detail equipment gear view' pk=equipment_offer.pk %}"
+                                       style="color: whitesmoke;"><small>{{ equipment_offer.description|truncatechars:30 }}</small></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light text-center p-4">
+                            <h5 class="fw-bold mb-0">{{ equipment_offer.brand }} {{ equipment_offer.model }}</h5>
+                            <small>Type: {{ equipment_offer.gear_type }}. </small>
+                            <small>Material: {{ equipment_offer.material_type }}. </small>
+                            <small>Price: {{ equipment_offer.price|floatformat:2 }}lv.</small>
+                            <button><a href="{% url 'detail equipment gear view' pk=equipment_offer.pk %}"
+                                       style="color: red">See Details</a>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Offers End -->
+    <div class="col-12">
+        <button class="btn btn-success rounded-pill text-center" style="position: center">
+            <a href="javascript:history.back()" style="color: whitesmoke">
+                GO BACK
+            </a>
+        </button>
+    </div>
 
 
 {% endblock %}

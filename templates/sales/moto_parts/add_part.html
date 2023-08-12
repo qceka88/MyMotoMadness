@@ -1,24 +1,150 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>
-        ADD NEW PART
-    </h1>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-bg-3.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">ADD NEW BIKE PART SALE OFFER</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <div class="container-xxl py-5">
+        <div class="wow fadeInUp" data-wow-delay="0.2s">
+            <div class="container text-center">
+                <form action="{% url 'add bike parts view' %}" method="post"
+                      enctype="multipart/form-data" class="form-control">
+                    <div class="row g-6">
+                        <div class="col-md-6">
+                            <label>Brand:</label>
+                            <div class="form-floating">
+                                {{ form.brand }}
+                                <div class="text-danger">
+                                    {{ form.brand.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Model:</label>
+                            <div class="form-floating">
+                                {{ form.model }}
+                                <div class="text-danger">
+                                    {{ form.model.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Type of part: </label>
+                            <div class="form-floating">
+                                {{ form.type_of_part }}
+                                <div class="text-danger">
+                                    {{ form.type_of_part.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>For Motorcycle:</label>
+                            <div class="form-floating">
+                                {{ form.for_bike }}
+                                <div class="text-danger">
+                                    {{ form.for_bike.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Price:</label>
+                            <div class="form-floating">
+                                {{ form.price }}
+                                <div class="text-danger">
+                                    {{ form.price.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Year of manufacture:</label>
+                            <div class="form-floating">
+                                {{ form.manufacture_year }}
+                                <div class="text-danger">
+                                    {{ form.manufacture_year.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>City:</label>
+                            <div class="form-floating">
+                                {{ form.city }}
+                                <div class="text-danger">
+                                    {{ form.city.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
 
-    <form action="{% url 'add bike parts view' %}" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button>
-            Submit information!
-        </button>
+                            <div class="form-floating">
 
-    </form>
-    <button>
-        <a href="{% url 'list bike parts view' %}">LIST PARTS</a>
-    </button>
+                                <div class="text-danger">
 
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Add Images:</label>
+                            <div class="form-floating">
+                                {{ form.moto_part_images }}
+                                <div class="text-danger">
+                                    {{ form.moto_part_images.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label>Description:</label>
+                            <div class="form-floating">
+                                {{ form.description }}
+                                <div class="text-danger">
+                                    {{ form.description.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-md-6">
+                            <label>NOTE: </label>
+                            <p>Images cannot be less than 2 and more than 8!</p>
+                            <p>After publish offer will go for approval!</p>
+                            <div class="form-floating">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label> </label>
+                            <div class="form-floating">
+                            </div>
+                        </div>
+                        <br>
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <button class="btn btn-primary w-25 py-3">Publish offer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="col-12">
+            <button class="btn btn-success rounded-pill text-center" style="position: center">
+                <a href="javascript:history.back()" style="color: whitesmoke">
+                    GO BACK
+                </a>
+            </button>
+        </div>
+    </div>
 
 {% endblock %}

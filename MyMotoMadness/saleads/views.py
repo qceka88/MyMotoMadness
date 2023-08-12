@@ -4,7 +4,7 @@ from django.views import generic as views
 
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.mixins import CheckForRestrictionAds
+from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission
 from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
 
@@ -24,8 +24,19 @@ class CommonSaleView(views.TemplateView):
 
         return context
 
-class NotApprovedOffersView(views.TemplateView):
+
+class NotApprovedOffersView(CheckAdminStaffPermission, views.TemplateView):
     template_name = 'sales/not_approved_offers.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['for_approval'] = []
+        for offers in (Motorcycles.objects.filter(approved=False),
+                       MotoEquipmentGear.objects.filter(approved=False),
+                       MotoParts.objects.filter(approved=False)):
+            data['for_approval'].extend(offers)
+        return data
+
 
 class MotorcyclesListViews(views.ListView, views.RedirectView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
@@ -107,6 +118,8 @@ class EquipmentGearListView(views.ListView):
         context = super().get_context_data(**kwargs)
         context['approved'] = context['object_list'].filter(approved=True)
         return context
+
+
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
@@ -140,8 +153,9 @@ class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionA
         form = self.get_form()
 
         if form.is_valid():
-            self.object.approved = False
-            self.object.save()
+            if not self.request.user.is_staff and not self.request.user.is_superuser:
+                self.object.approved = False
+                self.object.save()
             return data
 
         return data
@@ -209,8 +223,9 @@ class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, view
         form = self.get_form()
 
         if form.is_valid():
-            self.object.approved = False
-            self.object.save()
+            if not self.request.user.is_staff and not self.request.user.is_superuser:
+                self.object.approved = False
+                self.object.save()
             return data
 
         return data

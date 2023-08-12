@@ -7,7 +7,7 @@
     {% endfor %}
 <div class="container-fluid page-header-inner py-5">
     <div class="container text-center">
-        <h1 class="display-3 text-white mb-3 animated slideInDown">EDIT YOUR MOTORCYCLE</h1>
+        <h1 class="display-3 text-white mb-3 animated slideInDown">EDIT YOUR MOTORCYCLE OFFER</h1>
 
     </div>
 </div>
@@ -18,16 +18,18 @@
             <div class="container text-center overflow-visible">
                 <form action="{% url 'edit motorcycle view' pk=object.pk %}" method="post"
                       enctype="multipart/form-data" class="form-control overflow-visible">
-                    <div class="owl-carousel testimonial-carousel position-relative overflow-visible">
+                    <div class="row g-4">
                         {% for picture in object.motorcycleimages_set.all %}
-                            <div class="testimonial-item text-center">
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="team-item">
                                     <div class="position-relative">
                                         <img class="bg-light  p-2 mx-auto mb-3"
                                              src="{{ picture.image.url }}"
                                              style="width: 200px; height: 200px;" alt="{{ object.brand }}">
                                         <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                            <img src="{{ picture.image.url }}" alt="{{ object.brand }}">
+                                            <img src="{{ picture.image.url }}"
+                                                 style="width: 400px; height: 400px;"
+                                                 alt="{{ object.brand }}">
                                         </div>
                                     </div>
                                 </div>
