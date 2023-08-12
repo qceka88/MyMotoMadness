@@ -6,24 +6,33 @@ from MyMotoMadness.articles.models import ArticlesModel
 class BasicArticleForm(forms.ModelForm):
     class Meta:
         model = ArticlesModel
-        exclude = ['published']
+        exclude = ('published',)
         widgets = {
             'title': forms.TextInput(
                 attrs={
-                    'placeholder': 'Title'
+                    'placeholder': 'Enter Title',
+                    'style': "height: 55px",
                 }
             ),
             'sub_title': forms.TextInput(
                 attrs={
-                    'placeholder': 'Sub Title'
+                    'placeholder': 'Enter Sub Title',
+                    'style': "height: 55px",
                 }
             ),
             'description': forms.Textarea(
                 attrs={
-                    'placeholder': 'Description'
+                    'placeholder': 'Enter Article Content'
                 }
             ),
-            'author': forms.HiddenInput()
+            'author': forms.HiddenInput(
+
+            ),
+            'article_type': forms.Select(
+                attrs={
+                    'style': "height: 55px",
+                }
+            )
         }
 
 
@@ -32,7 +41,7 @@ class CreateArticleForm(BasicArticleForm):
 
 
 class EditArticleForm(BasicArticleForm):
-    ...
+    BasicArticleForm.Meta.exclude = ('published', 'author')
 
 
 class DeleteArticleForm(BasicArticleForm):

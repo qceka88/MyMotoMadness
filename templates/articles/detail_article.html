@@ -1,28 +1,59 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>{{ object.title }}</h1>
-    <h2>{{ object.sub_title }}</h2>
-    <h4>{{ object.published }}</h4>
-    {% if object.article_image %}
-        <img style="width: 150px" src="{{ object.article_image.url }}" alt="{{ object.title }}">
-    {% endif %}
-    <p>{{ object.description }} </p>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'img/carousel-4.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                            <li class="breadcrumb-item">
+                                <button class="btn btn-secondary rounded-pill text-center" style="position: center">
+                                    <a href="{% url 'edit article view' pk=object.pk %}" style="color: whitesmoke">
+                                        UPDATE ARTICLE
+                                    </a>
+                                </button>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <button class="btn btn-primary rounded-pill text-center" style="position: center">
+                                    <a href="{% url 'delete article view' pk=object.pk %}" style="color: whitesmoke">
+                                        DELETE ARTICLE
+                                    </a>
+                                </button>
+                            </li>
+                        {% endif %}
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
 
-
-    <p>By {{ object.author }} </p>
-
-
-    <button><a href="{% url 'edit article view' pk=object.pk %}">Article Edit</a></button>
-
-
-    <button><a href="{% url 'delete article view' pk=object.pk %}">Article Delete</a></button>
-
-
-    <button><a href="{% url 'common articles views' %}">Common articles</a></button>
-
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
-
+    <!-- Article Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 pt-4" style="min-height: 400px;">
+                    <div class="position-relative h-100 wow fadeIn" data-wow-delay="0.1s">
+                        <img class="position-absolute img-fluid w-100 h-100" src="{{ object.article_image.url }}" style="object-fit: cover;" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h5 class="text-dark text-uppercase"><a href="{% url 'details user view' pk=object.author.pk %}">
+                    Author: {{ object.author.username }}</a></h5>
+                    <h6 class="text-secondary text-uppercase">// Published: {{ object.published }} //</h6>
+                    <h1 class="mb-4"> {{ object.title }}</h1>
+                    <h4 class="mb-4"> {{ object.sub_title }}</h4>
+                    <p class="mb-4">{{ object.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Article End -->
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
 {% endblock %}

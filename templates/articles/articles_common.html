@@ -3,12 +3,19 @@
 
 {% block page_content %}
     <!-- Page Header Start -->
-    <body>
+
     <div class="container-fluid page-header mb-5 p-0"
-         style="background-image: url({% static 'img/carousel-bg-4.png' %});">
+         style="background-image: url({% static 'img/20200923075134_bmw-m-1000-r.jpg' %});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">ARTICLES</h1>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <button class="btn btn-success rounded-pill text-center" style="position: center">
+                        <a href="{% url 'add article view' %}" style="color: whitesmoke">
+                            CREATE ARTICLE
+                        </a>
+                    </button>
+                {% endif %}
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
                         <li class="breadcrumb-item"><a href="{% url 'list news view' %}">News</a></li>
@@ -21,110 +28,80 @@
     <!-- Page Header End -->
 
 
-    <!-- About Start -->
+    <!--Common Articles  Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6">
                     <h6 class="text-primary text-uppercase">// NEWS //</h6>
                     <h1 class="mb-4"><span class="text-primary">MyMotoMadness</span> Is Place For Motorcycle News</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et
-                        eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat
-                        amet</p>
+                    <p class="mb-4">Read latest news about motorcycles. Races, racing teams. Manufactures and
+                        their new bikes. News about equipment gears, world brands. Bulgarian brands and more...</p>
                     <div class="row g-4 mb-3 pb-3">
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">01</span>
+                        {% for article in object_list|slice:3 %}
+                            {% if article.article_type == 'News' %}
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
+                                            <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <span class="fw-bold text-secondary">
+                                                <img src="{{ article.article_image.url }}"
+                                                     alt="{{ article.title }}"
+                                                     style="width: 50px; height: 50px;"></span></a>
+                                        </div>
+                                        <div class="ps-3">
+                                            <a href="{% url 'detail article view' pk=article.pk %}">
+                                                <h6>{{ article.title }}</h6>
+                                                <span style="color: black">{{ article.sub_title|truncatechars:50 }}</span></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ps-3">
-                                    <h6>Professional & Expert</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">02</span>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>Quality Servicing Center</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">03</span>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>Awards Winning Workers</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <a href="{% url 'list news view' %}" class="btn btn-primary py-3 px-5">Read More<i
                             class="fa fa-arrow-right ms-3"></i></a>
                 </div>
-
                 <div class="col-lg-6">
                     <h6 class="text-primary text-uppercase">// Advices //</h6>
                     <h1 class="mb-4"><span class="text-primary">MyMotoMadness</span> Is Place For Motorcycle Tips &
                         Tricks</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et
-                        eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat
-                        amet</p>
+                    <p class="mb-4">Read advices. Tips and Tricks. Good riding destinations. How to maintenance your
+                        iron horse. Learn how to choose proper equipment. How to keep your bike in good condition...</p>
                     <div class="row g-4 mb-3 pb-3">
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">01</span>
+                        {% for article in object_list|slice:3 %}
+                            {% if article.article_type == 'Advices' %}
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
+                                            <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <span class="fw-bold text-secondary">
+                                                <img src="{{ article.article_image.url }}"
+                                                     alt="{{ article.title }}"
+                                                     style="width: 50px; height: 50px;"></span></a>
+                                        </div>
+                                        <div class="ps-3">
+                                            <a href="{% url 'detail article view' pk=article.pk %}">
+                                                <h6>{{ article.title }}</h6>
+                                                <span style="color: black">{{ article.sub_title|truncatechars:50 }}</span></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ps-3">
-                                    <h6>Professional & Expert</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">02</span>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>Quality Servicing Center</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
-                            <div class="d-flex">
-                                <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                     style="width: 45px; height: 45px;">
-                                    <span class="fw-bold text-secondary">03</span>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>Awards Winning Workers</h6>
-                                    <span>Diam dolor diam ipsum sit amet diam et eos</span>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <a href="{% url 'list advices view' %}" class="btn btn-primary py-3 px-5">Read More<i
                             class="fa fa-arrow-right ms-3"></i></a>
                 </div>
-
             </div>
         </div>
     </div>
-    <!-- About End -->
-    </body>
+    <!-- Common Article End -->
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
 {% endblock %}

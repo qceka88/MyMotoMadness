@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-4.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">{{ type_article|upper }}</h1>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <button class="btn btn-success rounded-pill text-center" style="position: center">
+                        <a href="{% url 'add article view' %}" style="color: whitesmoke">
+                            CREATE {{ type_article|upper }}
+                        </a>
+                    </button>
+                {% endif %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        <li class="breadcrumb-item"><a href="{% url 'list news view' %}">News</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list advices view' %}">Advices</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!--Common Articles  Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="row g-4 mb-3 pb-3">
+                        {% for article in left_articles %}
+                            <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
+                                <div class="d-flex">
+                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                         style="width: 45px; height: 45px;">
+                                        <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <span class="fw-bold text-secondary">
+                                                <img src="{{ article.article_image.url }}"
+                                                     alt="{{ article.title }}"
+                                                     style="width: 80px; height: 80px;"></span></a>
+                                    </div>
+                                    <div class="ps-4">
+                                        <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <h3 style="color: red">{{ article.title }}</h3>
+                                            <h5>{{ article.sub_title }}</h5>
+                                            <span style="color: black">{{ article.description|truncatechars:100 }}</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4 mb-3 pb-3">
+                        {% for article in right_articles %}
+                            <div class="col-12 wow form-control fadeIn" data-wow-delay="0.1s">
+                                <div class="d-flex">
+                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                         style="width: 45px; height: 45px;">
+                                        <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <span class="fw-bold text-secondary">
+                                                <img src="{{ article.article_image.url }}"
+                                                     alt="{{ article.title }}"
+                                                     style="width: 80px; height: 80px;"></span></a>
+                                    </div>
+                                    <div class="ps-4">
+                                        <a href="{% url 'detail article view' pk=article.pk %}">
+                                            <h3 style="color: red">{{ article.title }}</h3>
+                                            <h5>{{ article.sub_title }}</h5>
+                                            <span style="color: black">{{ article.description|truncatechars:100 }}</span></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Common Article End -->
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
+{% endblock %}

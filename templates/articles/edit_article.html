@@ -1,21 +1,90 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block page_content %}
-    <h1>
-        EDIT ARTICLE
-    </h1>
-    <form action="{% url 'edit article view' pk=object.pk %}" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        <button>
-            Edit!
-        </button>
-        {% csrf_token %}
-    </form>
-    <button>
-        <a href="{% url 'common articles views' %}">LIST ARTICLES</a>
-    </button>
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'img/carousel-bg-4.png' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">UPDATE ARTICLE</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-secondary booking my-3 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container" style="position: center; width: 30%; ">
+            <div class="row gx-6">
+                <div class="bg-light h-100 d-flex flex-column justify-content-center text-center p-3 wow zoomIn"
+                     data-wow-delay="0.6s">
+                    <h1 class="text-black-50 mb-4">ARTICLE CONTENT</h1>
+                    <form action="{% url 'edit article view' pk=object.pk %}" method="post"
+                          style="color: #0e0e0e;" enctype="multipart/form-data">
+                        <label>{{ form.title.label|upper }}:</label>
+                        <div class="col-12">
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div style="list-style: none">
+                                    {{ form.title.errors|join:"<p></p>" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+                        <label>{{ form.sub_title.label|upper }}:</label>
+                        <div class="col-12">
+                            {{ form.sub_title }}
+                            {% if form.sub_title.errors %}
+                                <div style="list-style: none">
+                                    {{ form.sub_title.errors|join:"<p></p>" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+                        <label>{{ form.description.label|upper }}:</label>
+                        <div class="col-12">
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div style="list-style: none">
+                                    {{ form.description.errors|join:"<p></p>" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+                        <label>{{ form.article_type.label|upper }}:</label>
+                        <div class="col-12">
+                            {{ form.article_type }}
+                            {% if form.article_type.errors %}
+                                <div style="list-style: none">
+                                    {{ form.article_type.errors|join:"<p></p>" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+                        <label>{{ form.article_image.label|upper }}:</label>
+                        <div class="col-12">
+                            {{ form.article_image }}
+                            {% if form.article_image.errors %}
+                                <div style="list-style: none">
+                                    {{ form.article_image.errors|join:"<p></p>" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
 
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+                        <br>
+                        <div class=col-md-6">
+                            <button class="btn btn-secondary rounded-pill py-3 px-5">UPDATE ARTICLE
+                            </button>
+                        </div>
+                        <br>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
 
 {% endblock %}

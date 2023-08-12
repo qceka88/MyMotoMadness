@@ -32,8 +32,7 @@
                         <div class="ps-4">
                             <h5 class="mb-3">Motorcycles</h5>
                             <p>Find your dream bike!</p>
-                            <a class="text-secondary border-bottom" href="{% url 'list motorcycle view' %}">Check
-                                Out</a>
+                            <button><a style="color: red" href="{% url 'list motorcycle view' %}">See All Motorcycles</a></button>
                         </div>
                     </div>
                 </div>
@@ -43,8 +42,8 @@
                         <div class="ps-4">
                             <h5 class="mb-3">Biker Protection Gear</h5>
                             <p>Find best protection for you!</p>
-                            <a class="text-secondary border-bottom" href="{% url 'list equipment gear view' %}">Check
-                                Out</a>
+                            <button><a style="color: red" href="{% url 'list equipment gear view' %}">See All
+                                Equipment</a></button>
                         </div>
                     </div>
                 </div>
@@ -124,5 +123,8 @@
             </div>
         </div>
     </div>
-
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
 {% endblock %}

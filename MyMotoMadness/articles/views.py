@@ -12,21 +12,29 @@ class CommonArticlesView(views.ListView):
 
 
 class NewsListView(views.ListView):
-    template_name = 'articles/articles_list.html'
+    template_name = 'articles/news_list.html'
     model = ArticlesModel
 
-    def get_queryset(self):
-        data = super().get_queryset().filter(article_type='News')
-        return data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = self.get_queryset().filter(article_type='News')
+        context['type_article'] = 'News'
+        context['left_articles'] = [art for art in data if art.pk % 2 != 0]
+        context['right_articles'] = [art for art in data if art.pk % 2 == 0]
+        return context
 
 
 class AdvicesListView(views.ListView):
-    template_name = 'articles/articles_list.html'
+    template_name = 'articles/advices_list.html'
     model = ArticlesModel
 
-    def get_queryset(self):
-        data = super().get_queryset().filter(article_type='Advices')
-        return data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = self.get_queryset().filter(article_type='Advices')
+        context['type_article'] = 'Advices'
+        context['left_articles'] = [art for art in data if art.pk % 2 != 0]
+        context['right_articles'] = [art for art in data if art.pk % 2 == 0]
+        return context
 
 
 class ArticleCreateView(CheckUserArticlePermission, views.CreateView):
@@ -41,7 +49,7 @@ class ArticleCreateView(CheckUserArticlePermission, views.CreateView):
         return data
 
     def get_success_url(self):
-        return reverse_lazy('detail article view view', kwargs={'pk': self.object.pk})
+        return reverse_lazy('detail article view', kwargs={'pk': self.object.pk})
 
 
 class ArticleDetailView(views.DetailView):
@@ -54,6 +62,9 @@ class ArticleUpdateView(CheckUserArticlePermission, views.UpdateView):
     model = ArticlesModel
     form_class = EditArticleForm
     success_url = reverse_lazy('common articles views')
+
+    def get_success_url(self):
+        return reverse_lazy('detail article view', kwargs={'pk': self.object.pk})
 
 
 class ArticleDeleteView(CheckUserArticlePermission, views.DeleteView):
