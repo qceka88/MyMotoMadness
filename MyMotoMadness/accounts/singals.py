@@ -16,7 +16,7 @@ def send_successful_registration_email(user):
         subject='Registration greetings!',
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=(user.email,),
-        template_name='emails/test_email.html',
+        template_name='emails/email-greeting.html',
         context=context,
     )
 
