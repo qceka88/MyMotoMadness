@@ -46,10 +46,22 @@ class CheckForRestrictionAds:
 
         return data
 
+
 class CheckAdminStaffPermission:
 
     def dispatch(self, request, *args, **kwargs):
         if not (request.user.is_staff or request.user.is_superuser):
+            return redirect('home-page')
+
+        data = super().dispatch(request, *args, **kwargs)
+        return data
+
+
+class NotApprovedContent:
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.object.approved and request.user.pk != self.object.owner.pk and \
+                not request.user.is_staff and not request.user.is_superuser:
             return redirect('home-page')
 
         data = super().dispatch(request, *args, **kwargs)
