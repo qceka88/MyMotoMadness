@@ -6,4 +6,3 @@ envs/__init__.py
 db.sqlite3
 *.sqlite3
 /mediafiles/
-\__pycache__\
