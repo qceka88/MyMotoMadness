@@ -6,9 +6,14 @@ from MyMotoMadness.articles.mixins import CheckUserArticlePermission
 from MyMotoMadness.articles.models import ArticlesModel
 
 
-class CommonArticlesView(views.ListView):
+class CommonArticlesView(views.TemplateView):
     template_name = 'articles/articles_common.html'
-    model = ArticlesModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advices_list'] = ArticlesModel.objects.filter(article_type='Advices').order_by('published')[:3]
+        context['news_list'] = ArticlesModel.objects.filter(article_type='News').order_by('published')[:3]
+        return context
 
 
 class NewsListView(views.ListView):

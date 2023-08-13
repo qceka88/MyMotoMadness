@@ -38,11 +38,9 @@
                     <p class="mb-4">Read latest news about motorcycles. Races, racing teams. Manufactures and
                         their new bikes. News about equipment gears, world brands. Bulgarian brands and more...</p>
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in object_list|slice:3 %}
-                            {% if article.article_type == 'News' %}
+                        {% for article in news_list %}
                                 <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="d-flex">
-
                                         <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
                                              style="width: 45px; height: 45px;">
                                             <a href="{% url 'detail article view' pk=article.pk %}">
@@ -58,7 +56,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% endif %}
                         {% endfor %}
                     </div>
                     <a href="{% url 'list news view' %}" class="btn btn-primary py-3 px-5">Read More<i
@@ -71,8 +68,8 @@
                     <p class="mb-4">Read advices. Tips and Tricks. Good riding destinations. How to maintenance your
                         iron horse. Learn how to choose proper equipment. How to keep your bike in good condition...</p>
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in object_list|slice:3 %}
-                            {% if article.article_type == 'Advices' %}
+                        {% for article in advices_list %}
+
                                 <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="d-flex">
                                         <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -90,7 +87,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% endif %}
+
                         {% endfor %}
                     </div>
                     <a href="{% url 'list advices view' %}" class="btn btn-primary py-3 px-5">Read More<i
