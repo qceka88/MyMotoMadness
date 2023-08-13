@@ -10,6 +10,7 @@ DEBUG = bool(int(os.getenv('DEBUG')))
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,9 +55,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'MyMotoMadness.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -95,11 +94,12 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles/'
 ]
-STATIC_ROOT = BASE_DIR / 'static'
+
+STATIC_ROOT = os.getenv('STATIC_ROOT')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'mediafiles/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.MotoUserModel'

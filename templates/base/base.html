@@ -143,31 +143,24 @@
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Address</h4>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <h4 class="text-light mb-4">Contacts:</h4>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0889 XX XX XX</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>yanko.rashkov@gmail.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://github.com/qceka88"><i class="fab fa-github"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/yanko-rashkov-9a8980aa/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Opening Hours</h4>
-                <h6 class="text-light">Monday - Friday:</h6>
-                <p class="mb-4">09.00 AM - 09.00 PM</p>
-                <h6 class="text-light">Saturday - Sunday:</h6>
-                <p class="mb-0">09.00 AM - 12.00 PM</p>
+                <h4 class="text-light mb-4">Sale Offers</h4>
+                 <a class="btn btn-link" href="{% url 'list motorcycle view' %}">Motorcycles</a>
+                 <a class="btn btn-link" href="{% url 'list equipment gear view' %}">Equipment Gear</a>
+                 <a class="btn btn-link" href="{% url 'list bike parts view' %}">Motorcycle Parts</a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Services</h4>
-                <a class="btn btn-link" href="">Diagnostic Test</a>
-                <a class="btn btn-link" href="">Engine Servicing</a>
-                <a class="btn btn-link" href="">Tires Replacement</a>
-                <a class="btn btn-link" href="">Oil Changing</a>
-                <a class="btn btn-link" href="">Vacuam Cleaning</a>
+                <h4 class="text-light mb-4">Articles</h4>
+                <a class="btn btn-link" href="{% url 'list news view' %}">News</a>
+                <a class="btn btn-link" href="{% url 'list advices view' %}">Advices</a>
             </div>
         </div>
     </div>

@@ -1,23 +1,35 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({{ object.article_image.url }}); ">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">DELETE ARTICLE</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s"
+         style="background-image: url({{ object.article_image.url }});
+                 background-position: 65%;
+                 background-repeat: no-repeat;
+                 background-size: 20%;">
+        <div class="container text-lg-start">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <form action="{% url  'delete article view' pk=object.pk %}" method="post">
+                        <h3 class="mb-4">You are about to delete. </h3>
+                        <h3 class="mb-4">{{ object.title }} article.</h3>
+                        <a class="btn btn-success rounded-pill py-3 px-5" href="javascript:history.back()">GO
+                            BACK</a>
+                        <button class="btn btn-primary rounded-pill py-3 px-5">DELETE</button>
+                        {% csrf_token %}
 
-    <h1>DELETE ARTICLE</h1>
-
-    <h1> Are you sure to delete? </h1>
-    <form action="{% url  'delete article view' pk=object.pk %}" method="post">
-        {{ form }}
-        {{ object }}
-        <button>
-            DELETE!
-        </button>
-        {% csrf_token %}
-
-    </form>
-
-    <button>
-        <a href="{% url 'home-page' %}">HOME</a>
-    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

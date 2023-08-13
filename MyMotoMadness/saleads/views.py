@@ -4,7 +4,7 @@ from django.views import generic as views
 
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
-from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission
+from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission, NotApprovedContent
 from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
 
@@ -94,7 +94,7 @@ class MotorcyclesEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds
         return reverse_lazy('detail motorcycle view', kwargs={'pk': self.object.pk})
 
 
-class MotorcyclesDetailsView(views.DetailView):
+class MotorcyclesDetailsView(NotApprovedContent, views.DetailView):
     template_name = 'sales/motorcycles/details_motorcycle.html'
     model = Motorcycles
 
