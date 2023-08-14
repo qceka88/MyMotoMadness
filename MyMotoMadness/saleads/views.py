@@ -164,7 +164,7 @@ class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionA
         return reverse_lazy('detail equipment gear view', kwargs={'pk': self.object.pk})
 
 
-class EquipmentGearDetailsView(views.DetailView):
+class EquipmentGearDetailsView(NotApprovedContent, views.DetailView):
     template_name = 'sales/equipment_gear/details_equipment.html'
     model = MotoEquipmentGear
 
@@ -234,7 +234,7 @@ class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, view
         return reverse_lazy('detail bike parts view', kwargs={'pk': self.object.pk})
 
 
-class PartsDetailsView(views.DetailView):
+class PartsDetailsView(NotApprovedContent, views.DetailView):
     template_name = 'sales/moto_parts/details_parts.html'
     model = MotoParts
 
