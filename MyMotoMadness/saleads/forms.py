@@ -52,6 +52,12 @@ class BaseMotorcycleForm(forms.ModelForm):
                     'style': "height: 35px",
                 }
             ),
+            'odo_meter': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Enter Odo Meter Data',
+                    'style': "height: 35px",
+                }
+            ),
             'horse_power': forms.NumberInput(
                 attrs={
                     'placeholder': 'Enter Horse Power',

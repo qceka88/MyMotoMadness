@@ -69,6 +69,15 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <label>Mileage:</label>
+                            <div class="form-floating">
+                                {{ form.odo_meter }}
+                                <div class="text-danger">
+                                    {{ form.odo_meter.errors|join:", " }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <label>Horse Power:</label>
                             <div class="form-floating">
                                 {{ form.horse_power }}

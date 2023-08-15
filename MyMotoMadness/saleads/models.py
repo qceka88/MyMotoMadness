@@ -41,6 +41,14 @@ class Motorcycles(models.Model):
         blank=True,
         null=True,
     )
+
+    odo_meter = models.BigIntegerField(
+        null=True,
+        blank=True,
+        validators=(
+            validators.MinValueValidator(0),
+        )
+    )
     price = models.FloatField(
     )
     city = models.CharField(

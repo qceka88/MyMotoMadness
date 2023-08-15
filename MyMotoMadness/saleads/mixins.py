@@ -15,6 +15,8 @@ class BikeTypeChoices(ChoicesMixin, Enum):
     CHOPPER = 'Chopper'
     BOBER = 'Bober'
     CAFE_RACER = 'Cafe Racer'
+    TOURER = 'Tourer'
+    SPORTTOURER = 'Sport Tourer'
     ENDURO = 'Enduro'
     CROSS = 'Cross'
     CUSTOM = 'Custom Bike'
@@ -29,13 +31,14 @@ class BikeTypeChoices(ChoicesMixin, Enum):
 class ProtectionGearTypeChoices(ChoicesMixin, Enum):
     HELMET = 'Helmet'
     RACE_SUIT_1PT = 'Race Suit One Part'
+    JACKET = 'Jacket'
+    PANTS = 'Pants'
     RACE_SUIT_2PT = 'Race Suit Two Parts'
     BONNET = 'Bonnet'
     BOOTS = 'Boots'
     GLOVES = 'Gloves'
     PROTECTORS = 'Protectors'
     OTHER = 'Other..'
-
 
 class CheckForRestrictionAds:
 
