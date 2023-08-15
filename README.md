@@ -3,7 +3,7 @@
 
 # This is my Person Project.
 
-[MyMotoMadness: Link](https://qceka88.pythonanywhere.com/sales/)
+[MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)
 
 
 It is about site for selling offers with sections for articles. Written on Django. Using a PostgreSQL.
