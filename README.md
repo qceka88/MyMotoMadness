@@ -3,22 +3,32 @@
 
 # This is my Person Project.
 
+      PROJECT WILL BE EXTENT WITH MORE FEATURES
+          EXTENTION IS IN PROGRESS...
+
+
 [MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)
 
 
-It is about site for selling offers with sections for articles. Written on Django. Using a PostgreSQL.
 
-Not registered us ers can only watch the offers and read the articles.
+
+Basically is a site for selling offers with sections for articles. Written on Django. Using a PostgreSQL as DB.
+
+Not registered users are restricted. They can only watch the offers and read the articles.
+If not registered user try to reach part of the site via URL. Will be redirected to Home Page.
+Also can se who is owner of the offer.
+
+Registered user have access to create a selling offers. After offer is created, goes to the approval section 
+where Admin or Moderator check the offer. Offer can be approved or deleted. 
+If the offer is approved will be visible for everyone. Normal users are restricted to reach trough URL
+other users EDIT and DELETE pages of other users or to make changes or delete other users offers. 
 
 It has two groups of administration. One is Moderators. 
 They have right to update and delete normal users selling offers. To create, update and delete Acritles.
-Admins have full CRUD rights for everything.  
+Moderators are alo restricted to edit or delete other users.
 
-When a registered normal user create a selling offer. The offers goes to the approval section where Admin or Moderator
-check the offer and if everything is ok. The offer will be approved  and will be visible for everyone.
 
-It has restrictions. When normal user try to reach other user edit/delete form for Profile, or Selling Offer.
-User will be redirect to the home page.
+Admin have full CRUD rights for everything.
 
 
 
@@ -62,8 +72,8 @@ Common Articles section
 Common Advices section is similar to News Section.
 ![articles.PNG](readme_images%2Farticles.PNG)
 
-Change Password view
+Change Password view.
 ![change-password.PNG](readme_images%2Fchange-password.PNG)
 
-Profile section
+Profile section.
 ![profile_details.PNG](readme_images%2Fprofile_details.PNG)
