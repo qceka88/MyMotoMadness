@@ -1,7 +1,7 @@
 # MyMotoMadness
  
 
-# This is my Person Project.
+# This is my Personal Project.
 
 [MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)
 
