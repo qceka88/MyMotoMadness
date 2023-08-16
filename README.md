@@ -3,8 +3,10 @@
 
 # This is my Personal Project.
 
+
       PROJECT WILL BE EXTENT WITH MORE FEATURES
           EXTENDING UNDER CONSTRUCTION...
+
 
 
 [MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)
@@ -75,5 +77,10 @@ Common Advices section is similar to News Section.
 Change Password view.
 ![change-password.PNG](readme_images%2Fchange-password.PNG)
 
+
 Profile section.
 ![profile_details.PNG](readme_images%2Fprofile_details.PNG)
+
+Profile section
+![profile_details.PNG](readme_images%2Fprofile_details.PNG)
+
