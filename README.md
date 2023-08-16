@@ -1,10 +1,10 @@
 # MyMotoMadness
  
 
-# This is my Person Project.
+# This is my Personal Project.
 
       PROJECT WILL BE EXTENT WITH MORE FEATURES
-          EXTENTION IS IN PROGRESS...
+          EXTENDING UNDER CONSTRUCTION...
 
 
 [MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)

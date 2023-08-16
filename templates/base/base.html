@@ -61,14 +61,26 @@
                 {% if offer_for_check %}
                     <div class="h-100 d-inline-flex align-items-center py-3">
                         <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
-                        <small>There is new offers for approval !  </small>
-                            <small>
-                                <button class="rounded-pill">
-                                    <a href="{% url 'sales for approval view' %}">Go To Offers</a></button>
-                            </small>
+                        <small>There is new offers for approval ! </small>
+                        <small>
+                            <button class="rounded-pill">
+                                <a href="{% url 'sales for approval view' %}">Go To Offers</a></button>
+                        </small>
                     </div>
                 {% endif %}
+
             {% endif %}
+        </div>
+        <div class="col-lg-5 px-5 text-end">
+            <div class="h-100 d-inline-flex align-items-center">
+                <a class="btn btn-sm-square bg-white text-primary me-1" href="http://127.0.0.1:8000/admin/"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i
+                        class="fab fa-twitter"></i></a>
+                <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-sm-square bg-white text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </div>
 </div>
@@ -147,15 +159,17 @@
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0889 XX XX XX</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>yanko.rashkov@gmail.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href="https://github.com/qceka88"><i class="fab fa-github"></i></a>
-                    <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/yanko-rashkov-9a8980aa/"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="https://github.com/qceka88"><i
+                            class="fab fa-github"></i></a>
+                    <a class="btn btn-outline-light btn-social"
+                       href="https://www.linkedin.com/in/yanko-rashkov-9a8980aa/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-light mb-4">Sale Offers</h4>
-                 <a class="btn btn-link" href="{% url 'list motorcycle view' %}">Motorcycles</a>
-                 <a class="btn btn-link" href="{% url 'list equipment gear view' %}">Equipment Gear</a>
-                 <a class="btn btn-link" href="{% url 'list bike parts view' %}">Motorcycle Parts</a>
+                <a class="btn btn-link" href="{% url 'list motorcycle view' %}">Motorcycles</a>
+                <a class="btn btn-link" href="{% url 'list equipment gear view' %}">Equipment Gear</a>
+                <a class="btn btn-link" href="{% url 'list bike parts view' %}">Motorcycle Parts</a>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-light mb-4">Articles</h4>

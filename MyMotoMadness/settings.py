@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'MyMotoMadness.common',
     'MyMotoMadness.articles',
     'MyMotoMadness.saleads',
+    'MyMotoMadness.messagebox',
 ]
 
 MIDDLEWARE = [
