@@ -9,7 +9,8 @@
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.username }}'s PROFILE</h1>
-
+                <button class="btn btn-success rounded-pill"><a
+                        href="{% url 'send message view' pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a></button>
             </div>
         </div>
     </div>
@@ -110,7 +111,7 @@
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="text-center">
-                <h6 class="text-primary text-uppercase">// sSelling offers //</h6>
+                <h6 class="text-primary text-uppercase">// Selling offers //</h6>
             </div>
             {% if not user_sale_offers %}
                 <div class="text-center">

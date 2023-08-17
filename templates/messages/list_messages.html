@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <ul>
+        {% for message_object in object_list %}
+            <li>{{ message_object }}</li>
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

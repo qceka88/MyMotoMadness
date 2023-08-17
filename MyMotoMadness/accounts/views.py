@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth import mixins as auth_mixins
-from django.contrib.auth import views as auth_views, get_user_model, login
-from django.forms import modelform_factory
+from django.contrib import messages
+from django.contrib.auth import views as auth_views, mixins as auth_mixins, get_user_model, login
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
@@ -30,8 +29,12 @@ class LoginMotoUserView(auth_views.LoginView):
     form_class = MotoUserLoginForm
 
 
-class LogoutMotoUserView(auth_views.LogoutView):
-    ...
+class LogoutMotoUserView(auth_mixins.LoginRequiredMixin, auth_views.LogoutView):
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            messages.success(request, 'Logged out!')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
@@ -55,7 +58,7 @@ class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailVi
 class EditMotoUser(CheckForRestriction, auth_mixins.LoginRequiredMixin, generic_views.UpdateView):
     template_name = 'accounts/edit_user.html'
     model = UserModel
-    form_class = modelform_factory(
+    form_class = forms.modelform_factory(
         UserModel,
         fields=('first_name', 'last_name', 'email', 'profile_picture', 'phone_number', 'is_staff', 'is_superuser'),
         widgets={

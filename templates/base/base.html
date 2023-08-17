@@ -49,40 +49,40 @@
 <!-- Topbar Start -->
 <div class="container-fluid bg-light p-0">
     <div class="row gx-0 d-none d-lg-flex">
-        <div class="col-lg-7 px-5 text-start">
-            {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
+            <div class="col-lg-7 px-5 text-start">
                 <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                     <small class="fa fa-user text-primary me-2"></small>
                     <small>{{ request.user.username }} welcome to the Madness!</small>
                 </div>
-            {% endif %}
-
-            {% if request.user.is_staff or request.user.is_superuser %}
-                {% if offer_for_check %}
-                    <div class="h-100 d-inline-flex align-items-center py-3">
-                        <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
-                        <small>There is new offers for approval ! </small>
-                        <small>
-                            <button class="rounded-pill">
-                                <a href="{% url 'sales for approval view' %}">Go To Offers</a></button>
-                        </small>
-                    </div>
+                {% if request.user.is_staff %}
+                    {% if offer_for_check %}
+                        <div class="h-100 d-inline-flex align-items-center py-3">
+                            <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
+                            <small>There is new offers for approval! </small>
+                        </div>
+                        <div class="h-100 d-inline-flex align-items-center py-3 me-2">
+                            <small>
+                                <button class="rounded-pill">
+                                    <a href="{% url 'sales for approval view' %}">Go To Offers</a>
+                                </button>
+                            </small>
+                        </div>
+                    {% endif %}
                 {% endif %}
-
-            {% endif %}
-        </div>
-        <div class="col-lg-5 px-5 text-end">
-            <div class="h-100 d-inline-flex align-items-center">
-                <a class="btn btn-sm-square bg-white text-primary me-1" href="http://127.0.0.1:8000/admin/"><i
-                        class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i
-                        class="fab fa-twitter"></i></a>
-                <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i
-                        class="fab fa-linkedin-in"></i></a>
-                <a class="btn btn-sm-square bg-white text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
             </div>
-        </div>
-    </div>
+            {% if request.user.is_superuser %}
+                <div class="col-lg-5 px-5 text-end">
+                    <div class="h-100 d-inline-flex align-items-center">
+                        <small class="fa fa-cog  text-primary me-2"></small>
+                        <button class="rounded-pill">
+                            <a href="{% url 'admin:index' %}">Admin Panel</a>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+        {% endif %}
 </div>
 <!-- Topbar End -->
 <!-- Navbar Start -->
@@ -90,6 +90,12 @@
     <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class='fas fa-motorcycle fa-lg'></i>MyMotoMadness</h2>
     </a>
+     {% for message in messages %}
+         <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
+         {% if message.tags == 'success' %}
+          <h6>{{ message }}</h6>
+         {% endif %}
+    {% endfor %}
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -97,7 +103,7 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="{% url 'home-page' %}" class="nav-item nav-link active">Home</a>
             <div class="nav-item dropdown">
-                <a href="{% url 'common sale view' %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                    onclick="window.location.href='{% url  'common sale view' %}'"
                 >Sale
                     Offers</a>
@@ -108,7 +114,7 @@
                 </div>
             </div>
             <div class="nav-item dropdown">
-                <a href="{% url 'common articles views' %}" class="nav-link dropdown-toggle"
+                <a href="" class="nav-link dropdown-toggle"
                    data-bs-toggle="dropdown"
                    onclick="window.location.href='{% url  'common articles views' %}'">Articles</a>
                 <div class="dropdown-menu fade-up m-0">
