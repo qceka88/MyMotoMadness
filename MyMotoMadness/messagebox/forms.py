@@ -9,4 +9,4 @@ UserModel = get_user_model()
 class BaseMessageForm(forms.ModelForm):
     class Meta:
         model = MyMessage
-        fields = ['to_user', 'message_content']
+        fields = ['message_content']

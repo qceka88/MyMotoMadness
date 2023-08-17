@@ -1,9 +1,11 @@
-from django.contrib.auth import mixins as auth_mixins
+from django.contrib.auth import mixins as auth_mixins, get_user_model
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
 from MyMotoMadness.messagebox.forms import BaseMessageForm
 from MyMotoMadness.messagebox.models import MyMessage
+
+UserModel = get_user_model()
 
 
 # Create your views here.
@@ -20,14 +22,15 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        print(5)
-       # form.to_user = self.request.resolver_match('user')
+        last_user = UserModel.objects.filter(pk=self.kwargs['pk']).get()
+        self.extra_context = {
+            'recipient_pk': last_user.pk,
+            'recipient': last_user}
         return form
 
-    # def form_valid(self, form):
-    #     self.object = form.save(commit=False)
-    #     self.object.from_user = self.request.user
-    #     self.object.save()
-    #     return super().form_valid(form)
-
-
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.from_user = self.request.user
+        self.object.to_user = self.extra_context['recipient']
+        self.object.save()
+        return super().form_valid(form)
