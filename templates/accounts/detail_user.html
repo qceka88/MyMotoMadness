@@ -9,8 +9,11 @@
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.username }}'s PROFILE</h1>
-                <button class="btn btn-success rounded-pill"><a
-                        href="{% url 'send message view' pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a></button>
+                {% if request.user.pk != object.pk %}
+                    <button class="btn btn-success rounded-pill"><a
+                            href="{% url 'send message view' slug=object.slug pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a>
+                    </button>
+                {% endif %}
             </div>
         </div>
     </div>

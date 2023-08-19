@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
-    <form action="{% url 'send message view' recipient.pk %}" method="post">
+    <form action="{% url 'send message view' slug=recipient.slug pk=recipient.pk %}" method="post">
         <p>FROM: {{ request.user.username }}</p>
         <p>TO: {{ recipient.username }}</p>
         {{ form.as_p }}

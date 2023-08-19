@@ -22,10 +22,10 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        last_user = UserModel.objects.filter(pk=self.kwargs['pk']).get()
+        recipient = UserModel.objects.filter(pk=self.kwargs['pk']).get()
         self.extra_context = {
-            'recipient_pk': last_user.pk,
-            'recipient': last_user}
+            'recipient': recipient,
+        }
         return form
 
     def form_valid(self, form):

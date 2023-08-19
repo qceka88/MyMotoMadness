@@ -1,11 +1,14 @@
 from django.contrib.auth import models as auth_models
 from django.db import models
 from django.shortcuts import redirect
+from django.template.defaultfilters import slugify
 
 from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical, phone_validator
 
 
 # ACCOUNTS MODELS.
+
+
 class MotoUserModel(auth_models.AbstractUser):
     first_name = models.CharField(
         max_length=30,
@@ -38,8 +41,20 @@ class MotoUserModel(auth_models.AbstractUser):
         validators=(phone_validator,)
     )
 
+    slug = models.SlugField(
+        unique=False,
+
+    )
+
     def __str__(self):
         return f"{self.username}"
 
     def get_absolute_url(self):
         return redirect('edit user view', kwargs={'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(f"{self.username}")
+
+        return super().save(*args, **kwargs)

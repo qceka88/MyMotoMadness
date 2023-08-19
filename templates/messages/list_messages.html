@@ -3,7 +3,8 @@
 {% block page_content %}
     <ul>
         {% for message_object in object_list %}
-            <li>{{ message_object }}</li>
+            <li><h3>{{ message_object }}</h3></li>
+            <h5>{{ message_object.message_content }}</h5>
         {% endfor %}
 
     </ul>

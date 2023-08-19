@@ -14,7 +14,6 @@ class MyMessage(models.Model):
 
     to_user = models.ForeignKey(
         UserModel,
-        #related_name='username',
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
@@ -47,4 +46,4 @@ class MyMessage(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"From: {self.from_user} to {self.to_user}"
+        return f"From: {self.from_user} -- TO: {self.to_user}"
