@@ -11,7 +11,7 @@
                 <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.username }}'s PROFILE</h1>
                 {% if request.user.pk != object.pk %}
                     <button class="btn btn-success rounded-pill"><a
-                            href="{% url 'send message view' slug=object.slug pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a>
+                            href="{% url 'send message view' user_slug=request.user.slug pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a>
                     </button>
                 {% endif %}
             </div>

@@ -46,6 +46,7 @@
     </div>
 </div>
 <!-- Spinner End -->
+
 <!-- Topbar Start -->
 <div class="container-fluid bg-light p-0">
     <div class="row gx-0 d-none d-lg-flex">
@@ -85,16 +86,17 @@
         {% endif %}
 </div>
 <!-- Topbar End -->
+
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class='fas fa-motorcycle fa-lg'></i>MyMotoMadness</h2>
     </a>
-     {% for message in messages %}
-         <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
-         {% if message.tags == 'success' %}
-          <h6>{{ message }}</h6>
-         {% endif %}
+    {% for message in messages %}
+        <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
+        {% if message.tags == 'success' %}
+            <h6>{{ message }}</h6>
+        {% endif %}
     {% endfor %}
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -137,6 +139,7 @@
                     <div class="dropdown-menu fade-up m-0">
                         <a href="{% url 'edit user view' pk=request.user.pk %}" class="dropdown-item">Edit</a>
                         <a href="{% url 'delete user view' pk=request.user.pk %}" class="dropdown-item">Delete</a>
+                        <a href="{% url 'my message box view' user_slug=request.user.slug %}" class="dropdown-item">Message Box</a>
                     </div>
                 </div>
                 <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"><i
@@ -146,6 +149,7 @@
     </div>
 </nav>
 <!-- Navbar End -->
+
 <body>
 {% block page_content %}
 
@@ -157,44 +161,7 @@
 
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Contacts:</h4>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0889 XX XX XX</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>yanko.rashkov@gmail.com</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href="https://github.com/qceka88"><i
-                            class="fab fa-github"></i></a>
-                    <a class="btn btn-outline-light btn-social"
-                       href="https://www.linkedin.com/in/yanko-rashkov-9a8980aa/"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Sale Offers</h4>
-                <a class="btn btn-link" href="{% url 'list motorcycle view' %}">Motorcycles</a>
-                <a class="btn btn-link" href="{% url 'list equipment gear view' %}">Equipment Gear</a>
-                <a class="btn btn-link" href="{% url 'list bike parts view' %}">Motorcycle Parts</a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Articles</h4>
-                <a class="btn btn-link" href="{% url 'list news view' %}">News</a>
-                <a class="btn btn-link" href="{% url 'list advices view' %}">Advices</a>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="{% url 'home-page' %}">MyMotoMadness</a>, All Right Reserved.
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'base/footer.html' %}
 <!-- Footer End -->
 
 

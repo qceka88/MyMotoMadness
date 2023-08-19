@@ -6,9 +6,6 @@ from django.template.defaultfilters import slugify
 from MyMotoMadness.accounts.validators import check_name_symbols_for_non_alphabetical, phone_validator
 
 
-# ACCOUNTS MODELS.
-
-
 class MotoUserModel(auth_models.AbstractUser):
     first_name = models.CharField(
         max_length=30,
@@ -42,8 +39,10 @@ class MotoUserModel(auth_models.AbstractUser):
     )
 
     slug = models.SlugField(
-        unique=False,
-
+        unique=True,
+        null=True,
+        blank=True,
+        editable=False,
     )
 
     def __str__(self):
@@ -54,7 +53,7 @@ class MotoUserModel(auth_models.AbstractUser):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.slug:
-            self.slug = slugify(f"{self.username}")
+        if not self.user_slug:
+            self.user_slug = slugify(f"{self.username}")
 
         return super().save(*args, **kwargs)

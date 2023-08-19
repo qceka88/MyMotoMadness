@@ -18,9 +18,17 @@ class MyMessage(models.Model):
         blank=True,
         null=True,
     )
+
+    message_subject = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
     message_content = models.TextField(
         max_length=500,
     )
+
     send_date = models.DateTimeField(
         auto_now_add=True,
     )
@@ -32,6 +40,7 @@ class MyMessage(models.Model):
     readed = models.BooleanField(
         default=False,
     )
+
     slug = models.SlugField(
         unique=True,
         null=True,

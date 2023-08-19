@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <p>FROM: {{ object.from_user }}</p>
+    <p>TO: {{ object.to_user }}</p>
+    <p>Subject: {{ object.message_subject }}</p>
+    <p>Content: {{ object.message_content }}</p>
+    <p>Sent: {{ object.send_date }}</p>
+    <button><a href="javascript:history.back()"> GO BACK </a></button>
+{% endblock %}

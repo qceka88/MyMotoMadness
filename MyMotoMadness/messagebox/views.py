@@ -18,7 +18,6 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
     model = MyMessage
     template_name = 'messages/create_message.html'
     form_class = BaseMessageForm
-    success_url = reverse_lazy('list messages view')
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -34,3 +33,11 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
         self.object.to_user = self.extra_context['recipient']
         self.object.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('my message box view', kwargs={'user_slug': self.request.user.slug})
+
+
+class DetailsMessageView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
+    model = MyMessage
+    template_name = 'messages/details_message.html'
