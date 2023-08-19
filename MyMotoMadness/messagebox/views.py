@@ -13,6 +13,16 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
     model = MyMessage
     template_name = 'messages/list_messages.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['received_messages'] = MyMessage.objects. \
+            filter(to_user=self.request.user) \
+            .order_by('send_date')
+        data['send_messages'] = MyMessage.objects. \
+            filter(from_user=self.request.user) \
+            .order_by('send_date')
+        return data
+
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
     model = MyMessage

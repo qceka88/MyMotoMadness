@@ -1,8 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
+    <h1>RECEIVED MESSAGES</h1>
     <ul>
-        {% for message_object in object_list %}
+        {% for message_object in received_messages %}
+            <li><h5>{{ message_object }} {{ message_object.message_content }}</h5></li>
+            <button>
+                <a href="{% url 'detail message view' user_slug=request.user.slug slug=message_object.slug %}">Read</a>
+            </button>
+        {% endfor %}
+    </ul>
+        <h1>SENT MESSAGES</h1>
+    <ul>
+        {% for message_object in send_messages %}
             <li><h5>{{ message_object }} {{ message_object.message_content }}</h5></li>
             <button>
                 <a href="{% url 'detail message view' user_slug=request.user.slug slug=message_object.slug %}">Read</a>
