@@ -53,7 +53,7 @@ class MotoUserModel(auth_models.AbstractUser):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.user_slug:
-            self.user_slug = slugify(f"{self.username}")
+        if not self.slug:
+            self.slug = slugify(f"{self.username}")
 
         return super().save(*args, **kwargs)
