@@ -62,7 +62,7 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, generic_views.DeleteView
         fields=(),
     )
 
-    def get(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
     def get_success_url(self):
