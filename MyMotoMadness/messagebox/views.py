@@ -62,5 +62,8 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, generic_views.DeleteView
         fields=(),
     )
 
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse_lazy('my message box view', kwargs={'user_slug': self.request.user.slug})
