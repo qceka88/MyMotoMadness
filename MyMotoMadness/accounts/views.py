@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views, mixins as auth_mixins, get_
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
-from MyMotoMadness.accounts.froms import MotoUserRegisterForm, MotoUserLoginForm, MotoUserChangePassword
+from MyMotoMadness.accounts.forms import MotoUserRegisterForm, MotoUserLoginForm, MotoUserChangePassword
 from MyMotoMadness.accounts.mixins import CheckForRestriction, CheckForRegisteredUser
 
 UserModel = get_user_model()
@@ -37,7 +37,7 @@ class LogoutMotoUserView(auth_mixins.LoginRequiredMixin, auth_views.LogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class DetailsMotoUserView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
+class DetailsMotoUserView(generic_views.DetailView):
     template_name = 'accounts/detail_user.html'
     model = UserModel
 

@@ -57,6 +57,8 @@ Approval section is visible only for administrators and moderators.
 
 Form for create new bike selling offer is accessible for registered users.
 It is similar to creation form for equipment and parts.
+User is restricted to upload minimum 2 and maximum 8 picture.
+In edit form for sale ad user cannot save the offer  if he try to upload more than 8 pictures, or to leave sale ad with less than 2 pictures.
 ![add_bike_form.PNG](readme_images%2Fadd_bike_form.PNG)
 
 In edit form of offers is has admin/mod part that is not vissible for normal users.
@@ -79,8 +81,5 @@ Change Password view.
 
 
 Profile section.
-![profile_details.PNG](readme_images%2Fprofile_details.PNG)
-
-Profile section
 ![profile_details.PNG](readme_images%2Fprofile_details.PNG)
 

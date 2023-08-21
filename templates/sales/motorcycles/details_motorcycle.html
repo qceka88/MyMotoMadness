@@ -123,9 +123,22 @@
                                      alt="{{ object.owner }}">
                             {% endif %}
                             <p>Contacts:</p>
+                            <small>PHONE:</small>
                             <h3>{{ object.owner.phone_number }}</h3>
+                            <small>email:</small>
                             <h3>{{ object.owner.email }}</h3>
-                            <button><a href="{% url 'details user view' pk=object.owner.pk %}">See Profile</a></button>
+                            <button>
+                                <a href="{% url 'details user view' pk=object.owner.pk %}">
+                                    See Profile
+                                </a>
+                            </button>
+                            {% if request.user.is_authenticated and request.user.pk != object.owner.pk %}
+                                <button >
+                                    <a href="{% url 'send message view' slug_user=object.owner.slug_user pk=object.owner.pk %}">
+                                        Send Message
+                                    </a>
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-6">

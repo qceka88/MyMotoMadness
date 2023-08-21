@@ -11,7 +11,6 @@ from MyMotoMadness.messagebox.models import MyMessage
 UserModel = get_user_model()
 
 
-# TODO: check if not registered user try to access message-box
 class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
     model = MyMessage
     template_name = 'messages/list_messages.html'
