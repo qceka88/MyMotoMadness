@@ -5,12 +5,13 @@ from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
 from MyMotoMadness.messagebox.forms import BaseMessageForm
+from MyMotoMadness.messagebox.mixins import RestrictAccessMessages
 from MyMotoMadness.messagebox.models import MyMessage
 
 UserModel = get_user_model()
 
 
-# Create your views here.
+# TODO: check if not registered user try to access message-box
 class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
     model = MyMessage
     template_name = 'messages/list_messages.html'
@@ -50,12 +51,12 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
         return reverse_lazy('my message box view', kwargs={'slug_user': self.request.user.slug_user})
 
 
-class DetailsMessageView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
+class DetailsMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DetailView):
     model = MyMessage
     template_name = 'messages/details_message.html'
 
 
-class DeleteMessageView(auth_mixins.LoginRequiredMixin, generic_views.DeleteView):
+class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DeleteView):
     model = MyMessage
     template_name = 'messages/delete_message.html'
     form_class = modelform_factory(
