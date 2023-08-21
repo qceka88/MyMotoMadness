@@ -8,4 +8,5 @@ class AccountsConfig(AppConfig):
     def ready(self):
         import MyMotoMadness.accounts.singals
         result = super().ready()
+        print('test  pri appps')
         return result

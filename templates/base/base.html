@@ -1,6 +1,7 @@
 {% load static %}
 {% load custom_filter %}
 {% not_approved_offers as offer_for_check %}
+{% load message_filter %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +53,9 @@
                     </div>
                 </div>
                 </div>
+            {% endif %}
+            {% if request.user|new_message %}
+                {{ a }}
             {% endif %}
         {% endif %}
 </div>
