@@ -14,7 +14,7 @@ urlpatterns = [
                   path('sales/', include('MyMotoMadness.saleads.urls')),
                   path('articles/', include('MyMotoMadness.articles.urls')),
                   path('accounts/', include('MyMotoMadness.accounts.urls')),
-                  path('message-box/', include('MyMotoMadness.messagebox.urls')),
+                  path('<str:slug_user>/', include('MyMotoMadness.messagebox.urls')),
                   path('', include('MyMotoMadness.common.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

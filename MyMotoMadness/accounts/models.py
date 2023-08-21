@@ -38,7 +38,7 @@ class MotoUserModel(auth_models.AbstractUser):
         validators=(phone_validator,)
     )
 
-    slug = models.SlugField(
+    slug_user = models.SlugField(
         unique=True,
         null=True,
         blank=True,
@@ -53,7 +53,7 @@ class MotoUserModel(auth_models.AbstractUser):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.slug:
-            self.slug = slugify(f"{self.username}")
+        if not self.slug_user:
+            self.slug_user = slugify(f"{self.username}")
 
         return super().save(*args, **kwargs)

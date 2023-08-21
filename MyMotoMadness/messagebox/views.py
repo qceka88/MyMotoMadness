@@ -1,5 +1,6 @@
 from django.contrib.auth import mixins as auth_mixins, get_user_model
 from django.forms import modelform_factory
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
@@ -46,7 +47,7 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('my message box view', kwargs={'user_slug': self.request.user.slug})
+        return reverse_lazy('my message box view', kwargs={'slug_user': self.request.user.slug_user})
 
 
 class DetailsMessageView(auth_mixins.LoginRequiredMixin, generic_views.DetailView):
@@ -62,8 +63,6 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, generic_views.DeleteView
         fields=(),
     )
 
-    def dispatch(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
-
-    def get_success_url(self):
-        return reverse_lazy('my message box view', kwargs={'user_slug': self.request.user.slug})
+    def get(self, request, *args, **kwargs):
+        MyMessage.objects.get(slug=kwargs['slug']).delete()
+        return redirect('my message box view', {'slug_user': self.request.user.slug_user})
