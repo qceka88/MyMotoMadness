@@ -9,9 +9,10 @@
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">{{ object.username }}'s PROFILE</h1>
-                {% if request.user.is_authenticated and request.user.pk != object.pk  %}
+                {% if request.user.is_authenticated and request.user.pk != object.pk %}
                     <button class="btn btn-success rounded-pill"><a
-                            href="{% url 'send message view' slug_user=request.user.slug_user pk=object.pk %}" style="color: whitesmoke">SEND MESSAGE</a>
+                            href="{% url 'send message view' slug_user=request.user.slug_user pk=object.pk %}"
+                            style="color: whitesmoke">SEND MESSAGE</a>
                     </button>
                 {% endif %}
             </div>
@@ -187,6 +188,7 @@
                                              src="{{ picture.image.url }}"
                                              style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
                                     {% endfor %}
+
                                     <h5 class="mb-0">{{ offer.brand }}</h5>
                                     <p>{{ offer.model }}</p>
                                     <div class="testimonial-text bg-light text-center p-4">
@@ -196,17 +198,18 @@
                                     </button>
                                 </div>
                             {% elif offer|class_name_show == 'MotoEquipmentGear' %}
-                                <div class="testimonial-item text-center">
+                                <div class="testimonial-item text-center" style="background-color: lightgoldenrodyellow">
                                     {% for picture in offer.motoequipmentimages_set.all|slice:1 %}
                                         <img class="bg-light rounded-circle p-2 mx-auto mb-3"
                                              src="{{ picture.image.url }}"
                                              style="width: 80px; height: 80px;" alt="{{ offer.brand }}">
                                     {% endfor %}
+
                                     <h5 class="mb-0">{{ offer.brand }}</h5>
                                     <p>{{ offer.model }}</p>
 
                                     <div class="testimonial-text bg-light text-center p-4">
-                                        <p class="mb-0">{{ offer.description|truncatechars:80 }}</p>
+                                        <p class="mb-0"><h6 class="mb-0">WAITING APPROVAL!</h6></p>
                                     </div>
                                     <button><a href="{% url 'detail equipment gear view' pk=offer.pk %}">DETAILS</a>
                                     </button>

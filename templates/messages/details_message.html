@@ -6,5 +6,5 @@
     <p>Subject: {{ object.message_subject }}</p>
     <p>Content: {{ object.message_content }}</p>
     <p>Sent: {{ object.send_date }}</p>
-    <button><a href="javascript:history.back()"> GO BACK </a></button>
+    <button><a href="{% url 'my message box view' slug_user=request.user.slug_user %}"> GO BACK </a></button>
 {% endblock %}

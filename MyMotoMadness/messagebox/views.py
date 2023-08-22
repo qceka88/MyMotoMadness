@@ -17,12 +17,19 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['received_messages'] = MyMessage.objects. \
-            filter(to_user=self.request.user) \
-            .order_by('send_date')
-        data['send_messages'] = MyMessage.objects. \
-            filter(from_user=self.request.user) \
-            .order_by('send_date')
+        data['received_messages'] = []
+        data['send_messages'] = []
+
+        for msg in data['object_list']:
+            if msg.to_user == self.request.user:
+                if not msg.viewed:
+                    msg.viewed = True
+                    msg.save()
+                data['received_messages'].append(msg)
+
+            elif msg.from_user == self.request.user:
+                data['send_messages'].append(msg)
+
         return data
 
 
@@ -53,6 +60,12 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
 class DetailsMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DetailView):
     model = MyMessage
     template_name = 'messages/details_message.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        self.object.readed = True
+        self.object.save()
+        return data
 
 
 class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DeleteView):

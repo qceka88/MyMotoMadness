@@ -1,12 +1,12 @@
 from django import template
 
-from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
+from MyMotoMadness.messagebox.models import MyMessage
 
 register = template.Library()
 
+
 @register.filter
-def new_message(value):
-    print(value)
-    return True
-
-
+def new_message(user_object):
+    for message in MyMessage.objects.filter(to_user=user_object, viewed=False):
+        if message:
+            return True

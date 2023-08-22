@@ -43,117 +43,124 @@
                     {% endif %}
                 {% endif %}
             </div>
-            {% if request.user.is_superuser %}
-                <div class="col-lg-5 px-5 text-end">
+
+            <div class="col-lg-5 px-5 text-end">
+                {% if request.user|new_message %}
                     <div class="h-100 d-inline-flex align-items-center">
-                        <small class="fa fa-cog  text-primary me-2"></small>
+                        <small class="fa fa-envelope text-primary me-2"></small>
+                        <button class="rounded-pill">
+                            <a href="{% url 'my message box view' slug_user=request.user.slug_user %}">New Message</a>
+                        </button>
+                    </div>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                    <div class="h-100 d-inline-flex align-items-center">
+                        <small class="fa fa-cog text-primary me-2"></small>
                         <button class="rounded-pill">
                             <a href="{% url 'admin:index' %}">Admin Panel</a>
                         </button>
                     </div>
-                </div>
-                </div>
-            {% endif %}
-            {% if request.user|new_message %}
-                {{ a }}
-            {% endif %}
-        {% endif %}
-</div>
-<!-- Topbar End -->
+                {% endif %}
+            </div>
 
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <h2 class="m-0 text-primary"><i class='fas fa-motorcycle fa-lg'></i>MyMotoMadness</h2>
-    </a>
-    {% for message in messages %}
-        <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
-        {% if message.tags == 'success' %}
-            <h6>{{ message }}</h6>
         {% endif %}
-    {% endfor %}
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{% url 'home-page' %}" class="nav-item nav-link active">Home</a>
-            <div class="nav-item dropdown">
-                <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                   onclick="window.location.href='{% url  'common sale view' %}'"
-                >Sale
-                    Offers</a>
-                <div class="dropdown-menu fade-up m-0">
-                    <a href="{% url 'list motorcycle view' %}" class="dropdown-item">Motorcycles</a>
-                    <a href="{% url 'list equipment gear view' %}" class="dropdown-item">EquipmentGear</a>
-                    <a href="{% url 'list bike parts view' %}" class="dropdown-item">Parts</a>
-                </div>
-            </div>
-            <div class="nav-item dropdown">
-                <a href="" class="nav-link dropdown-toggle"
-                   data-bs-toggle="dropdown"
-                   onclick="window.location.href='{% url  'common articles views' %}'">Articles</a>
-                <div class="dropdown-menu fade-up m-0">
-                    <a href="{% url 'list news view' %}" class="dropdown-item">News</a>
-                    <a href="{% url 'list advices view' %}" class="dropdown-item">Advices</a>
-                </div>
-            </div>
-            {% if not request.user.username %}
-                <a href="{% url 'login user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i
-                        class="fa fa-arrow-left ms-3"></i></a>
-                </div>
-                <a href="{% url 'register user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Register<i
-                        class="fa fa-arrow-left ms-3"></i></a>
-            {% else %}
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class='fas fa-motorcycle fa-lg'></i>MyMotoMadness</h2>
+        </a>
+        {% for message in messages %}
+            <small class="fa fa-exclamation-triangle  text-primary me-2"></small>
+            {% if message.tags == 'success' %}
+                <h6>{{ message }}</h6>
+            {% endif %}
+        {% endfor %}
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'home-page' %}" class="nav-item nav-link active">Home</a>
                 <div class="nav-item dropdown">
-                    <a href="{% url 'details user view' pk=request.user.pk %}" class="nav-link dropdown-toggle active"
-                       data-bs-toggle="dropdown"
-                       onclick="window.location.href='{% url 'details user view' request.user.pk %}'">My Profile</a>
-
+                    <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       onclick="window.location.href='{% url  'common sale view' %}'"
+                    >Sale
+                        Offers</a>
                     <div class="dropdown-menu fade-up m-0">
-                        <a href="{% url 'edit user view' pk=request.user.pk %}" class="dropdown-item">Edit</a>
-                        <a href="{% url 'delete user view' pk=request.user.pk %}" class="dropdown-item">Delete</a>
-                        <a href="{% url 'my message box view' slug_user=request.user.slug_user %}"
-                           class="dropdown-item">Message Box</a>
+                        <a href="{% url 'list motorcycle view' %}" class="dropdown-item">Motorcycles</a>
+                        <a href="{% url 'list equipment gear view' %}" class="dropdown-item">EquipmentGear</a>
+                        <a href="{% url 'list bike parts view' %}" class="dropdown-item">Parts</a>
                     </div>
                 </div>
-                <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"><i
-                        class="fa fa-arrow-right ms-3"></i> Logout<i
-                        class="fa fa-arrow-left ms-3"></i></a>
-            {% endif %}
-    </div>
-</nav>
-<!-- Navbar End -->
+                <div class="nav-item dropdown">
+                    <a href="" class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown"
+                       onclick="window.location.href='{% url  'common articles views' %}'">Articles</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'list news view' %}" class="dropdown-item">News</a>
+                        <a href="{% url 'list advices view' %}" class="dropdown-item">Advices</a>
+                    </div>
+                </div>
+                {% if not request.user.username %}
+                    <a href="{% url 'login user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i
+                            class="fa fa-arrow-left ms-3"></i></a>
+                    </div>
+                    <a href="{% url 'register user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Register<i
+                            class="fa fa-arrow-left ms-3"></i></a>
+                {% else %}
+                    <div class="nav-item dropdown">
+                        <a href="{% url 'details user view' pk=request.user.pk %}"
+                           class="nav-link dropdown-toggle active"
+                           data-bs-toggle="dropdown"
+                           onclick="window.location.href='{% url 'details user view' request.user.pk %}'">My Profile</a>
 
-<body>
-{% block page_content %}
+                        <div class="dropdown-menu fade-up m-0">
+                            <a href="{% url 'edit user view' pk=request.user.pk %}" class="dropdown-item">Edit</a>
+                            <a href="{% url 'delete user view' pk=request.user.pk %}" class="dropdown-item">Delete</a>
+                            <a href="{% url 'my message box view' slug_user=request.user.slug_user %}"
+                               class="dropdown-item">Message Box</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'logout user view' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"><i
+                            class="fa fa-arrow-right ms-3"></i> Logout<i
+                            class="fa fa-arrow-left ms-3"></i></a>
+                {% endif %}
+        </div>
+    </nav>
+    <!-- Navbar End -->
 
-{% endblock %}
-</body>
+    <body>
+    {% block page_content %}
 
-<!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    {% endblock %}
+    </body>
 
-
-<!-- Footer Start -->
-{% include 'base/footer.html' %}
-<!-- Footer End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'lib/wow/wow.min.js' %}"></script>
-<script src="{% static 'lib/easing/easing.min.js' %}"></script>
-<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
-<script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
-<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
-<script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
-<script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
-<script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <!-- Footer Start -->
+    {% include 'base/footer.html' %}
+    <!-- Footer End -->
 
-<!-- Template Javascript -->
-<script src="{% static 'js/main.js' %}"></script>
-</body>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    </body>
 
 </html>

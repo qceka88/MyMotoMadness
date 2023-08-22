@@ -34,7 +34,7 @@ class MyMessage(models.Model):
     )
 
     viewed = models.BooleanField(
-        default=False
+        default=False,
     )
 
     readed = models.BooleanField(

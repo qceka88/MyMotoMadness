@@ -4,7 +4,14 @@
     <h1>RECEIVED MESSAGES</h1>
     <ul>
         {% for message_object in received_messages %}
-            <li><h5>{{ message_object }} {{ message_object.message_content }}</h5></li>
+            {% if not message_object.readed %}
+                <li><h5>{{ message_object }}</h5>
+                    <h6>{{ message_object.message_content|truncatechars:50 }}</h6></li>
+            {% else %}
+                <li><table>{{ message_object }}</table>
+                    <small>{{ message_object.message_content|truncatechars:50 }}</small></li>
+            {% endif %}
+
             <button>
                 <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
             </button>
@@ -16,7 +23,8 @@
     <h1>SENT MESSAGES</h1>
     <ul>
         {% for message_object in send_messages %}
-            <li><h5>{{ message_object }} {{ message_object.message_content }}</h5></li>
+            <li><table>{{ message_object }}</table>
+                    <small>{{ message_object.message_content|truncatechars:50 }}</small></li>
             <button>
                 <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
             </button>
@@ -25,5 +33,8 @@
             </button>
         {% endfor %}
     </ul>
-
+    <div class=col-md-6">
+        <button class="btn btn-success rounded-pill"><a
+                href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>
+    </div>
 {% endblock %}
