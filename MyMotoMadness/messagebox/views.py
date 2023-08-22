@@ -15,22 +15,27 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
     model = MyMessage
     template_name = 'messages/list_messages.html'
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+    @staticmethod
+    def get_messages_for_user(data, current_user):
         data['received_messages'] = []
         data['send_messages'] = []
 
         for msg in data['object_list']:
-            if msg.to_user == self.request.user and not msg.receiver_delete:
+            if msg.to_user == current_user and not msg.receiver_delete:
                 if not msg.viewed:
                     msg.viewed = True
                     msg.save()
                 data['received_messages'].append(msg)
 
-            elif msg.from_user == self.request.user and not msg.sender_delete:
+            elif msg.from_user == current_user and not msg.sender_delete:
                 data['send_messages'].append(msg)
 
         return data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return self.get_messages_for_user(context, self.request.user)
 
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
@@ -63,8 +68,9 @@ class DetailsMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages,
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        self.object.readed = True
-        self.object.save()
+        if self.object.to_user == self.request.user:
+            self.object.readed = True
+            self.object.save()
         return data
 
 
@@ -76,8 +82,8 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, 
         fields=(),
     )
 
-    def get(self, request, *args, **kwargs):
-        message_object = MyMessage.objects.get(slug=kwargs['slug'])
+    @staticmethod
+    def check_message_for_deletion(message_object, request):
         if request.user == message_object.from_user and not message_object.sender_delete:
             message_object.sender_delete = True
         elif request.user == message_object.to_user and not message_object.receiver_delete:
@@ -86,5 +92,9 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, 
 
         if message_object.sender_delete and message_object.receiver_delete:
             message_object.delete()
+
+    def get(self, request, *args, **kwargs):
+        my_message = MyMessage.objects.get(slug=kwargs['slug'])
+        self.check_message_for_deletion(my_message, request)
 
         return redirect('my message box view', {'slug_user': self.request.user.slug_user})

@@ -5,11 +5,11 @@
 
 
       PROJECT WILL BE EXTENT WITH MORE FEATURES
-          EXTENDING UNDER CONSTRUCTION...
+          EXTENDING IS UNDER CONSTRUCTION...
 
 
-
-[MyMotoMadness: Link](https://qceka88.pythonanywhere.com/)
+Try it:
+www.mymotomadnes.eu
 
 
 

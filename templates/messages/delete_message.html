@@ -2,10 +2,8 @@
 
 {% block page_content %}
     <form action="{% url 'delete message view' slug_user=request.user.slug_user  slug=object.slug %}" method="post">
-        <p>FROM: {{ object.from_user }}</p>
-        <p>TO: {{ object.to_user }}</p>
         {{ form.as_p }}
         {% csrf_token %}
-        <button>DELETE THIS MESSAGE</button>
+        <button>DELETE</button>
     </form>
 {% endblock %}
