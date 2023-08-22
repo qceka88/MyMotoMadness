@@ -1,8 +1,8 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
-    <p>FROM: {{ object.from_user }}</p>
-    <p>TO: {{ object.to_user }}</p>
+    <p>FROM: <a href="{% url 'details user view' pk=object.from_user.pk %}">{{ object.from_user }}</a></p>
+    <p>TO: <a href="{% url 'details user view' pk=object.to_user.pk %}">{{ object.to_user }}</a></p>
     <p>Subject: {{ object.message_subject }}</p>
     <p>Content: {{ object.message_content }}</p>
     <p>Sent: {{ object.send_date }}</p>

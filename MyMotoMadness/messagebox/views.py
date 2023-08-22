@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
-from MyMotoMadness.messagebox.forms import BaseMessageForm
+from MyMotoMadness.messagebox.forms import CreateMessageForm
 from MyMotoMadness.messagebox.mixins import RestrictAccessMessages
 from MyMotoMadness.messagebox.models import MyMessage
 
@@ -21,13 +21,13 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
         data['send_messages'] = []
 
         for msg in data['object_list']:
-            if msg.to_user == self.request.user:
+            if msg.to_user == self.request.user and not msg.receiver_delete:
                 if not msg.viewed:
                     msg.viewed = True
                     msg.save()
                 data['received_messages'].append(msg)
 
-            elif msg.from_user == self.request.user:
+            elif msg.from_user == self.request.user and not msg.sender_delete:
                 data['send_messages'].append(msg)
 
         return data
@@ -36,7 +36,7 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
     model = MyMessage
     template_name = 'messages/create_message.html'
-    form_class = BaseMessageForm
+    form_class = CreateMessageForm
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -77,5 +77,14 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, 
     )
 
     def get(self, request, *args, **kwargs):
-        MyMessage.objects.get(slug=kwargs['slug']).delete()
+        message_object = MyMessage.objects.get(slug=kwargs['slug'])
+        if request.user == message_object.from_user and not message_object.sender_delete:
+            message_object.sender_delete = True
+        elif request.user == message_object.to_user and not message_object.receiver_delete:
+            message_object.receiver_delete = True
+        message_object.save()
+
+        if message_object.sender_delete and message_object.receiver_delete:
+            message_object.delete()
+
         return redirect('my message box view', {'slug_user': self.request.user.slug_user})

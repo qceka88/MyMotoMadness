@@ -12,11 +12,19 @@ class MyMessage(models.Model):
         on_delete=models.CASCADE,
     )
 
+    sender_delete = models.BooleanField(
+        default=False,
+    )
+
     to_user = models.ForeignKey(
         UserModel,
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
+    )
+
+    receiver_delete = models.BooleanField(
+        default=False,
     )
 
     message_subject = models.CharField(
