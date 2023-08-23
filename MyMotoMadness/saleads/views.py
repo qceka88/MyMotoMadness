@@ -16,9 +16,9 @@ class CommonSaleView(views.TemplateView):
 
         context['sale_offers'] = []
         for queryset_offers in (
-                Motorcycles.objects.all(),
-                MotoEquipmentGear.objects.all(),
-                MotoParts.objects.all()
+                Motorcycles.objects.all().order_by('-published')[:5],
+                MotoEquipmentGear.objects.all().order_by('-published')[:5],
+                MotoParts.objects.all().order_by('-published')[:5]
         ):
             context['sale_offers'].extend(queryset_offers)
 
@@ -41,11 +41,12 @@ class NotApprovedOffersView(CheckAdminStaffPermission, views.TemplateView):
 class MotorcyclesListViews(views.ListView, views.RedirectView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
+    paginate_by = 8
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['approved'] = context['object_list'].filter(approved=True)
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(approved=True).order_by('published')
+        return queryset
 
 
 class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
@@ -114,11 +115,10 @@ class EquipmentGearListView(views.ListView):
     template_name = 'sales/equipment_gear/equipment_list.html'
     model = MotoEquipmentGear
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['approved'] = context['object_list'].filter(approved=True)
-        return context
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(approved=True).order_by('published')
+        return queryset
 
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
@@ -184,10 +184,10 @@ class PartsListView(views.ListView):
     template_name = 'sales/moto_parts/list_parts.html'
     model = MotoParts
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['approved'] = context['object_list'].filter(approved=True)
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(approved=True).order_by('published')
+        return queryset
 
 
 class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):

@@ -32,6 +32,12 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
 
         return data
 
+    def get_paginator(
+            self, queryset, per_page, orphans=0, allow_empty_first_page=True, **kwargs
+    ):
+        data = super().get_paginator(queryset, per_page=3, orphans=0, allow_empty_first_page=True, **kwargs)
+        return data
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
