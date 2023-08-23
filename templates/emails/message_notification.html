@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMotoMadness</title>
+</head>
+<body style="display: flex;
+			justify-content: center;">
+<div style="display: flex;
+			justify-content: center;
+			border: 3px solid rgb(65, 63, 63);
+			border-radius: 20px;
+			margin: 2%;
+			max-width: 620px;">
+    <div>
+
+        <h1 style="			text-align: center;
+                color: rgb(65, 63, 63);
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+
+            Hello, {{ user_receiver.username }}!</h1>
+
+        <h2 style="	text-align: center;
+                color: rgb(65, 63, 63);
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+
+
+            {{ user_sender.username }} has send you a PM!</h2>
+
+        <h2 style="			text-align: center;
+                color: rgb(65, 63, 63);
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            <p>About:</p>
+            <p>{{ message_subject }}</p>
+        </h2>
+        <h1 style="text-align: center;
+                color: rgb(65, 63, 63);
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+               ">
+            <a style="font-size: 25px;"
+               href="http://127.0.0.1:8000{% url 'detail message view' slug_user=user_receiver.slug_user slug=message_slug %}">
+                Link to message!
+            </a>
+        </h1>
+
+    </div>
+</div>
+</body>
+</html>

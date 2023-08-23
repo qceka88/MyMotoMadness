@@ -12,8 +12,6 @@ class Limits:
     MAX_FILE_SIZE = 1024 * 1024 * 5
 
 
-a = forms.Select
-
 
 class BaseMotorcycleForm(forms.ModelForm):
     class Meta:
@@ -100,7 +98,6 @@ class CreateMotorcycleForm(Limits, BaseMotorcycleForm):
                                         )
 
 
-# "autocomplete": "current-password",
 class EditMotorcycleForm(Limits, BaseMotorcycleForm):
     BaseMotorcycleForm.Meta.exclude = ('motorcycle_images', 'owner')
 

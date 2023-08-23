@@ -20,7 +20,7 @@ class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView)
         data['received_messages'] = []
         data['send_messages'] = []
 
-        for msg in data['object_list']:
+        for msg in data['object_list'].order_by('-send_date'):
             if msg.to_user == current_user and not msg.receiver_delete:
                 if not msg.viewed:
                     msg.viewed = True
