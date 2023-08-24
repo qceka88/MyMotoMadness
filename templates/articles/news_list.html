@@ -7,11 +7,11 @@
          style="background-image: url({% static 'img/carousel-4.jpg' %});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">{{ type_article|upper }}</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">NEWS</h1>
                 {% if request.user.is_staff or request.user.is_superuser %}
                     <button class="btn btn-success rounded-pill text-center" style="position: center">
                         <a href="{% url 'add article view' %}" style="color: whitesmoke">
-                            CREATE {{ type_article|upper }}
+                            CREATE NEWS
                         </a>
                     </button>
                 {% endif %}

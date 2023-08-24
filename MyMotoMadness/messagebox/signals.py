@@ -15,7 +15,7 @@ def message_notification_with_email(user_sender, user_receiver, data):
 
     }
     return send_the_email(
-        subject=f'You have new message from {user_sender}',
+        subject=f'You have new message from {user_sender}.',
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=(user_receiver.email,),
         template_name='emails/message_notification.html',

@@ -4,53 +4,40 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
-from MyMotoMadness.messagebox.forms import CreateMessageForm
+from MyMotoMadness.messagebox.forms import SendMessageForm
 from MyMotoMadness.messagebox.mixins import RestrictAccessMessages
 from MyMotoMadness.messagebox.models import MyMessage
 
 UserModel = get_user_model()
 
 
-class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
+class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
     model = MyMessage
-    template_name = 'messages/list_messages.html'
-    paginate_by = 8
+    template_name = 'messages/received_messages.html'
+    paginate_by = 6
 
-    # TODO: Test to add paginator on messages and to save them as viewed.
     def get_queryset(self):
-        queryset = (
-                list(MyMessage.objects.filter(from_user=self.request.user, receiver_delete=False)) +
-                list(MyMessage.objects.filter(to_user=self.request.user, receiver_delete=False))
-        )
+        queryset = MyMessage.objects.filter(to_user=self.request.user, receiver_delete=False).order_by('-send_date')
+        queryset.update(viewed=True)
+
         return queryset
 
-        # @staticmethod
-        # def get_messages_for_user(data, current_user):
-        #     data['received_messages'] = []
-        #     data['send_messages'] = []
-        #
-        #     for msg in data['object_list'].order_by('-send_date'):
-        #         if msg.to_user == current_user and not msg.receiver_delete:
-        #             if not msg.viewed:
-        #                 msg.viewed = True
-        #                 msg.save()
-        #             data['received_messages'].append(msg)
-        #
-        #         elif msg.from_user == current_user and not msg.sender_delete:
-        #             data['send_messages'].append(msg)
-        #
-        #     return data
-        #
-        # def get_context_data(self, **kwargs):
-        #     context = super().get_context_data(**kwargs)
-        #
-        #     return self.get_messages_for_user(context, self.request.user)
+
+class SentMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
+    model = MyMessage
+    template_name = 'messages/sended_messages.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        queryset = MyMessage.objects.filter(from_user=self.request.user, sender_delete=False).order_by('-send_date')
+
+        return queryset
 
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
     model = MyMessage
-    template_name = 'messages/create_message.html'
-    form_class = CreateMessageForm
+    template_name = 'messages/send_message.html'
+    form_class = SendMessageForm
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -105,5 +92,5 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, 
     def get(self, request, *args, **kwargs):
         my_message = MyMessage.objects.get(slug=kwargs['slug'])
         self.check_message_for_deletion(my_message, request)
-
-        return redirect('my message box view', {'slug_user': self.request.user.slug_user})
+        a = 'HTTP_REFERER'
+        return redirect('received messages view', {'slug_user': self.request.user.slug_user})

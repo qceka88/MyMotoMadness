@@ -9,5 +9,6 @@
     <button>
         <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=object.slug %}">DELETE</a>
     </button>
-    <button><a href="{% url 'my message box view' slug_user=request.user.slug_user %}"> GO BACK </a></button>
-{% endblock %}s
+    <button><a href="{% url 'received messages view' slug_user=request.user.slug_user %}"> GO BACK </a></button>
+    <button><a href="{% url 'send message view' slug_user=request.user.slug_user pk=object.to_user.pk %}"> Reply </a></button>
+{% endblock %}

@@ -15,5 +15,5 @@ class BaseMessageForm(forms.ModelForm):
         )
 
 
-class CreateMessageForm(BaseMessageForm):
+class SendMessageForm(BaseMessageForm):
     ...
