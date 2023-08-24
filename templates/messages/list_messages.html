@@ -3,36 +3,78 @@
 {% block page_content %}
     <h1>RECEIVED MESSAGES</h1>
     <ul>
-        {% for message_object in received_messages %}
-            {% if not message_object.readed %}
-                <li><h5>{{ message_object }}</h5>
-                    <h6>{{ message_object.message_content|truncatechars:50 }}</h6></li>
+        {% for message_object in object_list %}
+            {% if message_object.to_user == request.user %}
+                {% if not message_object.readed %}
+                    <li><h5>{{ message_object }}</h5>
+                        <h6>{{ message_object.message_content|truncatechars:50 }}</h6></li>
+                {% else %}
+                    <li>
+                        <table>{{ message_object }}</table>
+                        <small>{{ message_object.message_content|truncatechars:50 }}</small></li>
+                {% endif %}
+
+
+                <button>
+                    <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                </button>
+                <button>
+                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                </button>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <h3 class="text-center">
+        {% if paginator.num_pages > 1 %}
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
             {% else %}
-                <li><table>{{ message_object }}</table>
-                    <small>{{ message_object.message_content|truncatechars:50 }}</small></li>
+                <a>&lt;</a>
             {% endif %}
 
-            <button>
-                <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-            </button>
-            <button>
-                <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-            </button>
-        {% endfor %}
-    </ul>
+            {{ page_obj.number }} / {{ paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+            {% else %}
+                <a>&gt;</a>
+            {% endif %}
+        {% endif %}
+    </h3>
     <h1>SENT MESSAGES</h1>
     <ul>
-        {% for message_object in send_messages %}
-            <li><table>{{ message_object }}</table>
+        {% for message_object in object_list %}
+            {% if message_object.from_user == request.user %}
+                <li>
+                    <table>{{ message_object }}</table>
                     <small>{{ message_object.message_content|truncatechars:50 }}</small></li>
-            <button>
-                <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-            </button>
-            <button>
-                <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-            </button>
+                <button>
+                    <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                </button>
+                <button>
+                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                </button>
+            {% endif %}
         {% endfor %}
+
     </ul>
+    <h3 class="text-center">
+        {% if paginator.num_pages > 1 %}
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+            {% else %}
+                <a>&lt;</a>
+            {% endif %}
+
+            {{ page_obj.number }} / {{ paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+            {% else %}
+                <a>&gt;</a>
+            {% endif %}
+        {% endif %}
+    </h3>
     <div class=col-md-6">
         <button class="btn btn-success rounded-pill"><a
                 href="javascript:history.back()" style="color: whitesmoke">GO BACK</a></button>

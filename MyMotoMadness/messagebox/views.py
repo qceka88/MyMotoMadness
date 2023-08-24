@@ -14,34 +14,37 @@ UserModel = get_user_model()
 class MessageBoxListView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
     model = MyMessage
     template_name = 'messages/list_messages.html'
+    paginate_by = 8
 
-    @staticmethod
-    def get_messages_for_user(data, current_user):
-        data['received_messages'] = []
-        data['send_messages'] = []
+    # TODO: Test to add paginator on messages and to save them as viewed.
+    def get_queryset(self):
+        queryset = (
+                list(MyMessage.objects.filter(from_user=self.request.user, receiver_delete=False)) +
+                list(MyMessage.objects.filter(to_user=self.request.user, receiver_delete=False))
+        )
+        return queryset
 
-        for msg in data['object_list'].order_by('-send_date'):
-            if msg.to_user == current_user and not msg.receiver_delete:
-                if not msg.viewed:
-                    msg.viewed = True
-                    msg.save()
-                data['received_messages'].append(msg)
-
-            elif msg.from_user == current_user and not msg.sender_delete:
-                data['send_messages'].append(msg)
-
-        return data
-
-    def get_paginator(
-            self, queryset, per_page, orphans=0, allow_empty_first_page=True, **kwargs
-    ):
-        data = super().get_paginator(queryset, per_page=3, orphans=0, allow_empty_first_page=True, **kwargs)
-        return data
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        return self.get_messages_for_user(context, self.request.user)
+        # @staticmethod
+        # def get_messages_for_user(data, current_user):
+        #     data['received_messages'] = []
+        #     data['send_messages'] = []
+        #
+        #     for msg in data['object_list'].order_by('-send_date'):
+        #         if msg.to_user == current_user and not msg.receiver_delete:
+        #             if not msg.viewed:
+        #                 msg.viewed = True
+        #                 msg.save()
+        #             data['received_messages'].append(msg)
+        #
+        #         elif msg.from_user == current_user and not msg.sender_delete:
+        #             data['send_messages'].append(msg)
+        #
+        #     return data
+        #
+        # def get_context_data(self, **kwargs):
+        #     context = super().get_context_data(**kwargs)
+        #
+        #     return self.get_messages_for_user(context, self.request.user)
 
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):

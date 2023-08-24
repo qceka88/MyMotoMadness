@@ -19,27 +19,21 @@ class CommonArticlesView(views.TemplateView):
 class NewsListView(views.ListView):
     template_name = 'articles/news_list.html'
     model = ArticlesModel
+    paginate_by = 8
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        data = self.get_queryset().filter(article_type='News')
-        context['type_article'] = 'News'
-        context['left_articles'] = [art for art in data if art.pk % 2 != 0]
-        context['right_articles'] = [art for art in data if art.pk % 2 == 0]
-        return context
+    def get_queryset(self):
+        queryset = ArticlesModel.objects.filter(article_type='News')
+        return queryset
 
 
 class AdvicesListView(views.ListView):
     template_name = 'articles/advices_list.html'
     model = ArticlesModel
+    paginate_by = 8
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        data = self.get_queryset().filter(article_type='Advices')
-        context['type_article'] = 'Advices'
-        context['left_articles'] = [art for art in data if art.pk % 2 != 0]
-        context['right_articles'] = [art for art in data if art.pk % 2 == 0]
-        return context
+    def get_queryset(self):
+        queryset = ArticlesModel.objects.filter(article_type='Advices')
+        return queryset
 
 
 class ArticleCreateView(CheckUserArticlePermission, views.CreateView):

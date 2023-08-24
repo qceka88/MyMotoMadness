@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load odd_even_filter %}
 {% load static %}
 {% block page_content %}
 
@@ -32,7 +33,7 @@
             <div class="row g-5">
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in left_articles %}
+                        {% for article in object_list|odd_numbers %}
                             <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -56,7 +57,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in right_articles %}
+                        {% for article in object_list|even_numbers %}
                             <div class="col-12 wow form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -81,6 +82,23 @@
                 </div>
             </div>
         </div>
+        <h3 class="text-center">
+            {% if paginator.num_pages > 1 %}
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+                {% else %}
+                    <a>&lt;</a>
+                {% endif %}
+
+                {{ page_obj.number }} / {{ paginator.num_pages }}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+                {% else %}
+                    <a>&gt;</a>
+                {% endif %}
+            {% endif %}
+        </h3>
     </div>
     <!-- Common Article End -->
     <div class=col-md-6">

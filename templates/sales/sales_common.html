@@ -22,7 +22,7 @@
     </div>
     <!-- Page Header End -->
 
-    <!-- Service Start -->
+    <!-- Sections Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
@@ -32,7 +32,8 @@
                         <div class="ps-4">
                             <h5 class="mb-3">Motorcycles</h5>
                             <p>Find your dream bike!</p>
-                            <button><a style="color: red" href="{% url 'list motorcycle view' %}">See All Motorcycles</a></button>
+                            <button><a style="color: red" href="{% url 'list motorcycle view' %}">See All
+                                Motorcycles</a></button>
                         </div>
                     </div>
                 </div>
@@ -59,13 +60,21 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Service End -->
 
+        </div>
+
+    </div>
+    <!-- Sections End -->
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+        <h6 class="text-primary text-uppercase">// MyMotoMadness //</h6>
+        <h2 class="mb-5">Newest Offers</h2>
+    </div>
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+
         <div class="container">
+
             <div class="owl-carousel testimonial-carousel position-relative">
+
                 {% for offer in sale_offers %}
                     {% if offer.approved %}
                         {% if offer|class_name_show == 'Motorcycles' %}
