@@ -25,20 +25,19 @@ class CommonSaleView(views.TemplateView):
         return context
 
 
-class NotApprovedOffersView(CheckAdminStaffPermission, views.TemplateView):
+class NotApprovedOffersView(CheckAdminStaffPermission, views.ListView):
     template_name = 'sales/not_approved_offers.html'
+    paginate_by = 8
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['for_approval'] = []
-        for offers in (Motorcycles.objects.filter(approved=False),
-                       MotoEquipmentGear.objects.filter(approved=False),
-                       MotoParts.objects.filter(approved=False)):
-            data['for_approval'].extend(offers)
-        return data
+    def get_queryset(self):
+        queryset = (list(Motorcycles.objects.filter(approved=False)) +
+                    list(MotoEquipmentGear.objects.filter(approved=False)) +
+                    list(MotoParts.objects.filter(approved=False)))
+
+        return queryset
 
 
-class MotorcyclesListViews(views.ListView, views.RedirectView):
+class MotorcyclesListViews(views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
     paginate_by = 8
@@ -114,11 +113,13 @@ class MotorcyclesDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictionA
 class EquipmentGearListView(views.ListView):
     template_name = 'sales/equipment_gear/equipment_list.html'
     model = MotoEquipmentGear
+    paginate_by = 8
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(approved=True).order_by('published')
         return queryset
+
 
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
@@ -183,6 +184,7 @@ class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictio
 class PartsListView(views.ListView):
     template_name = 'sales/moto_parts/list_parts.html'
     model = MotoParts
+    paginate_by = 8
 
     def get_queryset(self):
         queryset = super().get_queryset()

@@ -54,18 +54,20 @@
             </div>
         </div>
         <h3 class="text-center">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
-            {% else %}
-                <a>&lt;</a>
-            {% endif %}
+            {% if paginator.num_pages > 1 %}
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+                {% else %}
+                    <a>&lt;</a>
+                {% endif %}
 
-            {{ page_obj.number }} / {{ paginator.num_pages }}
+                {{ page_obj.number }} / {{ paginator.num_pages }}
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
-            {% else %}
-                <a>&gt;</a>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+                {% else %}
+                    <a>&gt;</a>
+                {% endif %}
             {% endif %}
         </h3>
     </div>

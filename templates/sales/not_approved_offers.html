@@ -31,7 +31,7 @@
                 <h1 class="mb-5">Offers Waiting For Approval</h1>
             </div>
             <div class="row g-4">
-                {% for offer in for_approval %}
+                {% for offer in object_list %}
                     {% if offer|class_name_show == 'Motorcycles' %}
                         <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="team-item">
@@ -109,6 +109,23 @@
                 {% endfor %}
             </div>
         </div>
+            <h3 class="text-center">
+            {% if paginator.num_pages > 1 %}
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+                {% else %}
+                    <a>&lt;</a>
+                {% endif %}
+
+                {{ page_obj.number }} / {{ paginator.num_pages }}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+                {% else %}
+                    <a>&gt;</a>
+                {% endif %}
+            {% endif %}
+        </h3>
     </div>
     <!-- Offers End -->
     <div class="col-12">
