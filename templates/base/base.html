@@ -49,7 +49,7 @@
                     <div class="h-100 d-inline-flex align-items-center">
                         <small class="fa fa-envelope text-primary me-2"></small>
                         <button class="rounded-pill">
-                            <a href="{% url 'received messages view' slug_user=request.user.slug_user %}">New Message</a>
+                            <a href="{% url 'received list messages view' slug_user=request.user.slug_user %}">New Message</a>
                         </button>
                     </div>
                 {% endif %}
@@ -120,7 +120,7 @@
                     <div class="dropdown-menu fade-up m-0">
                         <a href="{% url 'edit user view' pk=request.user.pk %}" class="dropdown-item">Edit</a>
                         <a href="{% url 'delete user view' pk=request.user.pk %}" class="dropdown-item">Delete</a>
-                        <a href="{% url 'received messages view' slug_user=request.user.slug_user %}"
+                        <a href="{% url 'received list messages view' slug_user=request.user.slug_user %}"
                            class="dropdown-item">Message Box</a>
                     </div>
                 </div>
