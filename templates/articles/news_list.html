@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load odd_even_filter %}
+{% load left_right_column %}
 {% load static %}
 {% block page_content %}
 
@@ -33,7 +33,7 @@
             <div class="row g-5">
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in object_list|odd_numbers %}
+                        {% for article in object_list|left_column %}
                             <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for article in object_list|even_numbers %}
+                        {% for article in object_list|right_column %}
                             <div class="col-12 wow form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"

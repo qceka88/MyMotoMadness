@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% load odd_even_filter %}
+{% load left_right_column %}
 {% block page_content %}
     <!-- Page Header START -->
     <div class="container-fluid page-header mb-5 p-0"
@@ -24,19 +24,18 @@
         </div>
     </div>
     <!-- Page Header End -->
-
-
     <!--Sent Messages   Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|odd_numbers %}
-                            <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
+    {% if object_list %}
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="row g-4 mb-3 pb-3">
+                            {% for message_object in object_list|left_column %}
+                                <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
                                             <span class="fw-bold text-secondary">
                                                 {% if message_object.to_user.profile_picture %}
                                                     <img src="{{ message_object.to_user.profile_picture.url }}"
@@ -49,34 +48,35 @@
                                                 {% endif %}
                                             </span>
 
+                                        </div>
+                                        <div class="ps-4">
+                                            <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">
+                                                <h3>To: {{ message_object.to_user }} <i
+                                                        class="fa fa-envelope-square text-secondary me-2"></i></h3>
+                                                <h5>Subject: {{ message_object.message_subject }}</h5>
+                                                <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                                <p style="color: black">Sent: {{ message_object.send_date }}</p></a>
+                                        </div>
                                     </div>
-                                    <div class="ps-4">
-                                        <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">
-                                            <h3>To: {{ message_object.to_user }} <i
-                                                    class="fa fa-envelope-square text-secondary me-2"></i></h3>
-                                            <h5>Subject: {{ message_object.message_subject }}</h5>
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span></a>
-                                    </div>
+                                    <br>
+                                    <button>
+                                        <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                                    </button>
+                                    <button>
+                                        <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                                    </button>
                                 </div>
-                                <br>
-                                <button>
-                                    <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-                                </button>
-                                <button>
-                                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-                                </button>
-                            </div>
 
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|even_numbers %}
-                            <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
+                    <div class="col-lg-6">
+                        <div class="row g-4 mb-3 pb-3">
+                            {% for message_object in object_list|right_column %}
+                                <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
                                             <span class="fw-bold text-secondary">
                                                 {% if message_object.to_user.profile_picture %}
                                                     <img src="{{ message_object.to_user.profile_picture.url }}"
@@ -89,46 +89,50 @@
                                                 {% endif %}
                                             </span>
 
+                                        </div>
+                                        <div class="ps-4">
+                                            <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">
+                                                <h3>To: {{ message_object.to_user }} <i
+                                                        class="fa fa-envelope-square text-secondary me-2"></i></h3>
+                                                <h5>Subject: {{ message_object.message_subject }}</h5>
+                                                <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                                <p style="color: black">Sent: {{ message_object.send_date }}</p></a>
+                                        </div>
                                     </div>
-                                    <div class="ps-4">
-                                        <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">
-                                            <h3>To: {{ message_object.to_user }} <i
-                                                    class="fa fa-envelope-square text-secondary me-2"></i></h3>
-                                            <h5>Subject: {{ message_object.message_subject }}</h5>
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span></a>
-                                    </div>
+                                    <br>
+                                    <button>
+                                        <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                                    </button>
+                                    <button>
+                                        <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                                    </button>
                                 </div>
-                                <br>
-                                <button>
-                                    <a href="{% url 'detail message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-                                </button>
-                                <button>
-                                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-                                </button>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
+            <h3 class="text-center">
+                {% if paginator.num_pages > 1 %}
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+                    {% else %}
+                        <a>&lt;</a>
+                    {% endif %}
+
+                    {{ page_obj.number }} / {{ paginator.num_pages }}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+                    {% else %}
+                        <a>&gt;</a>
+                    {% endif %}
+                {% endif %}
+            </h3>
         </div>
-        <h3 class="text-center">
-            {% if paginator.num_pages > 1 %}
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
-                {% else %}
-                    <a>&lt;</a>
-                {% endif %}
-
-                {{ page_obj.number }} / {{ paginator.num_pages }}
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
-                {% else %}
-                    <a>&gt;</a>
-                {% endif %}
-            {% endif %}
-        </h3>
-    </div>
+    {% else %}
+        <h2 class="text-center">NO MESSAGES TO SHOW</h2>
+    {% endif %}
     <!-- Sent Messages  End -->
     <div class=col-md-6">
         <button class="btn btn-success rounded-pill"><a

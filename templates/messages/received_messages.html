@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load odd_even_filter %}
+{% load left_right_column %}
 {% load static %}
 {% block page_content %}
     <!-- Page Header START -->
@@ -27,12 +27,13 @@
     <!-- Page Header End -->
 
     <!--Received Messages   Start -->
+    {% if object_list %}
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|odd_numbers %}
+                        {% for message_object in object_list|left_column %}
                             <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -61,7 +62,8 @@
                                                         class="fa fa-envelope-open text-secondary me-2"></i></h3>
                                                 <h5>Subject: {{ message_object.message_subject }}</h5>
                                             {% endif %}
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span></a>
+                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                            <p style="color: black">Received: {{ message_object.send_date }}</p></a>
                                     </div>
                                 </div>
                                 <br>
@@ -77,7 +79,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|even_numbers %}
+                        {% for message_object in object_list|right_column %}
                             <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex">
                                     <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
@@ -106,7 +108,8 @@
                                                         class="fa fa-envelope-open text-secondary me-2"></i></h3>
                                                 <h5>Subject: {{ message_object.message_subject }}</h5>
                                             {% endif %}
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span></a>
+                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                            <p style="color: black">Received: {{ message_object.send_date }}</p></a>
                                     </div>
                                 </div>
                                 <br>
@@ -140,6 +143,9 @@
             {% endif %}
         </h3>
     </div>
+    {% else %}
+        <h2 class="text-center">NO MESSAGES TO SHOW</h2>
+    {% endif %}
     <!-- Received Messages  End -->
     <div class=col-md-6">
         <button class="btn btn-success rounded-pill"><a

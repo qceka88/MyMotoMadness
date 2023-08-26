@@ -1,5 +1,6 @@
 from django.contrib.auth import mixins as auth_mixins, get_user_model
 from django.forms import modelform_factory
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as generic_views
@@ -22,6 +23,13 @@ class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListVie
 
         return queryset
 
+    def get_context_data(self, **kwargs):
+        try:
+            return super().get_context_data(**kwargs)
+        except Http404:
+            self.kwargs['page'] = len(self.object_list) // self.paginate_by
+            return super().get_context_data(**kwargs)
+
 
 class SentMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
     model = MyMessage
@@ -30,8 +38,14 @@ class SentMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
 
     def get_queryset(self):
         queryset = MyMessage.objects.filter(from_user=self.request.user, sender_delete=False).order_by('-send_date')
-
         return queryset
+
+    def get_context_data(self, **kwargs):
+        try:
+            return super().get_context_data(**kwargs)
+        except Http404:
+            self.kwargs['page'] = len(self.object_list) // self.paginate_by
+            return super().get_context_data(**kwargs)
 
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
@@ -58,9 +72,17 @@ class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):
         return reverse_lazy('my message box view', kwargs={'slug_user': self.request.user.slug_user})
 
 
-class DetailsMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DetailView):
+class DetailsMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, generic_views.DetailView,
+                         generic_views.ListView):
     model = MyMessage
     template_name = 'messages/details_message.html'
+    object_list = MyMessage.objects.all()
+    paginate_by = 3
+
+    #
+    # def get_queryset(self):
+    #     self.object_list = MyMessage.objects.filter(from_user=self.request.user, sender_delete=False).order_by(
+    #         '-send_date')
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -92,5 +114,5 @@ class DeleteMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessages, 
     def get(self, request, *args, **kwargs):
         my_message = MyMessage.objects.get(slug=kwargs['slug'])
         self.check_message_for_deletion(my_message, request)
-        a = 'HTTP_REFERER'
-        return redirect('received messages view', {'slug_user': self.request.user.slug_user})
+
+        return redirect(request.META['HTTP_REFERER'])
