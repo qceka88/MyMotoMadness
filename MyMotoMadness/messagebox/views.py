@@ -77,12 +77,13 @@ class DetailReceivedMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMe
     template_name = 'messages/details_received_message.html'
     paginate_by = 3
     allow_empty = False
+    redirect_url = 'received list messages view'
 
     def get(self, request, *args, **kwargs):
         try:
             return super().get(request, *args, **kwargs)
         except Http404:
-            return redirect('received list messages view', {'slug_user': request.user.slug_user})
+            return redirect(self.redirect_url, {'slug_user': request.user.slug_user})
 
     def get_queryset(self):
         self.object_list = MyMessage.objects.filter(to_user=self.request.user,
@@ -106,12 +107,12 @@ class DetailSentMessageView(auth_mixins.LoginRequiredMixin, RestrictAccessMessag
     template_name = 'messages/details_sent_message.html'
     paginate_by = 3
     allow_empty = False
-
+    redirect_url = 'sent list messages view'
     def get(self, request, *args, **kwargs):
         try:
             return super().get(request, *args, **kwargs)
         except Http404:
-            return redirect('sent list messages view', {'slug_user': request.user.slug_user})
+            return redirect(self.redirect_url, {'slug_user': request.user.slug_user})
 
     def get_queryset(self):
         self.object_list = MyMessage.objects.filter(from_user=self.request.user, sender_delete=False).order_by(
