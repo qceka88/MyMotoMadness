@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from MyMotoMadness.messagebox.views import ReceivedMessagesView, SentMessagesView, SendMessageView, \
-    DetailReceivedMessageView, DetailSentMessageView, DeleteMessageView
+    DetailReceivedMessageView, DetailSentMessageView, DeleteMessageView, CreateNewMessageView
 
 urlpatterns = [
     path('', include([
@@ -15,9 +15,8 @@ urlpatterns = [
                 path('details/<str:slug>/', DetailSentMessageView.as_view(), name='detail sent message view'),
             ])),
         ])),
-        path('create_message/', SendMessageView.as_view(), name='create new message view'),
+        path('create_message/', CreateNewMessageView.as_view(), name='create new message view'),
         path('send_message/<int:pk>/', SendMessageView.as_view(), name='send message view'),
         path('delete-message/<str:slug>/', DeleteMessageView.as_view(), name='delete message view'),
     ])),
 ]
-

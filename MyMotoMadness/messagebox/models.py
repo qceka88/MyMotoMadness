@@ -7,7 +7,7 @@ UserModel = get_user_model()
 
 class MyMessage(models.Model):
     from_user = models.ForeignKey(
-        UserModel,
+        to=UserModel,
         related_name='pk+',
         on_delete=models.CASCADE,
     )
@@ -17,7 +17,7 @@ class MyMessage(models.Model):
     )
 
     to_user = models.ForeignKey(
-        UserModel,
+        to=UserModel,
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,

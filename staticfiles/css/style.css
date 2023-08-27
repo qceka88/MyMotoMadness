@@ -223,6 +223,11 @@
     background-size: cover;
 }
 
+.send_message {
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/20200923075134_bmw-m-1000-r.jpg) center center no-repeat;
+    background-size: cover;
+}
+
 .bootstrap-datetimepicker-widget.bottom {
     top: auto !important;
 }
