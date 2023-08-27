@@ -9,7 +9,7 @@
 
 
 Try it:
-www.mymotomadnes.eu
+www.mymotomadness.eu
 
 
 
