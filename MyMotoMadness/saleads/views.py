@@ -45,6 +45,7 @@ class MotorcyclesListViews(views.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(approved=True).order_by('published')
+        #return queryset.order_by('published')
         return queryset
 
 
@@ -118,6 +119,7 @@ class EquipmentGearListView(views.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(approved=True).order_by('published')
+
         return queryset
 
 

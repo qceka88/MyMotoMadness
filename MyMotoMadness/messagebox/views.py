@@ -24,7 +24,7 @@ class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListVie
 
     def get_context_data(self, **kwargs):
         try:
-            return super().get_context_data(**kwargs)
+            return
         except Http404:
             self.kwargs['page'] = len(self.object_list) // self.paginate_by
             return super().get_context_data(**kwargs)

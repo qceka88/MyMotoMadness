@@ -2,6 +2,7 @@ from django import forms
 from django.core import exceptions
 from multiupload.fields import MultiMediaField
 
+from MyMotoMadness.saleads.mixins import BikeTypeChoices
 from MyMotoMadness.saleads.models import Motorcycles, MotoParts, MotoEquipmentGear, MotorcycleImages, \
     MotoEquipmentImages, MotoPartsImages
 
@@ -10,7 +11,6 @@ class Limits:
     MIN_FILES = 2
     MAX_FILES = 8
     MAX_FILE_SIZE = 1024 * 1024 * 5
-
 
 
 class BaseMotorcycleForm(forms.ModelForm):
@@ -132,6 +132,31 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
 
         MotorcycleImages.objects.filter(id__in=images_for_delete).delete()
         return self.cleaned_data
+
+
+class SearchMotorcycle(forms.Form):
+    brand = forms.CharField(
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by brand.'
+            }
+        )
+    )
+    model = forms.CharField(
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by brand.'
+            }
+        )
+    )
+    bike_type = forms.ChoiceField(
+        required=False,
+        choices=BikeTypeChoices.choices()
+    )
 
 
 class BaseEquipmentGearForm(forms.ModelForm):
