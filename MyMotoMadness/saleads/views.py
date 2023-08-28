@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
-    CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm
+    CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm, SearchMotorcycle
 from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission, NotApprovedContent
 from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
@@ -42,10 +42,15 @@ class MotorcyclesListViews(views.ListView):
     model = Motorcycles
     paginate_by = 8
 
+    def get_context_data(self,  *args, **kwargs):
+        data = super().get_context_data( *args, **kwargs)
+        data['search_motorcycle'] = SearchMotorcycle(self.request.GET)
+        return data
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(approved=True).order_by('published')
-        #return queryset.order_by('published')
+        # return queryset.order_by('published')
         return queryset
 
 
