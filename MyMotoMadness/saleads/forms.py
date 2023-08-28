@@ -1,5 +1,5 @@
 from django import forms
-from django.core import exceptions
+from django.core import exceptions, validators
 from multiupload.fields import MultiMediaField
 
 from MyMotoMadness.saleads.mixins import BikeTypeChoices
@@ -11,6 +11,8 @@ class Limits:
     MIN_FILES = 2
     MAX_FILES = 8
     MAX_FILE_SIZE = 1024 * 1024 * 5
+    MIN_YEAR = 1900
+    MAX_YEAR = 2023
 
 
 class BaseMotorcycleForm(forms.ModelForm):
@@ -134,7 +136,12 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
         return self.cleaned_data
 
 
-class SearchMotorcycle(forms.Form):
+class SearchMotorcycle(Limits, forms.Form):
+    year = ((y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR))
+    bike_type = forms.ChoiceField(
+        required=False,
+        choices=BikeTypeChoices.choices()
+    )
     brand = forms.CharField(
         required=False,
         max_length=30,
@@ -149,13 +156,72 @@ class SearchMotorcycle(forms.Form):
         max_length=30,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Search by brand.'
+                'placeholder': 'Search by model.'
             }
         )
     )
-    bike_type = forms.ChoiceField(
+    engine_volume_min = forms.IntegerField(
         required=False,
-        choices=BikeTypeChoices.choices()
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Min engine volume.'
+            }
+        )
+    )
+    engine_volume_max = forms.IntegerField(
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max engine volume.'
+            }
+        ),
+    )
+    odo_meter = forms.IntegerField(
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max mileage.'
+            }
+        ),
+    )
+    year_from = forms.ChoiceField(
+        required=False,
+        choices=year,
+    )
+    year_to = forms.ChoiceField(
+        required=False,
+        choices=year,
+    )
+    price_from = forms.IntegerField(
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Min price.'
+            }
+        ),
+    )
+    price_to = forms.IntegerField(
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max price.'
+            }
+        ),
     )
 
 
