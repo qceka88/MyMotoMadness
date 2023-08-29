@@ -137,12 +137,18 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
 
 
 class SearchMotorcycle(Limits, forms.Form):
-    year = ((y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR))
+    YEAR_FROM = ((Limits.MIN_YEAR, 'Year From'), *[(y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR + 1)])
+    YEAR_TO = ((Limits.MAX_YEAR, 'To Year'),(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR,-1))
+    bike_types = BikeTypeChoices.choices()
+    bike_types.insert(0, ('', 'Bike Type'))
+
     bike_type = forms.ChoiceField(
         required=False,
-        choices=BikeTypeChoices.choices()
+        choices=bike_types,
+        label='',
     )
     brand = forms.CharField(
+        label='',
         required=False,
         max_length=30,
         widget=forms.TextInput(
@@ -152,6 +158,7 @@ class SearchMotorcycle(Limits, forms.Form):
         )
     )
     model = forms.CharField(
+        label='',
         required=False,
         max_length=30,
         widget=forms.TextInput(
@@ -161,6 +168,7 @@ class SearchMotorcycle(Limits, forms.Form):
         )
     )
     engine_volume_min = forms.IntegerField(
+        label='',
         required=False,
         validators=(
             validators.MinValueValidator(0),
@@ -172,6 +180,7 @@ class SearchMotorcycle(Limits, forms.Form):
         )
     )
     engine_volume_max = forms.IntegerField(
+        label='',
         required=False,
         validators=(
             validators.MinValueValidator(0),
@@ -183,6 +192,7 @@ class SearchMotorcycle(Limits, forms.Form):
         ),
     )
     odo_meter = forms.IntegerField(
+        label='',
         required=False,
         validators=(
             validators.MinValueValidator(0),
@@ -194,14 +204,17 @@ class SearchMotorcycle(Limits, forms.Form):
         ),
     )
     year_from = forms.ChoiceField(
+        label='',
         required=False,
-        choices=year,
+        choices=YEAR_FROM,
     )
     year_to = forms.ChoiceField(
+        label='',
         required=False,
-        choices=year,
+        choices=YEAR_TO,
     )
     price_from = forms.IntegerField(
+        label='',
         required=False,
         validators=(
             validators.MinValueValidator(0),
@@ -213,6 +226,7 @@ class SearchMotorcycle(Limits, forms.Form):
         ),
     )
     price_to = forms.IntegerField(
+        label='',
         required=False,
         validators=(
             validators.MinValueValidator(0),
@@ -222,6 +236,15 @@ class SearchMotorcycle(Limits, forms.Form):
                 'placeholder': 'Max price.'
             }
         ),
+    )
+    city = forms.ChoiceField(
+        label='',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Enter city.'
+            }
+        )
     )
 
 

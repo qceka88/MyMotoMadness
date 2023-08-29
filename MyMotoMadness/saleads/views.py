@@ -37,20 +37,41 @@ class NotApprovedOffersView(CheckAdminStaffPermission, views.ListView):
         return queryset
 
 
+# helping function
+def search_action():
+    actions = {
+        'odo_meter': 'odo_meter__gte',
+        'engine_volume_min': 'engine_volume__gte',
+        'engine_volume_max': 'engine_volume__lte',
+        'year_from': 'manufacture_year__gte',
+        'year_to': 'manufacture_year__lte',
+        'price_from': 'price__gte',
+        'price_to': 'price__lte',
+    }
+    return actions
+
+
 class MotorcyclesListViews(views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
     paginate_by = 8
 
-    def get_context_data(self,  *args, **kwargs):
-        data = super().get_context_data( *args, **kwargs)
+    def get_context_data(self, *args, **kwargs):
+        data = super().get_context_data(*args, **kwargs)
         data['search_motorcycle'] = SearchMotorcycle(self.request.GET)
         return data
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(approved=True).order_by('published')
-        # return queryset.order_by('published')
+
+        for field, value in self.request.GET.items():
+            if value and field != 'page':
+                field_action = field + '__icontains'
+                if field in search_action():
+                    field_action = search_action()[field]
+                queryset = queryset.filter(**{field_action: value})
+
         return queryset
 
 
