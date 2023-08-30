@@ -28,6 +28,25 @@
         </div>
     </div>
     <!-- Page Header End -->
+    <!-- Search Start -->
+    <div class="text-center text-primary text-uppercase">
+        <a href="" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+            Search Messages</a>
+        <div class="dropdown-menu fadeInUp m-0 form-control text-center">
+            <form action="{% url 'received list messages view' slug_user=request.user.slug_user %}?page={{ page_obj.number }}"
+                  method="get">
+                {{ search_message.from_user.label }}
+                {{ search_message.from_user }}
+                {{ search_message.message_subject.label }}
+                {{ search_message.message_subject }}
+                <br>
+                <br>
+                <button style="color: red">SEARCH</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
 
     <!--Received Messages   Start -->
     {% if object_list %}

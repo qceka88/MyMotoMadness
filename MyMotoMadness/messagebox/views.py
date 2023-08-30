@@ -6,45 +6,45 @@ from django.urls import reverse_lazy
 from django.views import generic as generic_views
 
 from MyMotoMadness.messagebox.forms import SendMessageForm, CreateMessageForm
-from MyMotoMadness.messagebox.mixins import RestrictAccessMessages
+from MyMotoMadness.messagebox.mixins import RestrictAccessMessages, GetContextDataListMixin
 from MyMotoMadness.messagebox.models import MyMessage
 
 UserModel = get_user_model()
 
 
-class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
+class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, GetContextDataListMixin, generic_views.ListView):
     model = MyMessage
     template_name = 'messages/received_messages.html'
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = MyMessage.objects.filter(to_user=self.request.user, receiver_delete=False).order_by('-send_date')
+        queryset = super().get_queryset()
+        queryset = queryset.filter(to_user=self.request.user, receiver_delete=False).order_by('-send_date')
+
+        search_user = UserModel.objects.filter(username=self.request.GET.get('from_user', ''))
+        if search_user:
+            queryset = queryset.filter(from_user=search_user.get())
+        search_subject = self.request.GET.get('message_subject', '')
+        if search_subject:
+            queryset = queryset.filter(message_subject__icontains=search_subject)
         queryset.update(viewed=True)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        try:
-            return super().get_context_data(**kwargs)
-        except Http404:
-            self.kwargs['page'] = len(self.object_list) // self.paginate_by
-            return super().get_context_data(**kwargs)
 
-
-class SentMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListView):
+class SentMessagesView(auth_mixins.LoginRequiredMixin, GetContextDataListMixin, generic_views.ListView):
     model = MyMessage
     template_name = 'messages/sended_messages.html'
     paginate_by = 6
 
     def get_queryset(self):
         queryset = MyMessage.objects.filter(from_user=self.request.user, sender_delete=False).order_by('-send_date')
+        search_user = UserModel.objects.filter(username=self.request.GET.get('to_user', ''))
+        if search_user:
+            queryset = queryset.filter(to_user=search_user.get())
+        search_subject = self.request.GET.get('message_subject', '')
+        if search_subject:
+            queryset = queryset.filter(message_subject__icontains=search_subject)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        try:
-            return super().get_context_data(**kwargs)
-        except Http404:
-            self.kwargs['page'] = len(self.object_list) // self.paginate_by
-            return super().get_context_data(**kwargs)
 
 
 class SendMessageView(auth_mixins.LoginRequiredMixin, generic_views.CreateView):

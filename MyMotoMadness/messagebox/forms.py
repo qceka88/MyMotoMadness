@@ -54,3 +54,34 @@ class CreateMessageForm(BaseMessageForm):
             )
 
         return self.cleaned_data
+
+
+class SearchMessageForm(forms.Form):
+    from_user = forms.CharField(
+        required=False,
+        label='Sender:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Sender username.'
+            }
+        )
+    )
+    to_user = forms.CharField(
+        required=False,
+        label='Receiver:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Receiver username.'
+            }
+        )
+    )
+    message_subject = forms.CharField(
+        required=False,
+        label='Subject:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Subject.'
+            }
+        )
+    )
+
