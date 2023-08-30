@@ -2,7 +2,7 @@ from django import forms
 from django.core import exceptions, validators
 from multiupload.fields import MultiMediaField
 
-from MyMotoMadness.saleads.mixins import BikeTypeChoices
+from MyMotoMadness.saleads.mixins import BikeTypeChoices, ProtectionGearTypeChoices
 from MyMotoMadness.saleads.models import Motorcycles, MotoParts, MotoEquipmentGear, MotorcycleImages, \
     MotoEquipmentImages, MotoPartsImages
 
@@ -138,16 +138,16 @@ class EditMotorcycleForm(Limits, BaseMotorcycleForm):
 
 class SearchMotorcycle(Limits, forms.Form):
     YEAR_FROM = ((Limits.MIN_YEAR, 'Year From'), *[(y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR + 1)])
-    YEAR_TO = ((Limits.MAX_YEAR, 'To Year'),(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR,-1))
+    YEAR_TO = ((Limits.MAX_YEAR, 'To Year'), *[(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR, -1)])
     bike_types = BikeTypeChoices.choices()
     bike_types.insert(0, ('', 'Bike Type'))
 
-    bike_type = forms.ChoiceField(
+    bike_type__icontains = forms.ChoiceField(
         required=False,
         choices=bike_types,
         label='',
     )
-    brand = forms.CharField(
+    brand__icontains = forms.CharField(
         label='',
         required=False,
         max_length=30,
@@ -157,7 +157,7 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         )
     )
-    model = forms.CharField(
+    model__icontains = forms.CharField(
         label='',
         required=False,
         max_length=30,
@@ -167,7 +167,7 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         )
     )
-    engine_volume_min = forms.IntegerField(
+    engine_volume__gte = forms.IntegerField(
         label='',
         required=False,
         validators=(
@@ -179,7 +179,7 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         )
     )
-    engine_volume_max = forms.IntegerField(
+    engine_volume__lte = forms.IntegerField(
         label='',
         required=False,
         validators=(
@@ -191,7 +191,31 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         ),
     )
-    odo_meter = forms.IntegerField(
+    horse_power__gte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Min horse power.'
+            }
+        )
+    )
+    horse_power__lte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max horse power.'
+            }
+        )
+    )
+    odo_meter__lte = forms.IntegerField(
         label='',
         required=False,
         validators=(
@@ -203,17 +227,17 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         ),
     )
-    year_from = forms.ChoiceField(
+    manufacture_year__gte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_FROM,
     )
-    year_to = forms.ChoiceField(
+    manufacture_year__lte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_TO,
     )
-    price_from = forms.IntegerField(
+    price__gte = forms.IntegerField(
         label='',
         required=False,
         validators=(
@@ -225,7 +249,7 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         ),
     )
-    price_to = forms.IntegerField(
+    price__lte = forms.IntegerField(
         label='',
         required=False,
         validators=(
@@ -237,12 +261,12 @@ class SearchMotorcycle(Limits, forms.Form):
             }
         ),
     )
-    city = forms.ChoiceField(
+    city = forms.CharField(
         label='',
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Enter city.'
+                'placeholder': 'Search by city.'
             }
         )
     )
@@ -349,6 +373,95 @@ class EditEquipmentGearForm(Limits, BaseEquipmentGearForm):
         return self.cleaned_data
 
 
+class SearchEquipment(Limits, forms.Form):
+    YEAR_FROM = ((Limits.MIN_YEAR, 'Year From'), *[(y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR + 1)])
+    YEAR_TO = ((Limits.MAX_YEAR, 'To Year'), *[(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR, -1)])
+    gear_types = ProtectionGearTypeChoices.choices()
+    gear_types.insert(0, ('', 'Gear Type'))
+
+    gear_type__icontains = forms.ChoiceField(
+        required=False,
+        choices=gear_types,
+        label='',
+    )
+    brand__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by brand.'
+            }
+        )
+    )
+    model__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by model.'
+            }
+        )
+    )
+    material__type = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Search by material.'
+            }
+        )
+    )
+
+    manufacture_year__gte = forms.ChoiceField(
+        label='',
+        required=False,
+        choices=YEAR_FROM,
+    )
+    manufacture_year__lte = forms.ChoiceField(
+        label='',
+        required=False,
+        choices=YEAR_TO,
+    )
+    price__gte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Min price.'
+            }
+        ),
+    )
+    price__lte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max price.'
+            }
+        ),
+    )
+    city = forms.CharField(
+        label='',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                 'placeholder': 'Search by city.'
+            }
+        )
+    )
+
+
 class BasePartsForm(forms.ModelForm):
     class Meta:
         model = MotoParts
@@ -448,3 +561,93 @@ class EditPartsForm(Limits, BasePartsForm):
 
         MotoPartsImages.objects.filter(id__in=images_for_delete).delete()
         return self.cleaned_data
+
+
+class SearchPart(Limits, forms.Form):
+    YEAR_FROM = ((Limits.MIN_YEAR, 'Year From'), *[(y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR + 1)])
+    YEAR_TO = ((Limits.MAX_YEAR, 'To Year'), *[(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR, -1)])
+
+    type_of_part__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by type.'
+            }
+        )
+    )
+    brand__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by brand.'
+            }
+        )
+    )
+    model__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by model.'
+            }
+        )
+    )
+    for_bike__icontains = forms.CharField(
+        label='',
+        required=False,
+        max_length=40,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'For what bike.'
+            }
+        )
+    )
+
+    manufacture_year__gte = forms.ChoiceField(
+        label='',
+        required=False,
+        choices=YEAR_FROM,
+    )
+    manufacture_year__lte = forms.ChoiceField(
+        label='',
+        required=False,
+        choices=YEAR_TO,
+    )
+    price__gte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Min price.'
+            }
+        ),
+    )
+    price__lte = forms.IntegerField(
+        label='',
+        required=False,
+        validators=(
+            validators.MinValueValidator(0),
+        ),
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Max price.'
+            }
+        ),
+    )
+    city = forms.CharField(
+        label='',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                 'placeholder': 'Search by city.'
+            }
+        )
+    )

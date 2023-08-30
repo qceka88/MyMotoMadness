@@ -18,6 +18,12 @@
         </div>
     </div>
     <!-- Page Header End -->
+        <!-- Search Start -->
+    <form action="{% url 'list bike parts view' %}">
+        {{ search_part }}
+        <button>SEARCH</button>
+    </form>
+    <!-- Search End -->
     <!-- Offers Start -->
     <div class="container-xxl py-5">
         <div class="container">
