@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from MyMotoMadness.articles.forms import CreateArticleForm, EditArticleForm, DeleteArticleForm
+from MyMotoMadness.articles.forms import CreateArticleForm, EditArticleForm, DeleteArticleForm, SearchArticleForm
 from MyMotoMadness.articles.mixins import CheckUserArticlePermission
 from MyMotoMadness.articles.models import ArticlesModel
 
@@ -22,8 +22,18 @@ class NewsListView(views.ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = ArticlesModel.objects.filter(article_type='News')
+        queryset = ArticlesModel.objects.filter(article_type='News').order_by('-published')
+
+        for field, value in self.request.GET.items():
+            if value and field != 'page':
+                queryset = queryset.filter(**{field: value})
+
         return queryset
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['search_news'] = SearchArticleForm(self.request.GET)
+        return data
 
 
 class AdvicesListView(views.ListView):
@@ -33,7 +43,16 @@ class AdvicesListView(views.ListView):
 
     def get_queryset(self):
         queryset = ArticlesModel.objects.filter(article_type='Advices')
+        for field, value in self.request.GET.items():
+            if value and field != 'page':
+                queryset = queryset.filter(**{field: value})
+
         return queryset
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['search_advices'] = SearchArticleForm(self.request.GET)
+        return data
 
 
 class ArticleCreateView(CheckUserArticlePermission, views.CreateView):

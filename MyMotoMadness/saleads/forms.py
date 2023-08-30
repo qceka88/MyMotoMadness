@@ -25,7 +25,7 @@ class BaseMotorcycleForm(forms.ModelForm):
             'bike_type': forms.Select(
                 attrs={
                     'placeholder': 'Enter Motorcycle Model',
-                    'style': "height: 35px",
+                    'style': "height: 35px; width: 225px;",
                 }
             ),
             'brand': forms.TextInput(
@@ -146,6 +146,10 @@ class SearchMotorcycle(Limits, forms.Form):
         required=False,
         choices=bike_types,
         label='',
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     brand__icontains = forms.CharField(
         label='',
@@ -231,11 +235,19 @@ class SearchMotorcycle(Limits, forms.Form):
         label='',
         required=False,
         choices=YEAR_FROM,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     manufacture_year__lte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_TO,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     price__gte = forms.IntegerField(
         label='',
@@ -280,28 +292,32 @@ class BaseEquipmentGearForm(forms.ModelForm):
             'owner': forms.HiddenInput(),
             'brand': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Equipment Brand'
+                    'placeholder': 'Enter Equipment Brand',
+                    'style': "height: 35px",
                 }
             ),
             'gear_type': forms.Select(
                 attrs={
                     'placeholder': 'Select Equipment Model',
-                    'style': "height: 35px",
+                    'style': "height: 35px; width: 225px;",
                 }
             ),
             'model': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Equipment Model'
+                    'placeholder': 'Enter Equipment Model',
+                    'style': "height: 35px",
                 }
             ),
             'material_type': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Material Type'
+                    'placeholder': 'Enter Material Type',
+                    'style': "height: 35px",
                 }
             ),
             'manufacture_year': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Enter Manufacture Year'
+                    'placeholder': 'Enter Manufacture Year',
+                    'style': "height: 35px",
                 }
             ),
             'description': forms.Textarea(
@@ -311,12 +327,14 @@ class BaseEquipmentGearForm(forms.ModelForm):
             ),
             'city': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter City'
+                    'placeholder': 'Enter City',
+                    'style': "height: 35px",
                 }
             ),
             'price': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Price for Equipment'
+                    'placeholder': 'Enter Price for Equipment',
+                    'style': "height: 35px",
                 }
             ),
         }
@@ -377,12 +395,16 @@ class SearchEquipment(Limits, forms.Form):
     YEAR_FROM = ((Limits.MIN_YEAR, 'Year From'), *[(y, y) for y in range(Limits.MIN_YEAR, Limits.MAX_YEAR + 1)])
     YEAR_TO = ((Limits.MAX_YEAR, 'To Year'), *[(y, y) for y in range(Limits.MAX_YEAR, Limits.MIN_YEAR, -1)])
     gear_types = ProtectionGearTypeChoices.choices()
-    gear_types.insert(0, ('', 'Gear Type'))
+    gear_types.insert(0, ('', 'Equpment Type'))
 
     gear_type__icontains = forms.ChoiceField(
         required=False,
         choices=gear_types,
         label='',
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     brand__icontains = forms.CharField(
         label='',
@@ -404,28 +426,34 @@ class SearchEquipment(Limits, forms.Form):
             }
         )
     )
-    material__type = forms.IntegerField(
+    material__type = forms.CharField(
         label='',
+        max_length=30,
         required=False,
-        validators=(
-            validators.MinValueValidator(0),
-        ),
-        widget=forms.NumberInput(
+        widget=forms.TextInput(
             attrs={
                 'placeholder': 'Search by material.'
             }
-        )
+        ),
     )
 
     manufacture_year__gte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_FROM,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     manufacture_year__lte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_TO,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     price__gte = forms.IntegerField(
         label='',
@@ -456,7 +484,7 @@ class SearchEquipment(Limits, forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                 'placeholder': 'Search by city.'
+                'placeholder': 'Search by city.'
             }
         )
     )
@@ -470,42 +498,48 @@ class BasePartsForm(forms.ModelForm):
             'owner': forms.HiddenInput(),
             'type_of_part': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Type of Part'
+                    'placeholder': 'Enter Type of Part',
                 }
             ),
             'brand': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Brand of Part'
+                    'placeholder': 'Enter Brand of Part',
+                    'style': "height: 35px",
                 }
             ),
             'model': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Model of Part'
+                    'placeholder': 'Enter Model of Part',
+                    'style': "height: 35px",
                 }
             ),
             'for_bike': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter For What Bike is Part'
+                    'placeholder': 'Enter For What Bike is Part',
+                    'style': "height: 35px",
                 }
             ),
             'manufacture_year': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Enter Manufacture Year'
+                    'placeholder': 'Enter Manufacture Year',
+                    'style': "height: 35px",
                 }
             ),
             'description': forms.Textarea(
                 attrs={
-                    'placeholder': 'Enter addition information about bike Part'
+                    'placeholder': 'Enter addition information about bike Part',
                 }
             ),
             'city': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter City'
+                    'placeholder': 'Enter City',
+                    'style': "height: 35px",
                 }
             ),
             'price': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter Price for Part'
+                    'placeholder': 'Enter Price for Part',
+                    'style': "height: 35px",
                 }
             ),
         }
@@ -612,11 +646,19 @@ class SearchPart(Limits, forms.Form):
         label='',
         required=False,
         choices=YEAR_FROM,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     manufacture_year__lte = forms.ChoiceField(
         label='',
         required=False,
         choices=YEAR_TO,
+        widget=forms.Select(
+            attrs={'style': 'width: 225px; height:30px;',
+                   }
+        )
     )
     price__gte = forms.IntegerField(
         label='',
@@ -647,7 +689,7 @@ class SearchPart(Limits, forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                 'placeholder': 'Search by city.'
+                'placeholder': 'Search by city.'
             }
         )
     )

@@ -40,6 +40,7 @@ class ProtectionGearTypeChoices(ChoicesMixin, Enum):
     PROTECTORS = 'Protectors'
     OTHER = 'Other..'
 
+
 class CheckForRestrictionAds:
 
     def dispatch(self, request, *args, **kwargs):
@@ -57,7 +58,6 @@ class CheckAdminStaffPermission:
         if not (request.user.is_staff or request.user.is_superuser):
             return redirect('home-page')
 
-
         return data
 
 
@@ -69,5 +69,18 @@ class NotApprovedContent:
                 not request.user.is_staff and not request.user.is_superuser:
             return redirect('home-page')
 
-
         return data
+
+
+class GetQuerySetListViewsMixin:
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(approved=True).order_by('published')
+
+        for field, value in self.request.GET.items():
+            if value and field != 'page':
+                queryset = queryset.filter(**{field: value})
+
+        return queryset
+

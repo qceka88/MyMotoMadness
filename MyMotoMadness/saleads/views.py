@@ -5,7 +5,8 @@ from django.views import generic as views
 from MyMotoMadness.saleads.forms import CreateMotorcycleForm, EditMotorcycleForm, \
     CreateEquipmentGearForm, EditEquipmentGearForm, CreatePartsForm, EditPartsForm, SearchMotorcycle, SearchEquipment, \
     SearchPart
-from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission, NotApprovedContent
+from MyMotoMadness.saleads.mixins import CheckForRestrictionAds, CheckAdminStaffPermission, NotApprovedContent, \
+    GetQuerySetListViewsMixin
 from MyMotoMadness.saleads.models import Motorcycles, MotoEquipmentGear, MotoParts
 
 
@@ -38,25 +39,15 @@ class NotApprovedOffersView(CheckAdminStaffPermission, views.ListView):
         return queryset
 
 
-class MotorcyclesListViews(views.ListView):
+class MotorcyclesListViews(GetQuerySetListViewsMixin, views.ListView):
     template_name = 'sales/motorcycles/list_motorcycles.html'
     model = Motorcycles
     paginate_by = 8
 
     def get_context_data(self, *args, **kwargs):
         data = super().get_context_data(*args, **kwargs)
-        data['search_motorcycle'] = SearchMotorcycle(self.request.GET)
+        data['search_motorcycles'] = SearchMotorcycle(self.request.GET)
         return data
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(approved=True).order_by('published')
-
-        for field, value in self.request.GET.items():
-            if value and field != 'page':
-                queryset = queryset.filter(**{field: value})
-
-        return queryset
 
 
 class MotorcyclesAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
@@ -121,7 +112,7 @@ class MotorcyclesDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictionA
     success_url = reverse_lazy('list motorcycle view')
 
 
-class EquipmentGearListView(views.ListView):
+class EquipmentGearListView(GetQuerySetListViewsMixin, views.ListView):
     template_name = 'sales/equipment_gear/equipment_list.html'
     model = MotoEquipmentGear
     paginate_by = 8
@@ -130,16 +121,6 @@ class EquipmentGearListView(views.ListView):
         data = super().get_context_data(**kwargs)
         data['search_equipment'] = SearchEquipment(self.request.GET)
         return data
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(approved=True).order_by('published')
-
-        for field, value in self.request.GET.items():
-            if value and field != 'page':
-                queryset = queryset.filter(**{field: value})
-
-        return queryset
 
 
 class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
@@ -202,7 +183,7 @@ class EquipmentGearDeleteView(auth_mixins.LoginRequiredMixin, CheckForRestrictio
     success_url = reverse_lazy('list equipment gear view')
 
 
-class PartsListView(views.ListView):
+class PartsListView(GetQuerySetListViewsMixin, views.ListView):
     template_name = 'sales/moto_parts/list_parts.html'
     model = MotoParts
     paginate_by = 8
@@ -211,16 +192,6 @@ class PartsListView(views.ListView):
         data = super().get_context_data(**kwargs)
         data['search_part'] = SearchPart(self.request.GET)
         return data
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(approved=True).order_by('published')
-
-        for field, value in self.request.GET.items():
-            if value and field != 'page':
-                queryset = queryset.filter(**{field: value})
-
-        return queryset
 
 
 class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):

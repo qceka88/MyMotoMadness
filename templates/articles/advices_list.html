@@ -25,7 +25,20 @@
         </div>
     </div>
     <!-- Page Header End -->
-
+    <!-- Search Start -->
+    <div class="text-center text-primary text-uppercase">
+        <a href="" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+            Search Advices</a>
+        <div class="dropdown-menu fadeInUp m-0 form-control text-center">
+            <form action="{% url 'list advices view' %}">
+                {{ search_advices }}
+                <br>
+                <br>
+                <button style="color: red">SEARCH</button>
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
 
     <!--Common Articles  Start -->
     <div class="container-xxl py-5">

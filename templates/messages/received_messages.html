@@ -2,6 +2,9 @@
 {% load left_right_column %}
 {% load static %}
 {% block page_content %}
+    {% for msg in object_list %}
+        {{ o }}
+    {% endfor %}
     <!-- Page Header START -->
     <div class="container-fluid page-header mb-5 p-0"
          style="background-image: url({% static 'img/mailman.jpg' %});">
@@ -28,16 +31,16 @@
 
     <!--Received Messages   Start -->
     {% if object_list %}
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|left_column %}
-                            <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="row g-4 mb-3 pb-3">
+                            {% for message_object in object_list|left_column %}
+                                <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
                                             <span class="fw-bold text-secondary">
                                                 {% if message_object.from_user.profile_picture %}
                                                     <img src="{{ message_object.from_user.profile_picture.url }}"
@@ -49,41 +52,41 @@
                                                          style="width: 80px; height: 80px;">
                                                 {% endif %}
                                             </span>
+                                        </div>
+                                        <div class="ps-4">
+                                            <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">
+                                                {% if not message_object.readed %}
+                                                    <h3 style="color: red">From: {{ message_object.from_user }} <i
+                                                            class="fa fa-envelope text-primary me-2"></i></h3>
+                                                    <h5>
+                                                        Subject: {{ message_object.message_subject }}</h5>
+                                                {% else %}
+                                                    <h3>From: {{ message_object.from_user }} <i
+                                                            class="fa fa-envelope-open text-secondary me-2"></i></h3>
+                                                    <h5>Subject: {{ message_object.message_subject }}</h5>
+                                                {% endif %}
+                                                <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                                <p style="color: black">Received: {{ message_object.send_date }}</p></a>
+                                        </div>
                                     </div>
-                                    <div class="ps-4">
-                                        <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">
-                                            {% if not message_object.readed %}
-                                                <h3 style="color: red">From: {{ message_object.from_user }} <i
-                                                        class="fa fa-envelope text-primary me-2"></i></h3>
-                                                <h5>
-                                                    Subject: {{ message_object.message_subject }}</h5>
-                                            {% else %}
-                                                <h3>From: {{ message_object.from_user }} <i
-                                                        class="fa fa-envelope-open text-secondary me-2"></i></h3>
-                                                <h5>Subject: {{ message_object.message_subject }}</h5>
-                                            {% endif %}
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
-                                            <p style="color: black">Received: {{ message_object.send_date }}</p></a>
-                                    </div>
+                                    <br>
+                                    <button>
+                                        <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                                    </button>
+                                    <button>
+                                        <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                                    </button>
                                 </div>
-                                <br>
-                                <button>
-                                    <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-                                </button>
-                                <button>
-                                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-                                </button>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row g-4 mb-3 pb-3">
-                        {% for message_object in object_list|right_column %}
-                            <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
+                    <div class="col-lg-6">
+                        <div class="row g-4 mb-3 pb-3">
+                            {% for message_object in object_list|right_column %}
+                                <div class="col-12 wow  form-control fadeIn" data-wow-delay="0.1s">
+                                    <div class="d-flex">
+                                        <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
+                                             style="width: 45px; height: 45px;">
                                             <span class="fw-bold text-secondary">
                                                 {% if message_object.from_user.profile_picture %}
                                                     <img src="{{ message_object.from_user.profile_picture.url }}"
@@ -95,54 +98,54 @@
                                                          style="width: 80px; height: 80px;">
                                                 {% endif %}
                                             </span>
+                                        </div>
+                                        <div class="ps-4">
+                                            <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">
+                                                {% if not message_object.readed %}
+                                                    <h3 style="color: red">From: {{ message_object.from_user }} <i
+                                                            class="fa fa-envelope text-primary me-2"></i></h3>
+                                                    <h5>
+                                                        Subject: {{ message_object.message_subject }}</h5>
+                                                {% else %}
+                                                    <h3>From: {{ message_object.from_user }} <i
+                                                            class="fa fa-envelope-open text-secondary me-2"></i></h3>
+                                                    <h5>Subject: {{ message_object.message_subject }}</h5>
+                                                {% endif %}
+                                                <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
+                                                <p style="color: black">Received: {{ message_object.send_date }}</p></a>
+                                        </div>
                                     </div>
-                                    <div class="ps-4">
-                                        <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">
-                                            {% if not message_object.readed %}
-                                                <h3 style="color: red">From: {{ message_object.from_user }} <i
-                                                        class="fa fa-envelope text-primary me-2"></i></h3>
-                                                <h5>
-                                                    Subject: {{ message_object.message_subject }}</h5>
-                                            {% else %}
-                                                <h3>From: {{ message_object.from_user }} <i
-                                                        class="fa fa-envelope-open text-secondary me-2"></i></h3>
-                                                <h5>Subject: {{ message_object.message_subject }}</h5>
-                                            {% endif %}
-                                            <span style="color: black">Content: {{ message_object.message_content|truncatechars:100 }}</span>
-                                            <p style="color: black">Received: {{ message_object.send_date }}</p></a>
-                                    </div>
+                                    <br>
+                                    <button>
+                                        <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
+                                    </button>
+                                    <button>
+                                        <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
+                                    </button>
                                 </div>
-                                <br>
-                                <button>
-                                    <a href="{% url 'detail received message view' slug_user=request.user.slug_user slug=message_object.slug %}">Read</a>
-                                </button>
-                                <button>
-                                    <a href="{% url 'delete message view' slug_user=request.user.slug_user slug=message_object.slug %}">DELETE</a>
-                                </button>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
+            <h3 class="text-center">
+                {% if paginator.num_pages > 1 %}
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
+                    {% else %}
+                        <a>&lt;</a>
+                    {% endif %}
+
+                    {{ page_obj.number }} / {{ paginator.num_pages }}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
+                    {% else %}
+                        <a>&gt;</a>
+                    {% endif %}
+                {% endif %}
+            </h3>
         </div>
-        <h3 class="text-center">
-            {% if paginator.num_pages > 1 %}
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
-                {% else %}
-                    <a>&lt;</a>
-                {% endif %}
-
-                {{ page_obj.number }} / {{ paginator.num_pages }}
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
-                {% else %}
-                    <a>&gt;</a>
-                {% endif %}
-            {% endif %}
-        </h3>
-    </div>
     {% else %}
         <h2 class="text-center">NO MESSAGES TO SHOW</h2>
     {% endif %}

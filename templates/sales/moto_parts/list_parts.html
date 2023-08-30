@@ -18,12 +18,22 @@
         </div>
     </div>
     <!-- Page Header End -->
-        <!-- Search Start -->
-    <form action="{% url 'list bike parts view' %}">
-        {{ search_part }}
-        <button>SEARCH</button>
-    </form>
+
+    <!-- Search Start -->
+    <div class="nav-item dropdown">
+        <a href="" class="nav-link dropdown-toggle text-center text-primary text-uppercase" data-bs-toggle="dropdown">
+            Search Options</a>
+        <div class="dropdown-menu fadeInUp m-0 form-control text-center">
+            <form action="{% url 'list bike parts view' %}">
+                {{ search_part }}
+                <br>
+                <br>
+                <button style="color: red">SEARCH</button>
+            </form>
+        </div>
+    </div>
     <!-- Search End -->
+
     <!-- Offers Start -->
     <div class="container-xxl py-5">
         <div class="container">

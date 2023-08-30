@@ -19,13 +19,22 @@
         </div>
     </div>
     <!-- Page Header End -->
-    <!-- Search Start -->
-    <form action="{% url 'list motorcycle view' %}">
-        {{ search_motorcycle }}
-        <button>SEARCH</button>
-    </form>
 
+    <!-- Search Start -->
+    <div class="text-center text-primary text-uppercase">
+        <a href="" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+            Search Options</a>
+        <div class="dropdown-menu fadeInUp m-0 form-control text-center">
+            <form action="{% url 'list motorcycle view' %}">
+                {{ search_motorcycles }}
+                <br>
+                <br>
+                <button style="color: red">SEARCH</button>
+            </form>
+        </div>
+    </div>
     <!-- Search End -->
+
     <!-- Offers Start -->
     <div class="container-xxl py-5">
         <div class="container">

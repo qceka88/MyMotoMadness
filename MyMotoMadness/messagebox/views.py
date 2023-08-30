@@ -17,14 +17,14 @@ class ReceivedMessagesView(auth_mixins.LoginRequiredMixin, generic_views.ListVie
     template_name = 'messages/received_messages.html'
     paginate_by = 6
 
-    def get_queryset(self, ):
+    def get_queryset(self):
         queryset = MyMessage.objects.filter(to_user=self.request.user, receiver_delete=False).order_by('-send_date')
         queryset.update(viewed=True)
         return queryset
 
     def get_context_data(self, **kwargs):
         try:
-            return
+            return super().get_context_data(**kwargs)
         except Http404:
             self.kwargs['page'] = len(self.object_list) // self.paginate_by
             return super().get_context_data(**kwargs)

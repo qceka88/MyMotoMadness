@@ -8,6 +8,11 @@ class BasicArticleForm(forms.ModelForm):
         model = ArticlesModel
         exclude = ('published',)
         widgets = {
+            'article_type': forms.Select(
+                attrs={
+                    'style': "height: 55px; width: 225px;",
+                },
+            ),
             'title': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Title',
@@ -26,13 +31,8 @@ class BasicArticleForm(forms.ModelForm):
                 }
             ),
             'author': forms.HiddenInput(
-
             ),
-            'article_type': forms.Select(
-                attrs={
-                    'style': "height: 55px",
-                }
-            )
+
         }
 
 
@@ -57,3 +57,24 @@ class DeleteArticleForm(BasicArticleForm):
             self.instance.delete()
 
         return self.instance
+
+
+class SearchArticleForm(forms.Form):
+    title__icontains = forms.CharField(
+        required=False,
+        label='Title:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by title.',
+            }
+        )
+    )
+    sub_title__icontains = forms.CharField(
+        required=False,
+        label='Sub Title:',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Search by sub title.'
+            }
+        )
+    )
