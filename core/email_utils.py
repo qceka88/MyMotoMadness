@@ -3,7 +3,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-# TODO: Fix the stylisation of HTML for the Emails
 def send_the_email(subject, from_email, recipient_list, template_name, context):
     html_message = render_to_string(template_name=template_name, context=context)
     plain_message = strip_tags(html_message)

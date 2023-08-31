@@ -53,7 +53,8 @@ class DetailsMotoUserView(generic_views.DetailView):
                 context['object'].motorcycles_set.all()
         ):
             context['user_sale_offers'].extend(queryset_offers)
-
+        context['not_approved_offers'] = len([o for o in context['user_sale_offers'] if not o.approved]) \
+                                         == len(context['user_sale_offers'])
         return context
 
 
