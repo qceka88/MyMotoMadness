@@ -45,8 +45,6 @@ class DetailsMotoUserView(generic_views.DetailView):
         context = super().get_context_data(**kwargs)
 
         context['user_sale_offers'] = []
-        # TODO: To fix in user details when user all offers are not approved to show to other
-        #  users that current user dont have offers and fix the colors of non approved ads
         for queryset_offers in (
                 context['object'].motoparts_set.all(),
                 context['object'].motoequipmentgear_set.all(),
