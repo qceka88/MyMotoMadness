@@ -127,7 +127,6 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/equipment_gear/add_equipment.html'
     model = MotoEquipmentGear
     form_class = CreateEquipmentGearForm
-    success_url = reverse_lazy('list equipment gear view')
 
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
@@ -140,6 +139,8 @@ class EquipmentGearAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
 
         return self.form_invalid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('detail equipment gear view', kwargs={'pk': self.object.pk})
 
 class EquipmentGearEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/equipment_gear/edit_equipment.html'
@@ -198,7 +199,6 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
     template_name = 'sales/moto_parts/add_part.html'
     model = MotoParts
     form_class = CreatePartsForm
-    success_url = reverse_lazy('list bike parts view')
 
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
@@ -211,6 +211,8 @@ class PartsAddView(auth_mixins.LoginRequiredMixin, views.CreateView):
 
         return self.form_invalid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('detail bike parts view', kwargs={'pk': self.object.pk})
 
 class PartsEditView(auth_mixins.LoginRequiredMixin, CheckForRestrictionAds, views.UpdateView):
     template_name = 'sales/moto_parts/edit_part.html'
