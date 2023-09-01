@@ -68,7 +68,7 @@ Registration form.
 
 It has a top bar only for registered user. When the user is Admin/Mod.
 Addition button is appear to show that on site have offers for approval.
-Message button is visible from every registered user.  Admin button is visible
+Message button is visible from every registered user and is notification for new received message.  Admin button is visible
 only from admins.
 
 ![top_bar_for_registered_users.PNG](readme_images%2Ftop_bar_for_registered_users.PNG)
@@ -141,4 +141,5 @@ Email greetings for registration.
 ![email_greetings.PNG](readme_images%2Femail_greetings.PNG)
 
 Email notification for new message and link to message
+
 ![email_notification_for_message.PNG](readme_images%2Femail_notification_for_message.PNG)
