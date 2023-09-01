@@ -42,6 +42,7 @@ Admin have full CRUD rights for everything.
 7. Added button for admin section only visible for admins.
 8. Change admin URL for safety. 
 9. Added buttons for send message directly to owner in sale offers, and user details page.
+10. Messages can be deleted in different times from sender  and receiver.
 
 
 Home Page!
