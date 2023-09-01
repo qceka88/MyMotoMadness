@@ -43,6 +43,7 @@ Admin have full CRUD rights for everything.
 8. Change admin URL for safety. 
 9. Added buttons for send message directly to owner in sale offers, and user details page.
 10. Messages can be deleted in different times from sender  and receiver.
+11. When user logout. Next to site name appear a message for successful LogOut.
 
 
 Home Page!
@@ -143,3 +144,11 @@ Email greetings for registration.
 Email notification for new message and link to message
 
 ![email_notification_for_message.PNG](readme_images%2Femail_notification_for_message.PNG)
+
+When a user use a send message buttons
+
+![send_message.PNG](readme_images%2Fsend_message.PNG)
+
+When a user use a CreateMessage Button. If user write a username hat not exist. He receive a warning message for that.
+
+![create_message.PNG](readme_images%2Fcreate_message.PNG)
