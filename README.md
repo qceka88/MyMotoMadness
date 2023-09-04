@@ -149,6 +149,6 @@ When a user use a send message buttons
 
 ![send_message.PNG](readme_images%2Fsend_message.PNG)
 
-When a user use a CreateMessage Button. If user write a username hat not exist. He receive a warning message for that.
+When a user use a CreateMessage Button. If user write a username that not exist. He will receive a warning message for that.
 
 ![create_message.PNG](readme_images%2Fcreate_message.PNG)
