@@ -145,7 +145,7 @@ Email notification for new message and link to message
 
 ![email_notification_for_message.PNG](readme_images%2Femail_notification_for_message.PNG)
 
-When a user use a send message buttons
+When a user use a send message buttons. User receiver automatically has been attached to the message.
 
 ![send_message.PNG](readme_images%2Fsend_message.PNG)
 
